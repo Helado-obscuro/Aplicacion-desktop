@@ -5,10 +5,16 @@
  */
 package Ventanas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,9 +29,18 @@ public class frmMenu extends javax.swing.JFrame {
      */
     frmLogin inicio;
     int x=0, y=0;
+    int co=0; //contador para cambiar a posicion
+    static String n[] = new String[20];
+    
+  
+    
     public frmMenu(frmLogin l) {
         inicio= l;
+
         initComponents();
+                  init(n);
+
+        
     }
 
     /**
@@ -278,7 +293,8 @@ public class frmMenu extends javax.swing.JFrame {
         jpOpcionesContenido = new javax.swing.JPanel();
         jpOpcion1 = new javax.swing.JPanel();
         jbnCerrarOpciones1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jpGenerarOpciones = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jpOpcionesPoliticas = new javax.swing.JPanel();
@@ -622,7 +638,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarPedido.setBorderPainted(false);
         jbnRegresarPedido.setContentAreaFilled(false);
-        jbnRegresarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarPedido.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarPedido.setSelected(true);
         jbnRegresarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -836,7 +852,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarCliente.setBorderPainted(false);
         jbnRegresarCliente.setContentAreaFilled(false);
-        jbnRegresarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarCliente.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarCliente.setSelected(true);
         jbnRegresarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -1290,7 +1306,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarEmpleado.setBorderPainted(false);
         jbnRegresarEmpleado.setContentAreaFilled(false);
-        jbnRegresarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarEmpleado.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarEmpleado.setSelected(true);
         jbnRegresarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -1774,7 +1790,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarEmpresa.setBorderPainted(false);
         jbnRegresarEmpresa.setContentAreaFilled(false);
-        jbnRegresarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarEmpresa.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarEmpresa.setSelected(true);
         jbnRegresarEmpresa.addActionListener(new java.awt.event.ActionListener() {
@@ -2153,7 +2169,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarProveedor.setBorderPainted(false);
         jbnRegresarProveedor.setContentAreaFilled(false);
-        jbnRegresarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarProveedor.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarProveedor.setSelected(true);
         jbnRegresarProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -2469,16 +2485,23 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jButton1.setText("Generar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jpGenerarOpciones.setBackground(new java.awt.Color(153, 153, 153));
+
+        javax.swing.GroupLayout jpGenerarOpcionesLayout = new javax.swing.GroupLayout(jpGenerarOpciones);
+        jpGenerarOpciones.setLayout(jpGenerarOpcionesLayout);
+        jpGenerarOpcionesLayout.setHorizontalGroup(
+            jpGenerarOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 787, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jpGenerarOpcionesLayout.setVerticalGroup(
+            jpGenerarOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 340, Short.MAX_VALUE)
         );
 
@@ -2492,13 +2515,17 @@ public class frmMenu extends javax.swing.JFrame {
             jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpOpcion1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpGenerarOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 45, Short.MAX_VALUE))
             .addGroup(jpOpcion1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbnCerrarOpciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpOpcion1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbnCerrarOpciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpOpcion1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
@@ -2507,9 +2534,13 @@ public class frmMenu extends javax.swing.JFrame {
         jpOpcion1Layout.setVerticalGroup(
             jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpOpcion1Layout.createSequentialGroup()
-                .addComponent(jbnCerrarOpciones1)
+                .addGroup(jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbnCerrarOpciones1)
+                    .addGroup(jpOpcion1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpGenerarOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOpcion1Layout.createSequentialGroup()
@@ -2680,7 +2711,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarOpciones.setBorderPainted(false);
         jbnRegresarOpciones.setContentAreaFilled(false);
-        jbnRegresarOpciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarOpciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarOpciones.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarOpciones.setSelected(true);
         jbnRegresarOpciones.addActionListener(new java.awt.event.ActionListener() {
@@ -2735,7 +2766,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarProducto.setBorderPainted(false);
         jbnRegresarProducto.setContentAreaFilled(false);
-        jbnRegresarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarProducto.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarProducto.setSelected(true);
         jbnRegresarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -2975,7 +3006,8 @@ public class frmMenu extends javax.swing.JFrame {
 
         jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 250, 230));
+        jlbLogoEmpresaProveedor1.setPreferredSize(new java.awt.Dimension(220, 220));
+        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, -1, -1));
 
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -3075,6 +3107,13 @@ public class frmMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+ public static void init(String n[]){
+        
+for (int i = 0; i < 20; i++) {
+    n[i] = "jbn_producto_"+i;
+}
+    }
+    
     private void jbnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jbnCerrarActionPerformed
@@ -3109,7 +3148,6 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jbnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCompraActionPerformed
         abrirOpcion(jpPrincipal, jpCompra);
-        autogenerete();
     }//GEN-LAST:event_jbnCompraActionPerformed
 
     private void jbnRerportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRerportesActionPerformed
@@ -3328,6 +3366,11 @@ public class frmMenu extends javax.swing.JFrame {
     private void jbnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarProductoActionPerformed
         // TODO add your handling code here:Sysr
     }//GEN-LAST:event_jbnEliminarProductoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        generatebutton(this.jpGenerarOpciones);
+    }//GEN-LAST:event_jButton1ActionPerformed
      
     
     void setColorEmpresa(JPanel panel, JLabel label){
@@ -3359,27 +3402,17 @@ public class frmMenu extends javax.swing.JFrame {
         panelito.revalidate();
     }
     
-    void autogenerete(){
-    for (int i=0;i<3;i++){
-        String name ="jbncodigo"+Integer.toString(i);
-        JButton jbncodigo= new JButton();
-                jbncodigo.setText("jButton1");
+    void generatebutton(JPanel panel){
 
-        javax.swing.GroupLayout jpCompraLayout = new javax.swing.GroupLayout(jpCompra);
-        jpCompra.setLayout(jpCompraLayout);
-        jpCompraLayout.addLayoutComponent(jbncodigo, i);
-        this.add(jbncodigo);
-        System.out.println("Ventanas.frmMenu.autogenerete()"+i);
+
+        JButton group; //objeto boton
+        group = new JButton("Click me!");
+        panel.add(group); //agrega el boton a el panel
+        group.setSize( 150, 75+(co*60) );  //marca la posicion del boton   
+        group.setVisible( true ); //hace visible el nuevo boton
+        co++;
         
-//        jpCompraLayout.setHorizontalGroup(
-//            jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//            .addGroup(jpCompraLayout.createSequentialGroup()
-//                .addGap(58+i+2, 58+1+i, 58+i+6)
-//                .addComponent(jbncodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                .addContainerGap(1004, Short.MAX_VALUE)
-//            )
-//        );
-    }
+        System.out.println("nuevo boton agregado " + co); //logfile
     }
     /**
      * 
@@ -3419,13 +3452,13 @@ public class frmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPMenuEmpresa;
     private javax.swing.JPanel jPMenuPedido;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -3640,6 +3673,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jpContenidoLogoProducto;
     private javax.swing.JPanel jpEmpleado;
     private javax.swing.JPanel jpEmpresa;
+    private javax.swing.JPanel jpGenerarOpciones;
     private javax.swing.JPanel jpInferior;
     private javax.swing.JPanel jpInformacionAsistencia;
     private javax.swing.JPanel jpMenu;
@@ -3716,4 +3750,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jtxTelefonoProveedor1;
     private javax.swing.JTextField jtxUsuarioEmpleado;
     // End of variables declaration//GEN-END:variables
+
+
 }

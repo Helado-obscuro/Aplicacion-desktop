@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import Controlador.controlProductos;
 
 /**
  *
@@ -31,7 +32,7 @@ public class frmMenu extends javax.swing.JFrame {
     int x=0, y=0;
     int co=0; //contador para cambiar a posicion
     static String n[] = new String[20];
-    
+    controlProductos cProductos = new controlProductos(inicio, this);
   
     
     public frmMenu(frmLogin l) {
@@ -39,8 +40,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         initComponents();
                   init(n);
-
-        
     }
 
     /**
@@ -346,6 +345,10 @@ public class frmMenu extends javax.swing.JFrame {
         jlbIdProveedor1 = new javax.swing.JLabel();
         jSeparator55 = new javax.swing.JSeparator();
         jtxProveedor1 = new javax.swing.JTextField();
+        jlbRfcProveedor2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jSeparator56 = new javax.swing.JSeparator();
+        jtfImagen = new javax.swing.JTextField();
         jpVenta = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
         jpCompra = new javax.swing.JPanel();
@@ -2793,7 +2796,7 @@ public class frmMenu extends javax.swing.JFrame {
                 .addComponent(jbnRegresarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlbTituloProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jlbBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpBarraSuperiorProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -2877,7 +2880,7 @@ public class frmMenu extends javax.swing.JFrame {
         jpBarraInferiorProductoLayout.setHorizontalGroup(
             jpBarraInferiorProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInferiorProductoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(213, Short.MAX_VALUE)
                 .addComponent(jbnAgregarProveedor1)
                 .addGap(112, 112, 112)
                 .addComponent(jbnEliminarProducto)
@@ -2909,21 +2912,21 @@ public class frmMenu extends javax.swing.JFrame {
         jpProducto.add(jlbNombreProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 130, -1));
 
         jSeparator50.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator50, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 460, 10));
+        jpProducto.add(jSeparator50, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 450, 10));
 
         jtxNombreProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxNombreProveedor1.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreProveedor1.setBorder(null);
-        jpProducto.add(jtxNombreProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 450, 30));
+        jpProducto.add(jtxNombreProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 450, 30));
 
         jSeparator51.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator51, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 550, 10));
+        jpProducto.add(jSeparator51, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 540, 10));
 
         jtxDomicilioProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxDomicilioProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxDomicilioProveedor1.setBorder(null);
-        jpProducto.add(jtxDomicilioProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 540, 30));
+        jpProducto.add(jtxDomicilioProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 540, 30));
 
         jlbDomicilioProveedor1.setDisplayedMnemonic('d');
         jlbDomicilioProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -2936,12 +2939,12 @@ public class frmMenu extends javax.swing.JFrame {
         jpProducto.add(jlbDomicilioProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 120, 20));
 
         jSeparator52.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator52, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 260, 10));
+        jpProducto.add(jSeparator52, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 240, 10));
 
         jtxTelefonoProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxTelefonoProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxTelefonoProveedor1.setBorder(null);
-        jpProducto.add(jtxTelefonoProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 240, 30));
+        jpProducto.add(jtxTelefonoProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 240, 30));
 
         jlbTelefonoProveedor1.setDisplayedMnemonic('b');
         jlbTelefonoProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -2954,30 +2957,30 @@ public class frmMenu extends javax.swing.JFrame {
         jpProducto.add(jlbTelefonoProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 120, 30));
 
         jSeparator53.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 260, 10));
+        jpProducto.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 240, 10));
 
         jtxRfcProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxRfcProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxRfcProveedor1.setBorder(null);
-        jpProducto.add(jtxRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 240, 30));
+        jpProducto.add(jtxRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 240, 30));
 
         jlbRfcProveedor1.setDisplayedMnemonic('b');
         jlbRfcProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlbRfcProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbRfcProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
-        jlbRfcProveedor1.setText("RFC:");
+        jlbRfcProveedor1.setText("Imagen:");
         jlbRfcProveedor1.setToolTipText("");
         jlbRfcProveedor1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbRfcProveedor1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpProducto.add(jlbRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 300, 70, 20));
+        jpProducto.add(jlbRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 290, 110, 30));
 
         jSeparator54.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator54, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 260, 10));
+        jpProducto.add(jSeparator54, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 310, 210, 10));
 
         jtxEmailProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxEmailProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxEmailProveedor1.setBorder(null);
-        jpProducto.add(jtxEmailProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 240, 30));
+        jpProducto.add(jtxEmailProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 230, 240, 30));
 
         jlbEmailProveedor1.setDisplayedMnemonic('b');
         jlbEmailProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -2987,7 +2990,7 @@ public class frmMenu extends javax.swing.JFrame {
         jlbEmailProveedor1.setToolTipText("");
         jlbEmailProveedor1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbEmailProveedor1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpProducto.add(jlbEmailProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 100, 20));
+        jpProducto.add(jlbEmailProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 240, 100, 20));
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3007,7 +3010,7 @@ public class frmMenu extends javax.swing.JFrame {
         jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
         jlbLogoEmpresaProveedor1.setPreferredSize(new java.awt.Dimension(220, 220));
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, -1, -1));
+        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 70, 90, 60));
 
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -3060,13 +3063,41 @@ public class frmMenu extends javax.swing.JFrame {
         jtxProveedor1.setEnabled(false);
         jpProducto.add(jtxProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 20));
 
+        jlbRfcProveedor2.setDisplayedMnemonic('b');
+        jlbRfcProveedor2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRfcProveedor2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRfcProveedor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
+        jlbRfcProveedor2.setText("RFC:");
+        jlbRfcProveedor2.setToolTipText("");
+        jlbRfcProveedor2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbRfcProveedor2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpProducto.add(jlbRfcProveedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 70, 20));
+
+        jButton2.setText("Examinar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jpProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 280, -1, -1));
+
+        jSeparator56.setForeground(new java.awt.Color(0, 0, 0));
+        jpProducto.add(jSeparator56, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, 240, 10));
+
+        jtfImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfImagenActionPerformed(evt);
+            }
+        });
+        jpProducto.add(jtfImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 280, 210, 30));
+
         jpPrincipal.add(jpProducto, "card3");
 
         javax.swing.GroupLayout jpVentaLayout = new javax.swing.GroupLayout(jpVenta);
         jpVenta.setLayout(jpVentaLayout);
         jpVentaLayout.setHorizontalGroup(
             jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 1204, Short.MAX_VALUE)
         );
         jpVentaLayout.setVerticalGroup(
             jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3079,7 +3110,7 @@ public class frmMenu extends javax.swing.JFrame {
         jpReportes.setLayout(jpReportesLayout);
         jpReportesLayout.setHorizontalGroup(
             jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 1204, Short.MAX_VALUE)
         );
         jpReportesLayout.setVerticalGroup(
             jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3092,7 +3123,7 @@ public class frmMenu extends javax.swing.JFrame {
         jpCompra.setLayout(jpCompraLayout);
         jpCompraLayout.setHorizontalGroup(
             jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 1204, Short.MAX_VALUE)
         );
         jpCompraLayout.setVerticalGroup(
             jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3371,6 +3402,14 @@ for (int i = 0; i < 20; i++) {
         // TODO add your handling code here:
         generatebutton(this.jpGenerarOpciones);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtfImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfImagenActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       cProductos.selectImagen(this);
+    }//GEN-LAST:event_jButton2ActionPerformed
      
     
     void setColorEmpresa(JPanel panel, JLabel label){
@@ -3453,6 +3492,7 @@ for (int i = 0; i < 20; i++) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -3518,6 +3558,7 @@ for (int i = 0; i < 20; i++) {
     private javax.swing.JSeparator jSeparator53;
     private javax.swing.JSeparator jSeparator54;
     private javax.swing.JSeparator jSeparator55;
+    private javax.swing.JSeparator jSeparator56;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
@@ -3643,6 +3684,7 @@ for (int i = 0; i < 20; i++) {
     private javax.swing.JLabel jlbRfcEmpresa;
     private javax.swing.JLabel jlbRfcProveedor;
     private javax.swing.JLabel jlbRfcProveedor1;
+    private javax.swing.JLabel jlbRfcProveedor2;
     private javax.swing.JLabel jlbTelefonoCliente;
     private javax.swing.JLabel jlbTelefonoEmpleado;
     private javax.swing.JLabel jlbTelefonoEmpresa;
@@ -3692,6 +3734,7 @@ for (int i = 0; i < 20; i++) {
     private javax.swing.JPanel jpProveedor;
     private javax.swing.JPanel jpReportes;
     private javax.swing.JPanel jpVenta;
+    public javax.swing.JTextField jtfImagen;
     private javax.swing.JTextField jtxApellidosClientes;
     private javax.swing.JTextField jtxApellidosEmpleado;
     private javax.swing.JTextField jtxBuscarEmpleado;

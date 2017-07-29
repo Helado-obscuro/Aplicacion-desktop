@@ -3729,7 +3729,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        pcontrol.seleccionarImagen();
+        pcontrol.seleccionarImagen(this);
     }//GEN-LAST:event_jButton1ActionPerformed
      
     //Metodos para cambiar color en el panel empresa
@@ -4084,7 +4084,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTable jtbCliente;
     private javax.swing.JTable jtbEmpleado;
     private javax.swing.JTable jtbProveedor;
-    private javax.swing.JTextField jtfImagen;
+    public javax.swing.JTextField jtfImagen;
     private javax.swing.JTextField jtxApellidosClientes;
     private javax.swing.JTextField jtxApellidosEmpleado;
     private javax.swing.JTextField jtxBuscarCliente;

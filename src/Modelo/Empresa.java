@@ -1,26 +1,54 @@
 package Modelo;
 
-public class Empresa {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
- private String rfc;
- private String telefono;
- private String localidad;
- private String domicilio;
- private String email;
- private int noEmpleados;
+public class Empresa {
+ private int idEmp=0;
+ private String nombreEmpresa=""; 
+ private String rfcEmpresa="";
+ private String telefono="";
+ private String localidad="";
+ private String domicilio="";
+ private String email="";
+ private int noEmpleados=0;
+ 
+ Conexion obj= new Conexion();
  
  public Empresa(){
  
  }
 
-    public String getRfc() {
-        return rfc;
+    public int getIdEmp() {
+        return idEmp;
     }
 
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
+    public void setIdEmp(int idEmp) {
+        this.idEmp = idEmp;
     }
 
+   
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
+    public String getRfcEmpresa() {
+        return rfcEmpresa;
+    }
+
+    public void setRfcEmpresa(String rfcEmpresa) {
+        this.rfcEmpresa = rfcEmpresa;
+    }
+
+   
     public String getTelefono() {
         return telefono;
     }
@@ -67,11 +95,74 @@ public class Empresa {
  public void bajaEmpresa(){
 
  }
- public void consultaEmpresa(){
-
- }
+ public void consultaEmpresa(int id){
+           PreparedStatement comando;
+            ResultSet resultado;
+            obj.conectar();
+        try {    
+         
+           comando= obj.conexion.prepareCall("select * from empresa where idEmp="+id);
+         
+            resultado=comando.executeQuery();
+            
+            if(resultado.first()){
+            idEmp=resultado.getInt("idEmp");
+            nombreEmpresa=resultado.getString("nombreEmpresa");
+            rfcEmpresa=resultado.getString("rfcEmpresa");
+            domicilio=resultado.getString("domicilio");
+            telefono=resultado.getString("telefono");
+            email=resultado.getString("email");
+            localidad=resultado.getString("localidad");
+            noEmpleados=resultado.getInt("noEmpleados");
+                
+            }else{
+           
+            JOptionPane.showMessageDialog(null,"No se puede realizar la consulta");
+            idEmp=0;
+            nombreEmpresa="";
+            rfcEmpresa="";
+            domicilio="";
+            telefono="";
+            email="";
+            localidad="";
+            noEmpleados=0;
+            
+            }// fin del else 
+        } catch (SQLException ex) {
+            
+        }// fin del try-cach
+    }
+ 
  public void modificarEmpresa(){
 
+     PreparedStatement conectar;
+    obj.conectar();
+        try {
+            conectar = obj.conexion.prepareStatement("UPDATE empresa SET nombreEmpresa=?,rfcEmpresa=?,domicilio=?, telefono=?,email=?, localidad=?, noEmpleados=? WHERE idEmp=?");
+          
+            conectar.setString(1, nombreEmpresa);
+            conectar.setString(2, rfcEmpresa);
+            conectar.setString(3, domicilio);
+            conectar.setString(4, telefono);
+            conectar.setString(5, email);
+            conectar.setString(6, localidad);
+            conectar.setInt(7,noEmpleados);
+            conectar.setInt(8,idEmp);
+             
+            //ejecutar sentencia
+            int resp = conectar.executeUpdate();
+            JOptionPane.showMessageDialog(null, resp + " Se actualizó registro de forma exitosa");
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, "Error al actualizar datos");
+          
+        }
+     
+ }
+ 
+ 
+ public void consultaNombre(){
+ 
+ 
  }
 
 

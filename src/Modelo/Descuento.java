@@ -5,9 +5,9 @@ public class Descuento {
     private int idDescuento;
     private String porcentaje;
     private String descripcion;
-
+    
     public Descuento(){
-
+    
     }
 
     public int getIdDescuento() {
@@ -33,9 +33,9 @@ public class Descuento {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    
  public void altaDescuento(){
-
+ 
  }
  public void bajaDescuento(){
 
@@ -46,11 +46,9 @@ public class Descuento {
  public void modificarDescuento(){
 
  }
-public void modifica(){
-
-}
 
 
 
 
+    
 }

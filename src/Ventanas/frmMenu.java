@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import Controlador.productosControlador;
 
 /**
  *
@@ -41,6 +42,7 @@ public class frmMenu extends javax.swing.JFrame {
     Empresa objEmpresa=new Empresa();
     Cliente objCliente = new Cliente();
     Proveedor objProveedor = new Proveedor();
+    productosControlador pcontrol = new productosControlador(this);
     
     frmLogin inicio;
     
@@ -371,6 +373,9 @@ public class frmMenu extends javax.swing.JFrame {
         jlbIdProveedor1 = new javax.swing.JLabel();
         jSeparator55 = new javax.swing.JSeparator();
         jtxProveedor1 = new javax.swing.JTextField();
+        jtfImagen = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jlbRfcProveedor2 = new javax.swing.JLabel();
         jpVenta = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
         jpCompra = new javax.swing.JPanel();
@@ -663,7 +668,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarPedido.setBorderPainted(false);
         jbnRegresarPedido.setContentAreaFilled(false);
-        jbnRegresarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarPedido.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarPedido.setSelected(true);
         jbnRegresarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -885,7 +890,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarCliente.setBorderPainted(false);
         jbnRegresarCliente.setContentAreaFilled(false);
-        jbnRegresarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarCliente.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarCliente.setSelected(true);
         jbnRegresarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -1372,7 +1377,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarEmpleado.setBorderPainted(false);
         jbnRegresarEmpleado.setContentAreaFilled(false);
-        jbnRegresarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarEmpleado.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarEmpleado.setSelected(true);
         jbnRegresarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -1886,7 +1891,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarEmpresa.setBorderPainted(false);
         jbnRegresarEmpresa.setContentAreaFilled(false);
-        jbnRegresarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarEmpresa.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarEmpresa.setSelected(true);
         jbnRegresarEmpresa.addActionListener(new java.awt.event.ActionListener() {
@@ -2279,7 +2284,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarProveedor.setBorderPainted(false);
         jbnRegresarProveedor.setContentAreaFilled(false);
-        jbnRegresarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarProveedor.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarProveedor.setSelected(true);
         jbnRegresarProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -2809,7 +2814,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarOpciones.setBorderPainted(false);
         jbnRegresarOpciones.setContentAreaFilled(false);
-        jbnRegresarOpciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarOpciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarOpciones.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarOpciones.setSelected(true);
         jbnRegresarOpciones.addActionListener(new java.awt.event.ActionListener() {
@@ -2864,7 +2869,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarProducto.setBorderPainted(false);
         jbnRegresarProducto.setContentAreaFilled(false);
-        jbnRegresarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarProducto.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarProducto.setSelected(true);
         jbnRegresarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -3052,22 +3057,22 @@ public class frmMenu extends javax.swing.JFrame {
         jpProducto.add(jlbTelefonoProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 120, 30));
 
         jSeparator53.setForeground(new java.awt.Color(0, 0, 0));
-        jpProducto.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 260, 10));
+        jpProducto.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 260, 260, 10));
 
         jtxRfcProveedor1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxRfcProveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxRfcProveedor1.setBorder(null);
-        jpProducto.add(jtxRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 240, 30));
+        jpProducto.add(jtxRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 230, 240, 30));
 
         jlbRfcProveedor1.setDisplayedMnemonic('b');
         jlbRfcProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlbRfcProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbRfcProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
-        jlbRfcProveedor1.setText("RFC:");
+        jlbRfcProveedor1.setText("Imagen:");
         jlbRfcProveedor1.setToolTipText("");
         jlbRfcProveedor1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbRfcProveedor1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpProducto.add(jlbRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 300, 70, 20));
+        jpProducto.add(jlbRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 110, 20));
 
         jSeparator54.setForeground(new java.awt.Color(0, 0, 0));
         jpProducto.add(jSeparator54, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 260, 10));
@@ -3104,7 +3109,7 @@ public class frmMenu extends javax.swing.JFrame {
 
         jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 250, 230));
+        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
 
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -3156,6 +3161,25 @@ public class frmMenu extends javax.swing.JFrame {
         jtxProveedor1.setBorder(null);
         jtxProveedor1.setEnabled(false);
         jpProducto.add(jtxProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 20));
+        jpProducto.add(jtfImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 294, 230, 30));
+
+        jButton1.setText("Examinar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jpProducto.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 290, -1, -1));
+
+        jlbRfcProveedor2.setDisplayedMnemonic('b');
+        jlbRfcProveedor2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRfcProveedor2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRfcProveedor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
+        jlbRfcProveedor2.setText("RFC:");
+        jlbRfcProveedor2.setToolTipText("");
+        jlbRfcProveedor2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbRfcProveedor2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpProducto.add(jlbRfcProveedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 240, 70, 20));
 
         jpPrincipal.add(jpProducto, "card3");
 
@@ -3702,6 +3726,11 @@ public class frmMenu extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jtxBuscarProveedorKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        pcontrol.seleccionarImagen();
+    }//GEN-LAST:event_jButton1ActionPerformed
      
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label){
@@ -3810,6 +3839,7 @@ public class frmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -4003,6 +4033,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbRfcEmpresa;
     private javax.swing.JLabel jlbRfcProveedor;
     private javax.swing.JLabel jlbRfcProveedor1;
+    private javax.swing.JLabel jlbRfcProveedor2;
     private javax.swing.JLabel jlbTelefonoCliente;
     private javax.swing.JLabel jlbTelefonoEmpleado;
     private javax.swing.JLabel jlbTelefonoEmpresa;
@@ -4053,6 +4084,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTable jtbCliente;
     private javax.swing.JTable jtbEmpleado;
     private javax.swing.JTable jtbProveedor;
+    private javax.swing.JTextField jtfImagen;
     private javax.swing.JTextField jtxApellidosClientes;
     private javax.swing.JTextField jtxApellidosEmpleado;
     private javax.swing.JTextField jtxBuscarCliente;

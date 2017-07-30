@@ -42,7 +42,7 @@ public class productosControlador {
         JPanel panel = menu.getPanelPord();//Make a panel
         panel.setLayout(new GridLayout(0, 3));
         JLabel label1 = new JLabel("test");
-        JLabel label2 = new JLabel("DAS");
+        JLabel label2 = new JLabel("Imagen");
         panel.add(label1);
         panel.add(label2);
 

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import Ventanas.dialogProductos;
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -32,51 +33,28 @@ public class productosControlador {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath()); //lofgile
-//            frmm.jtfImagen.setText(selectedFile.getAbsolutePath());
             dprod.jtxImagen.setText(selectedFile.getAbsolutePath());
         }
     }
 
-        public static void initUI() {
-        JPanel pane = newPane("Nuevo producto");
-        JFrame frame = new JFrame("Nuevo");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(pane);
-        frame.pack();
-        frame.setVisible(true);
+    public void initUI() {
+
+        JPanel panel = menu.getPanelPord();//Make a panel
+        panel.setLayout(new GridLayout(0, 3));
+        JLabel label1 = new JLabel("test");
+        JLabel label2 = new JLabel("DAS");
+        panel.add(label1);
+        panel.add(label2);
+
+        panel.validate();
+        panel.repaint();
+        panel.setVisible(true);
+
+        panel.revalidate();
 
     }
 
-    public static JPanel newPane(String labelText) {
-        JPanel pane = new JPanel(new BorderLayout());
-        pane.add(newLabel(labelText));
-        pane.add(newButton("Open dialog"), BorderLayout.SOUTH);
-        return pane;
-    }
 
-    private static JButton newButton(String label) {
-        final JButton button = new JButton(label);
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent ae) {
-                Window parentWindow = SwingUtilities.windowForComponent(button);
-                JDialog dialog = new JDialog(parentWindow);
-                dialog.setLocationRelativeTo(button);
-                dialog.setModal(true);
-                dialog.add(newPane("Label in dialog"));
-                dialog.pack();
-                dialog.setVisible(true);
-            }
-        });
-        return button;
-    }
-
-    private static JLabel newLabel(String label) {
-        JLabel l = new JLabel(label);
-        l.setFont(l.getFont().deriveFont(24.0f));
-        return l;
-    }
     
     public void agegarProducto(){
         dprod.setVisible(true);

@@ -4,7 +4,10 @@ package Ventanas;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import Modelo.Empleado;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+
 
 public class frmLogin extends javax.swing.JFrame {
 
@@ -140,6 +143,11 @@ public class frmLogin extends javax.swing.JFrame {
                 jpsContrasenaActionPerformed(evt);
             }
         });
+        jpsContrasena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jpsContrasenaKeyTyped(evt);
+            }
+        });
         jpContenido.add(jpsContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, 30));
 
         jbnAceptar.setBackground(new java.awt.Color(255, 255, 255));
@@ -221,31 +229,7 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void jbnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAceptarActionPerformed
 
-          objEmpleado.setUsuario(jtxUsuario.getText());
-          objEmpleado.setContrasena(jpsContrasena.getText());
-          validar=objEmpleado.validarUsuario();
-
-            menu= new frmMenu(this);
-          //if para validar usuario si es 1 usuario y contraseña correctos
-        if(validar==1){
-            splash = new frmSplash(this, menu);
-            splash.setVisible(true);
-            this.dispose();
-//          menu.jlbLogin.setText(jtxUsuario.getText());
-//          menu.jlbTitulo.setText("Venta");
-//          menu.jlbTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Buy_48px_1.png")));
-        }
-        //if para validar datos si es 2 la contraseña es la incorrecta
-        if(validar==2){
-          JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-//
-        }
-//
-//        if(!jtxUsuario.getText().equals("admin")){
-//            menu.jbnConfiguracion.setEnabled(false);
-//            menu.jbnConfiguracion.setToolTipText("No tienes permisos para acceder a esta opción");
-//
-      //}
+    validarlog();
     }//GEN-LAST:event_jbnAceptarActionPerformed
 
     private void jpsContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsContrasenaActionPerformed
@@ -292,6 +276,15 @@ public class frmLogin extends javax.swing.JFrame {
         setLocation(point.x - x, point.y - y);
     }//GEN-LAST:event_jpContenidoMouseDragged
 
+    private void jpsContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpsContrasenaKeyTyped
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("enter pressed");
+        }
+
+
+    }//GEN-LAST:event_jpsContrasenaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -326,6 +319,34 @@ public class frmLogin extends javax.swing.JFrame {
                 new frmLogin().setVisible(true);
             }
         });
+    }
+    
+    private void validarlog(){
+        objEmpleado.setUsuario(jtxUsuario.getText());
+        objEmpleado.setContrasena(jpsContrasena.getText());
+        validar = objEmpleado.validarUsuario();
+
+        menu = new frmMenu(this);
+        //if para validar usuario si es 1 usuario y contraseña correctos
+        if (validar == 1) {
+            splash = new frmSplash(this, menu);
+            splash.setVisible(true);
+            this.dispose();
+//          menu.jlbLogin.setText(jtxUsuario.getText());
+//          menu.jlbTitulo.setText("Venta");
+//          menu.jlbTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Buy_48px_1.png")));
+        }
+        //if para validar datos si es 2 la contraseña es la incorrecta
+        if (validar == 2) {
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+//
+        }
+//
+//        if(!jtxUsuario.getText().equals("admin")){
+//            menu.jbnConfiguracion.setEnabled(false);
+//            menu.jbnConfiguracion.setToolTipText("No tienes permisos para acceder a esta opción");
+//
+        //}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

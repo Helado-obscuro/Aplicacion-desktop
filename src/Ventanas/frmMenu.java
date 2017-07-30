@@ -3886,7 +3886,7 @@ public class frmMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jtxBuscarProveedorKeyPressed
 
-<<<<<<< HEAD
+
     private void jbnCerrarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarPedido1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jbnCerrarPedido1ActionPerformed
@@ -3894,11 +3894,11 @@ public class frmMenu extends javax.swing.JFrame {
     private void jbnRegresarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarPedido1ActionPerformed
        regresarMenu();
     }//GEN-LAST:event_jbnRegresarPedido1ActionPerformed
-=======
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         pcontrol.initUI();
     }//GEN-LAST:event_jButton2ActionPerformed
->>>>>>> master
+
      
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label){
@@ -3985,11 +3985,11 @@ public class frmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-=======
+
+
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
->>>>>>> master
+
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -4010,11 +4010,11 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-<<<<<<< HEAD
+
     private javax.swing.JScrollPane jScrollPane5;
-=======
+
     private javax.swing.JScrollPane jScrollPane3;
->>>>>>> master
+
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
@@ -4072,12 +4072,12 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-<<<<<<< HEAD
+
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable5;
-=======
+
     private javax.swing.JTable jTable3;
->>>>>>> master
+
     private javax.swing.JButton jbnActualizarCliente;
     private javax.swing.JButton jbnActualizarCliente3;
     private javax.swing.JButton jbnActualizarEmpleado;

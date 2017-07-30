@@ -24,6 +24,12 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -55,11 +61,34 @@ public class frmMenu extends javax.swing.JFrame {
     public frmMenu(frmLogin l) {
         inicio= l;
         initComponents();
+//        init();
         
+    }
+    
+    private void init(){
+//          String path = "C:\\Users\\alexi\\Pictures\\Codev.png";
+//  jLabel4.setIcon(null);
+//    try {
+//      BufferedImage img=ImageIO.read(new File(path));
+//        jLabel4.setIcon(new ImageIcon(img));
+//        jLabel4.revalidate();
+//        jLabel4.repaint();
+//        jLabel4.update(jLabel4.getGraphics());
+//    } catch (IOException ex) {
+//
+//    }
     }
     
     public productosControlador getpcontrol(){
       return pcontrol;  
+    }
+    
+    public JFrame getFrame(){
+        return this;
+    }
+    
+    public JPanel getPanelPord(){
+        return jpListaProd;
     }
     
     
@@ -359,6 +388,7 @@ public class frmMenu extends javax.swing.JFrame {
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jpListaProd = new javax.swing.JPanel();
         jpVenta = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
         jpCompra = new javax.swing.JPanel();
@@ -3028,6 +3058,19 @@ public class frmMenu extends javax.swing.JFrame {
         });
         jpProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, -1, -1));
 
+        javax.swing.GroupLayout jpListaProdLayout = new javax.swing.GroupLayout(jpListaProd);
+        jpListaProd.setLayout(jpListaProdLayout);
+        jpListaProdLayout.setHorizontalGroup(
+            jpListaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 770, Short.MAX_VALUE)
+        );
+        jpListaProdLayout.setVerticalGroup(
+            jpListaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+
+        jpProducto.add(jpListaProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 770, 470));
+
         jpPrincipal.add(jpProducto, "card3");
 
         javax.swing.GroupLayout jpVentaLayout = new javax.swing.GroupLayout(jpVenta);
@@ -3891,11 +3934,12 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jpBarraSuperiorProducto;
     private javax.swing.JPanel jpCliente;
     private javax.swing.JPanel jpCompra;
-    private javax.swing.JPanel jpContenidoLogoProducto;
+    public javax.swing.JPanel jpContenidoLogoProducto;
     private javax.swing.JPanel jpEmpleado;
     private javax.swing.JPanel jpEmpresa;
     private javax.swing.JPanel jpInferior;
     private javax.swing.JPanel jpInformacionAsistencia;
+    public javax.swing.JPanel jpListaProd;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JPanel jpOpcion1;
     private javax.swing.JPanel jpOpcionDescuento;

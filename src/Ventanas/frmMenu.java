@@ -3584,7 +3584,7 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jbnEliminarClienteActionPerformed
 
     private void jbnCerrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarEmpleadoActionPerformed
-        System.exit(0);
+        System.exit(0); //cierra el formulario
     }//GEN-LAST:event_jbnCerrarEmpleadoActionPerformed
 
     private void jbnRegresarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarEmpleadoActionPerformed
@@ -4026,29 +4026,7 @@ public class frmMenu extends javax.swing.JFrame {
           }
     
     
-    
-//    void autogenerete(){
-//    for (int i=0;i<3;i++){
-//        String name ="jbncodigo"+Integer.toString(i);
-//        JButton jbncodigo= new JButton();
-//                jbncodigo.setText("jButton1");
-//
-//        javax.swing.GroupLayout jpCompraLayout = new javax.swing.GroupLayout(jpCompra);
-//        jpCompra.setLayout(jpCompraLayout);
-//        jpCompraLayout.addLayoutComponent(jbncodigo, i);
-//        this.add(jbncodigo);
-//        System.out.println("Ventanas.frmMenu.autogenerete()"+i);
-//        
-////        jpCompraLayout.setHorizontalGroup(
-////            jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-////            .addGroup(jpCompraLayout.createSequentialGroup()
-////                .addGap(58+i+2, 58+1+i, 58+i+6)
-////                .addComponent(jbncodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-////                .addContainerGap(1004, Short.MAX_VALUE)
-////            )
-////        );
-//    }
-//    }
+
     /**
      * 
      * @param args the command line arguments

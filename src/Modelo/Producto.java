@@ -10,10 +10,55 @@ private String descripcionProd;
 private double precioCompra;
 private double precioVenta;
 private String ubicacion;
+private String imagen;
+private String cbarras;
+private String categoria;
 
 public Producto(){
 
 }
+
+    public Producto(int idProducto, String nombreProducto, String pedimento, int stok, String descripcionProd, double precioCompra, double precioVenta, String ubicacion, String imagen, String cbarras, String categoria) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.pedimento = pedimento;
+        this.stok = stok;
+        this.descripcionProd = descripcionProd;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
+        this.ubicacion = ubicacion;
+        this.imagen = imagen;
+        this.cbarras = cbarras;
+        this.categoria = categoria;
+    }
+
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCbarras() {
+        return cbarras;
+    }
+
+    public void setCbarras(String cbarras) {
+        this.cbarras = cbarras;
+    }
+    
     public int getIdProducto() {
         return idProducto;
     }

@@ -40,7 +40,7 @@ public class productosControlador {
     public void initUI() {
 
         JPanel panel = menu.getPanelPord();//Make a panel
-        panel.setLayout(new GridLayout(0, 3));
+        panel.setLayout(new GridLayout(0, 3)); //la ultima linea son las columnas
         JLabel label1 = new JLabel("test");
         JLabel label2 = new JLabel("Imagen");
         panel.add(label1);

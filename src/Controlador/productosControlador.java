@@ -6,6 +6,8 @@
 package Controlador;
 
 import Modelo.Conexion;
+import Modelo.Empleado;
+import Modelo.Producto;
 import java.io.File;
 import Ventanas.frmMenu;
 import java.awt.*;
@@ -25,8 +27,11 @@ import javax.imageio.ImageIO;
 
 public class productosControlador {
     frmMenu menu;
-    dialogProductos dprod = new dialogProductos(menu, true);
+    dialogProductos dprod = new dialogProductos(menu, true, this);
     Conexion obj= new Conexion();
+    
+    
+    
 
 
 
@@ -107,4 +112,16 @@ public class productosControlador {
     
         }  
     }
+
+    public Producto obternetObjProd() {
+        Producto prod = menu.getProducto();
+        return prod;
+    }
+    
+    public productosControlador getthisObj(){
+        return this;
+    }
+
+    
+    
 }

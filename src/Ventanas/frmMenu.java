@@ -24,6 +24,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
+import Modelo.Producto;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class frmMenu extends javax.swing.JFrame {
     Empresa objEmpresa=new Empresa();
     Cliente objCliente = new Cliente();
     Proveedor objProveedor = new Proveedor();
+    Producto objProducto = new Producto();
     productosControlador pcontrol = new productosControlador(this);
     
     frmLogin inicio;
@@ -95,6 +97,10 @@ public class frmMenu extends javax.swing.JFrame {
         return jpListaProd;
     }
     
+        public Producto getProducto(){
+        return objProducto;
+    }
+        
     
  //Metodo de filtros   
     public void filtroEmpleado(){

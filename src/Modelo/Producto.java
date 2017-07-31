@@ -1,5 +1,9 @@
 package Modelo;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 public class Producto {
 
 private int idProducto;
@@ -14,7 +18,10 @@ private String imagen;
 private String cbarras;
 private String categoria;
 
+Conexion obj= new Conexion();
+
 public Producto(){
+    
 
 }
 
@@ -123,9 +130,31 @@ public Producto(){
         this.ubicacion = ubicacion;
     }
 
- public void altaProducto(){
- 
- }
+    public int altaProducto(String nombre, int stock, String desp, double precioCom, 
+            double precioVent, String ubi, String image, String cat ) {
+
+        PreparedStatement  conectar;
+        obj.conectar();
+        try {
+            conectar = obj.conexion.prepareStatement("INSERT INTO producto VALUES (null,?,null,?,?,?,?,?,null,?,?,null)");
+            conectar.setString(1, nombre);
+            conectar.setInt(2, stock);
+            conectar.setString(3, desp);
+            conectar.setDouble(4, precioCom);
+            conectar.setDouble(5, precioVent);
+            conectar.setString(6, ubi);
+            conectar.setString(7, image);
+            conectar.setString(8, cat);
+
+            //ejecutar sentencia
+            conectar.executeUpdate();
+            return 0;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            return 1;
+        }
+    }
+    
  public void bajaProducto(){
 
  }

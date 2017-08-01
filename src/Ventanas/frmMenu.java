@@ -7,12 +7,15 @@ import java.awt.Point;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 
 //Importar clases**
 import Modelo.Empleado;
 import Modelo.Empresa;
 import Modelo.Cliente;  
-import Modelo.Proveedor;        
+import Modelo.Proveedor;  
+import Modelo.Pedido;
+
         
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,23 +27,28 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
-/**
- *
- * @author Usuario1
- */
-public class frmMenu extends javax.swing.JFrame {
+
+public class frmMenu extends javax.swing.JFrame implements ActionListener{
+    //Instancia del jDialog
     
     //Modelo de las tablas 
     DefaultTableModel modeloEmpleado = new DefaultTableModel();
     DefaultTableModel modeloCliente = new DefaultTableModel();
     DefaultTableModel modeloProveedor = new DefaultTableModel();
+    DefaultTableModel modeloPedido = new DefaultTableModel();
     //modelo para la fecha 
     Date date = new Date();   
     //Instancias de las clases 
@@ -48,7 +56,18 @@ public class frmMenu extends javax.swing.JFrame {
     Empresa objEmpresa=new Empresa();
     Cliente objCliente = new Cliente();
     Proveedor objProveedor = new Proveedor();
+    Pedido objPedido = new Pedido();
     productosControlador pcontrol = new productosControlador(this);
+    
+    //Variables del JpopupMenu
+    private final JPopupMenu popupMenu;
+    private final JMenuItem menuItemAdd;
+    private final JMenuItem menuItemRemove;
+    private final JMenuItem menuItemRecibido ;
+    private final JMenuItem menuItemTransferido ;
+    private final JMenuItem menuItemEnviado;
+    private final JMenuItem menuItemCompletado ;
+    private final JMenuItem menuItemDesglosarPedido;
     
     frmLogin inicio;
     
@@ -59,11 +78,127 @@ public class frmMenu extends javax.swing.JFrame {
     private TableRowSorter trsfiltro;
     
     public frmMenu(frmLogin l) {
+        
         inicio= l;
         initComponents();
 //        init();
         
+    // constructs the popup menu
+        popupMenu = new JPopupMenu();
+        menuItemAdd = new JMenuItem("Agrgera nueva fila");
+        menuItemRemove = new JMenuItem("Remover la fila actual");
+        menuItemTransferido = new JMenuItem("Cambiar estatus a transferido");
+        menuItemRecibido = new JMenuItem("Cambiar estatus a recibido");
+        menuItemEnviado = new JMenuItem("Cambiar estatus a enviado");
+        menuItemCompletado = new JMenuItem("Cambiar estatus a completado");
+        menuItemDesglosarPedido = new JMenuItem("Detalle de pedido");
+    
+        menuItemAdd.addActionListener(this);
+        menuItemRemove.addActionListener(this);
+        menuItemRecibido.addActionListener(this);
+        menuItemTransferido.addActionListener(this);
+        menuItemEnviado.addActionListener(this);
+        menuItemCompletado.addActionListener(this);
+        menuItemDesglosarPedido.addActionListener(this);
+        
+        popupMenu.add(menuItemAdd);
+        popupMenu.add(menuItemRemove);
+        popupMenu.add(menuItemTransferido);
+        popupMenu.add(menuItemRecibido);
+        popupMenu.add(menuItemEnviado);
+        popupMenu.add(menuItemCompletado);
+        popupMenu.add(menuItemDesglosarPedido);
+        
+        // sets the popup menu for the table
+        jtbPedido.setComponentPopupMenu(popupMenu);
+        jtbPedido.addMouseListener(new TableMouseListener(jtbPedido));
+        
     }
+    public class TableMouseListener extends MouseAdapter {
+     
+    private JTable table;
+     
+    public TableMouseListener(JTable table) {
+        this.table = table;
+    }
+     
+    @Override
+    public void mousePressed(MouseEvent event) {
+        // selects the row at which point the mouse is clicked
+        Point point = event.getPoint();
+        int currentRow = table.rowAtPoint(point);
+        table.setRowSelectionInterval(currentRow, currentRow);
+    }
+}
+    
+    @Override
+    public void actionPerformed(ActionEvent event) {
+
+        JMenuItem menu = (JMenuItem) event.getSource();
+        if (menu == menuItemAdd) {
+            addNewRow();
+        } else if (menu == menuItemRemove) {
+            removeCurrentRow();
+        } else if (menu == menuItemTransferido) {
+           transferido();
+           
+        } else if (menu == menuItemRecibido) {
+           recibido();
+        } else if (menu == menuItemEnviado) {
+           enviado();
+        } else if (menu == menuItemCompletado) {
+           completado();
+        }
+        else if (menu == menuItemDesglosarPedido) {
+           detalle();
+        }
+       
+       
+    }
+    private void addNewRow() {
+        modeloPedido.addRow(new String[0]);
+    }
+     
+    private void removeCurrentRow() {
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.removeRow(selectedRow);
+    }
+     
+    private void removeAllRows() {
+        int rowCount = modeloPedido.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            modeloPedido.removeRow(0);
+        }
+    }
+    //Fin 
+    private void recibido() {
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.setValueAt("Recibido", selectedRow, 3);
+        objPedido.modificarEstatus("Recibido", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue()) ; 
+    }
+     
+      private void transferido() {
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.setValueAt("Transferido", selectedRow, 3);
+        objPedido.modificarEstatus("Transferido", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue()) ;
+    }
+      
+       private void completado() {
+           
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.setValueAt("completado", selectedRow, 3);
+        objPedido.modificarEstatus("Completado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue()) ;
+    }
+       
+        private void enviado() {
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.setValueAt("Enviado", selectedRow, 3);
+        objPedido.modificarEstatus("Enviado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue()) ; 
+    }
+        private void detalle(){
+           abrirOpcion(jpPrincipal, jpDetallePedido);
+        }
+        
     
     private void init(){
 //          String path = "C:\\Users\\alexi\\Pictures\\Codev.png";
@@ -106,6 +241,10 @@ public class frmMenu extends javax.swing.JFrame {
      String buscarProveedor=jtxBuscarProveedor.getText();
      trsfiltro.setRowFilter(RowFilter.regexFilter(String.valueOf(buscarProveedor)));
       }
+    public void filtroPedido(){
+     String buscarPedido=jtxBuscarPedido.getText();
+     trsfiltro.setRowFilter(RowFilter.regexFilter(String.valueOf(buscarPedido)));
+      } 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,15 +276,11 @@ public class frmMenu extends javax.swing.JFrame {
         jPMenuPedido = new javax.swing.JPanel();
         jlbLogoPrograma2 = new javax.swing.JLabel();
         jpBarraInferiorPedido = new javax.swing.JPanel();
-        jbnActualizarCliente3 = new javax.swing.JButton();
-        jbnAgregarCliente3 = new javax.swing.JButton();
-        jbnEliminarCliente3 = new javax.swing.JButton();
-        jlbEstatusPedido = new javax.swing.JLabel();
         jlbIconoPedido = new javax.swing.JLabel();
-        jlbLogoEmpresa2 = new javax.swing.JLabel();
+        jcbxEstatusPedido = new javax.swing.JComboBox<>();
         jScrollPane8 = new javax.swing.JScrollPane();
         jtbPedido = new javax.swing.JTable();
-        jcbxEmpresaEmpleado1 = new javax.swing.JComboBox<>();
+        jlbEstatusPedido = new javax.swing.JLabel();
         jpCliente = new javax.swing.JPanel();
         jpBarraSuperiorCliente = new javax.swing.JPanel();
         jlbTituloCliente = new javax.swing.JLabel();
@@ -394,16 +529,21 @@ public class frmMenu extends javax.swing.JFrame {
         jpCompra = new javax.swing.JPanel();
         jPedido1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel5 = new javax.swing.JPanel();
+        jpGeneral = new javax.swing.JPanel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        jtbPedidogenral = new javax.swing.JTable();
+        jpPestañaRecibido = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jtbPedido1 = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
+        jtbPedidoRecibido = new javax.swing.JTable();
+        jpPestañaTransferido = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
-        jtbPedido3 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        jtbTransferido = new javax.swing.JTable();
+        jpPestañaEnviado = new javax.swing.JPanel();
         jScrollPane10 = new javax.swing.JScrollPane();
         jtbPedido2 = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
+        jpPestañaCompletado = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Prueba = new javax.swing.JTable();
         jpBarraSuperiorPedido2 = new javax.swing.JPanel();
         jlbTituloPedido1 = new javax.swing.JLabel();
         jtxBuscarPedido1 = new javax.swing.JTextField();
@@ -411,11 +551,35 @@ public class frmMenu extends javax.swing.JFrame {
         jbnCerrarPedido1 = new javax.swing.JButton();
         jbnRegresarPedido1 = new javax.swing.JButton();
         jlbBuscarPedido1 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        jpDescripcionPedido = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator58 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jSeparator59 = new javax.swing.JSeparator();
+        jpDetallePedido = new javax.swing.JPanel();
+        jpBarraInferiorPedido2 = new javax.swing.JPanel();
+        jpBarraSuperiorPedido3 = new javax.swing.JPanel();
+        jlbTituloPedido2 = new javax.swing.JLabel();
+        jbnCerrarPedido2 = new javax.swing.JButton();
+        jbnRegresarPedido2 = new javax.swing.JButton();
+        jlbTituloPedido3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jlbIconoPedido1 = new javax.swing.JLabel();
+        jlbLogoPrograma3 = new javax.swing.JLabel();
+        jlbNombreProveedor1 = new javax.swing.JLabel();
+        jSeparator51 = new javax.swing.JSeparator();
+        jtxClientePedido = new javax.swing.JTextField();
+        jSeparator52 = new javax.swing.JSeparator();
+        jtxDomicilioPedido = new javax.swing.JTextField();
+        jlbDomicilioProveedor1 = new javax.swing.JLabel();
+        jSeparator53 = new javax.swing.JSeparator();
+        jtxTelefonoPedido = new javax.swing.JTextField();
+        jlbTelefonoPedido = new javax.swing.JLabel();
+        jlbfolioPedido = new javax.swing.JLabel();
+        jSeparator60 = new javax.swing.JSeparator();
+        jtxfolioPedido = new javax.swing.JTextField();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jtbPedido1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -686,6 +850,14 @@ public class frmMenu extends javax.swing.JFrame {
         jtxBuscarPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxBuscarPedido.setForeground(new java.awt.Color(255, 255, 255));
         jtxBuscarPedido.setBorder(null);
+        jtxBuscarPedido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxBuscarPedidoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxBuscarPedidoKeyTyped(evt);
+            }
+        });
 
         jSeparator42.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -766,100 +938,40 @@ public class frmMenu extends javax.swing.JFrame {
         jPMenuPedido.setBackground(new java.awt.Color(153, 153, 153));
         jPMenuPedido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlbLogoPrograma2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
-        jPMenuPedido.add(jlbLogoPrograma2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 190, 285, 185));
+        jlbLogoPrograma2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
+        jPMenuPedido.add(jlbLogoPrograma2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 230, 220));
 
         jpPedido.add(jPMenuPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 280, 550));
 
         jpBarraInferiorPedido.setBackground(new java.awt.Color(22, 114, 185));
         jpBarraInferiorPedido.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jbnActualizarCliente3.setBackground(new java.awt.Color(145, 36, 36));
-        jbnActualizarCliente3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jbnActualizarCliente3.setForeground(new java.awt.Color(255, 255, 255));
-        jbnActualizarCliente3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sync_48px_1.png"))); // NOI18N
-        jbnActualizarCliente3.setText("Actualizar pedido");
-        jbnActualizarCliente3.setBorderPainted(false);
-        jbnActualizarCliente3.setContentAreaFilled(false);
-        jbnActualizarCliente3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sync_48px_2.png"))); // NOI18N
-        jbnActualizarCliente3.setSelected(true);
-        jbnActualizarCliente3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnActualizarCliente3ActionPerformed(evt);
-            }
-        });
-
-        jbnAgregarCliente3.setBackground(new java.awt.Color(145, 36, 36));
-        jbnAgregarCliente3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jbnAgregarCliente3.setForeground(new java.awt.Color(255, 255, 255));
-        jbnAgregarCliente3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px.png"))); // NOI18N
-        jbnAgregarCliente3.setText("Agregar pedido ");
-        jbnAgregarCliente3.setBorderPainted(false);
-        jbnAgregarCliente3.setContentAreaFilled(false);
-        jbnAgregarCliente3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px_1.png"))); // NOI18N
-        jbnAgregarCliente3.setSelected(true);
-        jbnAgregarCliente3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnAgregarCliente3ActionPerformed(evt);
-            }
-        });
-
-        jbnEliminarCliente3.setBackground(new java.awt.Color(145, 36, 36));
-        jbnEliminarCliente3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jbnEliminarCliente3.setForeground(new java.awt.Color(255, 255, 255));
-        jbnEliminarCliente3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Minus_48px.png"))); // NOI18N
-        jbnEliminarCliente3.setText("Eliminar");
-        jbnEliminarCliente3.setBorderPainted(false);
-        jbnEliminarCliente3.setContentAreaFilled(false);
-        jbnEliminarCliente3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Minus_48px_1.png"))); // NOI18N
-        jbnEliminarCliente3.setSelected(true);
-        jbnEliminarCliente3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnEliminarCliente3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jpBarraInferiorPedidoLayout = new javax.swing.GroupLayout(jpBarraInferiorPedido);
         jpBarraInferiorPedido.setLayout(jpBarraInferiorPedidoLayout);
         jpBarraInferiorPedidoLayout.setHorizontalGroup(
             jpBarraInferiorPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInferiorPedidoLayout.createSequentialGroup()
-                .addContainerGap(232, Short.MAX_VALUE)
-                .addComponent(jbnAgregarCliente3)
-                .addGap(112, 112, 112)
-                .addComponent(jbnEliminarCliente3)
-                .addGap(125, 125, 125)
-                .addComponent(jbnActualizarCliente3)
-                .addGap(150, 150, 150))
+            .addGap(0, 1196, Short.MAX_VALUE)
         );
         jpBarraInferiorPedidoLayout.setVerticalGroup(
             jpBarraInferiorPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInferiorPedidoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpBarraInferiorPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbnActualizarCliente3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbnAgregarCliente3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jbnEliminarCliente3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGap(0, 56, Short.MAX_VALUE)
         );
 
         jpPedido.add(jpBarraInferiorPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
-        jlbEstatusPedido.setDisplayedMnemonic('b');
-        jlbEstatusPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jlbEstatusPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbEstatusPedido.setText("Estatus pedido:");
-        jlbEstatusPedido.setToolTipText("");
-        jlbEstatusPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jlbEstatusPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpPedido.add(jlbEstatusPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 130, 30));
-
         jlbIconoPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pedido_128.png"))); // NOI18N
-        jpPedido.add(jlbIconoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 140, 130));
+        jpPedido.add(jlbIconoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 140, 130));
 
-        jlbLogoEmpresa2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpPedido.add(jlbLogoEmpresa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 60, 240, 230));
+        jcbxEstatusPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbxEstatusPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Recibido", "Enviado", "Transferido", "Completado" }));
+        jcbxEstatusPedido.setBorder(null);
+        jcbxEstatusPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jcbxEstatusPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxEstatusPedidoActionPerformed(evt);
+            }
+        });
+        jpPedido.add(jcbxEstatusPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 380, 30));
 
         jScrollPane8.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane8.setBorder(null);
@@ -868,7 +980,7 @@ public class frmMenu extends javax.swing.JFrame {
 
         jtbPedido.setAutoCreateRowSorter(true);
         jtbPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtbPedido.setModel(modeloProveedor);
+        jtbPedido.setModel(modeloPedido);
         jtbPedido.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtbPedido.setGridColor(new java.awt.Color(255, 255, 255));
         jtbPedido.setRowHeight(25);
@@ -878,11 +990,14 @@ public class frmMenu extends javax.swing.JFrame {
 
         jpPedido.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 880, 290));
 
-        jcbxEmpresaEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jcbxEmpresaEmpleado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Redes y Equipos Pesqueros S.A  De C.V", "Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V" }));
-        jcbxEmpresaEmpleado1.setBorder(null);
-        jcbxEmpresaEmpleado1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jpPedido.add(jcbxEmpresaEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 380, 30));
+        jlbEstatusPedido.setDisplayedMnemonic('b');
+        jlbEstatusPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbEstatusPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbEstatusPedido.setText("Estatus pedido:");
+        jlbEstatusPedido.setToolTipText("");
+        jlbEstatusPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbEstatusPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpPedido.add(jlbEstatusPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 130, 30));
 
         jpPrincipal.add(jpPedido, "card3");
 
@@ -3149,69 +3264,103 @@ public class frmMenu extends javax.swing.JFrame {
         jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jScrollPane13.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane13.setBorder(null);
+        jScrollPane13.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jtbPedidogenral.setAutoCreateRowSorter(true);
+        jtbPedidogenral.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbPedidogenral.setModel(modeloPedido);
+        jtbPedidogenral.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPedidogenral.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbPedidogenral.setRowHeight(25);
+        jtbPedidogenral.setRowMargin(8);
+        jtbPedidogenral.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane13.setViewportView(jtbPedidogenral);
+
+        javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
+        jpGeneral.setLayout(jpGeneralLayout);
+        jpGeneralLayout.setHorizontalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 1175, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpGeneralLayout.setVerticalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGeneralLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("General", jpGeneral);
+
         jScrollPane9.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane9.setBorder(null);
         jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jtbPedido1.setAutoCreateRowSorter(true);
-        jtbPedido1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtbPedido1.setModel(modeloProveedor);
-        jtbPedido1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jtbPedido1.setGridColor(new java.awt.Color(255, 255, 255));
-        jtbPedido1.setRowHeight(25);
-        jtbPedido1.setRowMargin(8);
-        jtbPedido1.setSelectionBackground(new java.awt.Color(22, 114, 185));
-        jScrollPane9.setViewportView(jtbPedido1);
+        jtbPedidoRecibido.setAutoCreateRowSorter(true);
+        jtbPedidoRecibido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbPedidoRecibido.setModel(modeloPedido);
+        jtbPedidoRecibido.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPedidoRecibido.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbPedidoRecibido.setRowHeight(25);
+        jtbPedidoRecibido.setRowMargin(8);
+        jtbPedidoRecibido.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane9.setViewportView(jtbPedidoRecibido);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpPestañaRecibidoLayout = new javax.swing.GroupLayout(jpPestañaRecibido);
+        jpPestañaRecibido.setLayout(jpPestañaRecibidoLayout);
+        jpPestañaRecibidoLayout.setHorizontalGroup(
+            jpPestañaRecibidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPestañaRecibidoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1175, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+        jpPestañaRecibidoLayout.setVerticalGroup(
+            jpPestañaRecibidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPestañaRecibidoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Recibido", jPanel5);
+        jTabbedPane1.addTab("Recibido", jpPestañaRecibido);
 
         jScrollPane11.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane11.setBorder(null);
         jScrollPane11.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jtbPedido3.setAutoCreateRowSorter(true);
-        jtbPedido3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtbPedido3.setModel(modeloProveedor);
-        jtbPedido3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jtbPedido3.setGridColor(new java.awt.Color(255, 255, 255));
-        jtbPedido3.setRowHeight(25);
-        jtbPedido3.setRowMargin(8);
-        jtbPedido3.setSelectionBackground(new java.awt.Color(22, 114, 185));
-        jScrollPane11.setViewportView(jtbPedido3);
+        jtbTransferido.setAutoCreateRowSorter(true);
+        jtbTransferido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbTransferido.setModel(modeloProveedor);
+        jtbTransferido.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbTransferido.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbTransferido.setRowHeight(25);
+        jtbTransferido.setRowMargin(8);
+        jtbTransferido.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane11.setViewportView(jtbTransferido);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jpPestañaTransferidoLayout = new javax.swing.GroupLayout(jpPestañaTransferido);
+        jpPestañaTransferido.setLayout(jpPestañaTransferidoLayout);
+        jpPestañaTransferidoLayout.setHorizontalGroup(
+            jpPestañaTransferidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 1195, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 40, Short.MAX_VALUE)
+        jpPestañaTransferidoLayout.setVerticalGroup(
+            jpPestañaTransferidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPestañaTransferidoLayout.createSequentialGroup()
+                .addGap(0, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane1.addTab("Transeferido", jPanel6);
+        jTabbedPane1.addTab("Transeferido", jpPestañaTransferido);
 
         jScrollPane10.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane10.setBorder(null);
@@ -3228,35 +3377,54 @@ public class frmMenu extends javax.swing.JFrame {
         jtbPedido2.setSelectionBackground(new java.awt.Color(22, 114, 185));
         jScrollPane10.setViewportView(jtbPedido2);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jpPestañaEnviadoLayout = new javax.swing.GroupLayout(jpPestañaEnviado);
+        jpPestañaEnviado.setLayout(jpPestañaEnviadoLayout);
+        jpPestañaEnviadoLayout.setHorizontalGroup(
+            jpPestañaEnviadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 1195, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 40, Short.MAX_VALUE)
+        jpPestañaEnviadoLayout.setVerticalGroup(
+            jpPestañaEnviadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPestañaEnviadoLayout.createSequentialGroup()
+                .addGap(0, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane1.addTab("Pedido enviado", jPanel4);
+        jTabbedPane1.addTab("Pedido enviado", jpPestañaEnviado);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1195, Short.MAX_VALUE)
+        Prueba.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(Prueba);
+
+        javax.swing.GroupLayout jpPestañaCompletadoLayout = new javax.swing.GroupLayout(jpPestañaCompletado);
+        jpPestañaCompletado.setLayout(jpPestañaCompletadoLayout);
+        jpPestañaCompletadoLayout.setHorizontalGroup(
+            jpPestañaCompletadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPestañaCompletadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1175, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+        jpPestañaCompletadoLayout.setVerticalGroup(
+            jpPestañaCompletadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPestañaCompletadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Pedido Completado", jPanel7);
+        jTabbedPane1.addTab("Pedido Completado", jpPestañaCompletado);
 
-        jPedido1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1200, 310));
+        jPedido1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1200, 290));
 
         jpBarraSuperiorPedido2.setBackground(new java.awt.Color(22, 114, 185));
         jpBarraSuperiorPedido2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -3292,7 +3460,7 @@ public class frmMenu extends javax.swing.JFrame {
         jbnRegresarPedido1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
         jbnRegresarPedido1.setBorderPainted(false);
         jbnRegresarPedido1.setContentAreaFilled(false);
-        jbnRegresarPedido1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbnRegresarPedido1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbnRegresarPedido1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
         jbnRegresarPedido1.setSelected(true);
         jbnRegresarPedido1.addActionListener(new java.awt.event.ActionListener() {
@@ -3350,23 +3518,23 @@ public class frmMenu extends javax.swing.JFrame {
 
         jPedido1.add(jpBarraSuperiorPedido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpDescripcionPedido.setBackground(new java.awt.Color(255, 255, 255));
+        jpDescripcionPedido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sort Down_48px_1.png"))); // NOI18N
         jLabel4.setText("Información ");
-        jPanel8.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, -1, 25));
+        jpDescripcionPedido.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, -1, 25));
 
         jSeparator58.setBackground(new java.awt.Color(51, 51, 51));
         jSeparator58.setForeground(new java.awt.Color(0, 0, 0));
         jSeparator58.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel8.add(jSeparator58, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 42, -1, 230));
+        jpDescripcionPedido.add(jSeparator58, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 42, -1, 230));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sort Down_48px_1.png"))); // NOI18N
         jLabel5.setText("Descripción");
-        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 150, 30));
+        jpDescripcionPedido.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 150, 30));
 
         jSeparator59.setBackground(new java.awt.Color(51, 51, 51));
         jSeparator59.setForeground(new java.awt.Color(0, 0, 0));
@@ -3375,11 +3543,227 @@ public class frmMenu extends javax.swing.JFrame {
         jSeparator59.setAlignmentY(0.8F);
         jSeparator59.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         jSeparator59.setPreferredSize(new java.awt.Dimension(5, 0));
-        jPanel8.add(jSeparator59, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 10, 130));
+        jpDescripcionPedido.add(jSeparator59, new org.netbeans.lib.awtextra.AbsoluteConstraints(495, 40, -1, 130));
 
-        jPedido1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 1120, 280));
+        jPedido1.add(jpDescripcionPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 1150, 280));
 
         jpPrincipal.add(jPedido1, "card13");
+
+        jpDetallePedido.setBackground(new java.awt.Color(255, 255, 255));
+        jpDetallePedido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpBarraInferiorPedido2.setBackground(new java.awt.Color(22, 114, 185));
+        jpBarraInferiorPedido2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jpBarraInferiorPedido2Layout = new javax.swing.GroupLayout(jpBarraInferiorPedido2);
+        jpBarraInferiorPedido2.setLayout(jpBarraInferiorPedido2Layout);
+        jpBarraInferiorPedido2Layout.setHorizontalGroup(
+            jpBarraInferiorPedido2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1196, Short.MAX_VALUE)
+        );
+        jpBarraInferiorPedido2Layout.setVerticalGroup(
+            jpBarraInferiorPedido2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 56, Short.MAX_VALUE)
+        );
+
+        jpDetallePedido.add(jpBarraInferiorPedido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
+
+        jpBarraSuperiorPedido3.setBackground(new java.awt.Color(22, 114, 185));
+        jpBarraSuperiorPedido3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jlbTituloPedido2.setDisplayedMnemonic('b');
+        jlbTituloPedido2.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbTituloPedido2.setForeground(new java.awt.Color(255, 255, 255));
+        jlbTituloPedido2.setText("Regresar a pedidos");
+        jlbTituloPedido2.setToolTipText("");
+        jlbTituloPedido2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTituloPedido2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jbnCerrarPedido2.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCerrarPedido2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
+        jbnCerrarPedido2.setBorderPainted(false);
+        jbnCerrarPedido2.setContentAreaFilled(false);
+        jbnCerrarPedido2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_1.png"))); // NOI18N
+        jbnCerrarPedido2.setSelected(true);
+        jbnCerrarPedido2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnCerrarPedido2ActionPerformed(evt);
+            }
+        });
+
+        jbnRegresarPedido2.setBackground(new java.awt.Color(145, 36, 36));
+        jbnRegresarPedido2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
+        jbnRegresarPedido2.setBorderPainted(false);
+        jbnRegresarPedido2.setContentAreaFilled(false);
+        jbnRegresarPedido2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnRegresarPedido2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnRegresarPedido2.setSelected(true);
+        jbnRegresarPedido2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnRegresarPedido2ActionPerformed(evt);
+            }
+        });
+
+        jlbTituloPedido3.setDisplayedMnemonic('b');
+        jlbTituloPedido3.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbTituloPedido3.setForeground(new java.awt.Color(255, 255, 255));
+        jlbTituloPedido3.setText("Detalle pedido");
+        jlbTituloPedido3.setToolTipText("");
+        jlbTituloPedido3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTituloPedido3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        javax.swing.GroupLayout jpBarraSuperiorPedido3Layout = new javax.swing.GroupLayout(jpBarraSuperiorPedido3);
+        jpBarraSuperiorPedido3.setLayout(jpBarraSuperiorPedido3Layout);
+        jpBarraSuperiorPedido3Layout.setHorizontalGroup(
+            jpBarraSuperiorPedido3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBarraSuperiorPedido3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbnRegresarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jlbTituloPedido2)
+                .addGap(345, 345, 345)
+                .addComponent(jlbTituloPedido3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 326, Short.MAX_VALUE)
+                .addComponent(jbnCerrarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpBarraSuperiorPedido3Layout.setVerticalGroup(
+            jpBarraSuperiorPedido3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBarraSuperiorPedido3Layout.createSequentialGroup()
+                .addComponent(jbnRegresarPedido2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(3, 3, 3))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraSuperiorPedido3Layout.createSequentialGroup()
+                .addComponent(jbnCerrarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jpBarraSuperiorPedido3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpBarraSuperiorPedido3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbTituloPedido2)
+                    .addComponent(jlbTituloPedido3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jpDetallePedido.add(jpBarraSuperiorPedido3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 255));
+
+        jlbIconoPedido1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pedido_128.png"))); // NOI18N
+
+        jlbLogoPrograma3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jlbIconoPedido1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jlbLogoPrograma3))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jlbLogoPrograma3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(jlbIconoPedido1)
+                .addContainerGap())
+        );
+
+        jpDetallePedido.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 550));
+
+        jlbNombreProveedor1.setDisplayedMnemonic('b');
+        jlbNombreProveedor1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbNombreProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNombreProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Contacts_25px.png"))); // NOI18N
+        jlbNombreProveedor1.setText("Cliente");
+        jlbNombreProveedor1.setToolTipText("");
+        jlbNombreProveedor1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbNombreProveedor1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbNombreProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 120, -1));
+
+        jSeparator51.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator51, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 460, 10));
+
+        jtxClientePedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxClientePedido.setForeground(new java.awt.Color(102, 102, 102));
+        jtxClientePedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxClientePedido.setBorder(null);
+        jpDetallePedido.add(jtxClientePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 450, 30));
+
+        jSeparator52.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator52, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, 550, 10));
+
+        jtxDomicilioPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxDomicilioPedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxDomicilioPedido.setBorder(null);
+        jpDetallePedido.add(jtxDomicilioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 540, 30));
+
+        jlbDomicilioProveedor1.setDisplayedMnemonic('d');
+        jlbDomicilioProveedor1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbDomicilioProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbDomicilioProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Home_25px_3.png"))); // NOI18N
+        jlbDomicilioProveedor1.setText("Domicilio:");
+        jlbDomicilioProveedor1.setToolTipText("");
+        jlbDomicilioProveedor1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbDomicilioProveedor1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbDomicilioProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 120, 20));
+
+        jSeparator53.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 260, 10));
+
+        jtxTelefonoPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxTelefonoPedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxTelefonoPedido.setBorder(null);
+        jpDetallePedido.add(jtxTelefonoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 240, 30));
+
+        jlbTelefonoPedido.setDisplayedMnemonic('b');
+        jlbTelefonoPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Phone_25px.png"))); // NOI18N
+        jlbTelefonoPedido.setText("Telefono:");
+        jlbTelefonoPedido.setToolTipText("");
+        jlbTelefonoPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 120, 30));
+
+        jlbfolioPedido.setDisplayedMnemonic('b');
+        jlbfolioPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbfolioPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbfolioPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Pin Code_25px_1.png"))); // NOI18N
+        jlbfolioPedido.setText("Folio");
+        jlbfolioPedido.setToolTipText("");
+        jlbfolioPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbfolioPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 140, -1));
+
+        jSeparator60.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator60, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 120, 10));
+
+        jtxfolioPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxfolioPedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxfolioPedido.setBorder(null);
+        jpDetallePedido.add(jtxfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 20));
+
+        jScrollPane12.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane12.setBorder(null);
+        jScrollPane12.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jtbPedido1.setAutoCreateRowSorter(true);
+        jtbPedido1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbPedido1.setModel(modeloPedido);
+        jtbPedido1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPedido1.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbPedido1.setRowHeight(25);
+        jtbPedido1.setRowMargin(8);
+        jtbPedido1.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane12.setViewportView(jtbPedido1);
+
+        jpDetallePedido.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 860, 220));
+
+        jpPrincipal.add(jpDetallePedido, "card14");
 
         getContentPane().add(jpPrincipal, "card3");
 
@@ -3397,6 +3781,8 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jbnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnPedidosActionPerformed
         abrirOpcion(jpPrincipal,jpPedido);
+        LimpiarTabla(jtbPedido, modeloPedido);
+        objPedido.consultaPedido(modeloPedido);
     }//GEN-LAST:event_jbnPedidosActionPerformed
 
     private void jbnDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnDescuentoActionPerformed
@@ -3434,6 +3820,8 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jbnRerportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRerportesActionPerformed
         abrirOpcion(jpPrincipal, jPedido1);
+        LimpiarTabla(jtbPedido2, modeloPedido);
+        objPedido.consultaPedido(modeloPedido);
     }//GEN-LAST:event_jbnRerportesActionPerformed
 
     private void jbnEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEmpresasActionPerformed
@@ -3608,18 +3996,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void jbnRegresarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarPedidoActionPerformed
        regresarMenu();
     }//GEN-LAST:event_jbnRegresarPedidoActionPerformed
-
-    private void jbnActualizarCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnActualizarCliente3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnActualizarCliente3ActionPerformed
-
-    private void jbnAgregarCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAgregarCliente3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnAgregarCliente3ActionPerformed
-
-    private void jbnEliminarCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarCliente3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnEliminarCliente3ActionPerformed
 
     private void jpOpcionRedesEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpOpcionRedesEmpresaMouseClicked
         
@@ -3818,7 +4194,7 @@ public class frmMenu extends javax.swing.JFrame {
          @Override
          public void keyTyped(final KeyEvent e){
              repaint();
-             filtroEmpleado();     
+             filtroCliente();     
     }
          });
         trsfiltro = new TableRowSorter(modeloCliente);
@@ -3859,7 +4235,7 @@ public class frmMenu extends javax.swing.JFrame {
          @Override
          public void keyTyped(final KeyEvent e){
              repaint();
-             filtroEmpleado();     
+             filtroProveedor();     
     }
          });
         trsfiltro = new TableRowSorter(modeloProveedor);
@@ -3898,6 +4274,57 @@ public class frmMenu extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         pcontrol.initUI();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jcbxEstatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEstatusPedidoActionPerformed
+    if((jcbxEstatusPedido.getSelectedIndex())==0){
+      modeloPedido.setRowCount(0);
+      objPedido.consultaPedido(modeloPedido);
+     }
+   if((jcbxEstatusPedido.getSelectedIndex())==1){
+      modeloPedido.setRowCount(0);
+      objPedido.setEstatus(((String)jcbxEstatusPedido.getSelectedItem()));
+      objPedido.consultaEstatus(modeloPedido);
+     }
+   if((jcbxEstatusPedido.getSelectedIndex())==2){
+      modeloPedido.setRowCount(0);
+      objPedido.setEstatus(((String)jcbxEstatusPedido.getSelectedItem()));
+      objPedido.consultaEstatus(modeloPedido);
+    }
+   if((jcbxEstatusPedido.getSelectedIndex())==3){
+      modeloPedido.setRowCount(0);
+      objPedido.setEstatus(((String)jcbxEstatusPedido.getSelectedItem()));
+      objPedido.consultaEstatus(modeloPedido);
+       }
+   if((jcbxEstatusPedido.getSelectedIndex())==4){
+      modeloPedido.setRowCount(0);
+      objPedido.setEstatus(((String)jcbxEstatusPedido.getSelectedItem()));
+      objPedido.consultaEstatus(modeloPedido);
+       }
+    }//GEN-LAST:event_jcbxEstatusPedidoActionPerformed
+
+    private void jtxBuscarPedidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarPedidoKeyTyped
+     jtxBuscarPedido.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyTyped(final KeyEvent e){
+             repaint();
+             filtroPedido();     
+    }
+         });
+        trsfiltro = new TableRowSorter(modeloPedido);
+        jtbPedido.setRowSorter(trsfiltro); 
+    }//GEN-LAST:event_jtxBuscarPedidoKeyTyped
+
+    private void jtxBuscarPedidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarPedidoKeyPressed
+        
+    }//GEN-LAST:event_jtxBuscarPedidoKeyPressed
+
+    private void jbnCerrarPedido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarPedido2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbnCerrarPedido2ActionPerformed
+
+    private void jbnRegresarPedido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarPedido2ActionPerformed
+        abrirOpcion(jpPrincipal, jpPedido);
+    }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
      
     //Metodos para cambiar color en el panel empresa
@@ -3985,11 +4412,8 @@ public class frmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-
-
+    private javax.swing.JTable Prueba;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -4002,19 +4426,13 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPedido1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
-
-    private javax.swing.JScrollPane jScrollPane5;
-
-    private javax.swing.JScrollPane jScrollPane3;
-
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
@@ -4064,28 +4482,25 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator48;
     private javax.swing.JSeparator jSeparator49;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator51;
+    private javax.swing.JSeparator jSeparator52;
+    private javax.swing.JSeparator jSeparator53;
     private javax.swing.JSeparator jSeparator56;
     private javax.swing.JSeparator jSeparator57;
     private javax.swing.JSeparator jSeparator58;
     private javax.swing.JSeparator jSeparator59;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator60;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable5;
-
-    private javax.swing.JTable jTable3;
-
     private javax.swing.JButton jbnActualizarCliente;
-    private javax.swing.JButton jbnActualizarCliente3;
     private javax.swing.JButton jbnActualizarEmpleado;
     private javax.swing.JButton jbnActualizarEmpresa;
     private javax.swing.JButton jbnActualizarProducto;
     private javax.swing.JButton jbnActualizarProveedor;
     private javax.swing.JButton jbnAgregarCliente;
-    private javax.swing.JButton jbnAgregarCliente3;
     private javax.swing.JButton jbnAgregarEmpleado;
     private javax.swing.JButton jbnAgregarEmpresa;
     private javax.swing.JButton jbnAgregarProveedor;
@@ -4099,6 +4514,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton jbnCerrarOpciones2;
     private javax.swing.JButton jbnCerrarPedido;
     private javax.swing.JButton jbnCerrarPedido1;
+    private javax.swing.JButton jbnCerrarPedido2;
     private javax.swing.JButton jbnCerrarProducto;
     private javax.swing.JButton jbnCerrarProveedor;
     private javax.swing.JButton jbnClientes;
@@ -4106,7 +4522,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton jbnDescuento;
     private javax.swing.JButton jbnEliminarCliente;
     private javax.swing.JButton jbnEliminarCliente2;
-    private javax.swing.JButton jbnEliminarCliente3;
     private javax.swing.JButton jbnEliminarEmpleado;
     private javax.swing.JButton jbnEliminarProducto;
     private javax.swing.JButton jbnEliminarProveedor;
@@ -4121,13 +4536,14 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton jbnRegresarOpciones;
     private javax.swing.JButton jbnRegresarPedido;
     private javax.swing.JButton jbnRegresarPedido1;
+    private javax.swing.JButton jbnRegresarPedido2;
     private javax.swing.JButton jbnRegresarProducto;
     private javax.swing.JButton jbnRegresarProveedor;
     private javax.swing.JButton jbnRerportes;
     private javax.swing.JButton jbnVenta;
     private javax.swing.JComboBox<String> jcbxEmpresaCliente;
     private javax.swing.JComboBox<String> jcbxEmpresaEmpleado;
-    private javax.swing.JComboBox<String> jcbxEmpresaEmpleado1;
+    private javax.swing.JComboBox<String> jcbxEstatusPedido;
     private javax.swing.JLabel jlbApellidosCliente;
     private javax.swing.JLabel jlbApellidosEmpleado;
     private javax.swing.JLabel jlbBuscarCliente2;
@@ -4147,6 +4563,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbCpEmpleado;
     private javax.swing.JLabel jlbDomicilioEmpresa;
     private javax.swing.JLabel jlbDomicilioProveedor;
+    private javax.swing.JLabel jlbDomicilioProveedor1;
     private javax.swing.JLabel jlbEmailCliente;
     private javax.swing.JLabel jlbEmailEmpleado;
     private javax.swing.JLabel jlbEmailEmpresa;
@@ -4160,6 +4577,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbIconoEmresa;
     private javax.swing.JLabel jlbIconoOpciones;
     private javax.swing.JLabel jlbIconoPedido;
+    private javax.swing.JLabel jlbIconoPedido1;
     private javax.swing.JLabel jlbIconoProducto;
     private javax.swing.JLabel jlbIconoProveedor;
     private javax.swing.JLabel jlbIdCliente;
@@ -4168,11 +4586,11 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbLocalidadEmpresa;
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
-    private javax.swing.JLabel jlbLogoEmpresa2;
     private javax.swing.JLabel jlbLogoEmpresaProveedor;
     private javax.swing.JLabel jlbLogoEmpresaProveedor1;
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
+    private javax.swing.JLabel jlbLogoPrograma3;
     private javax.swing.JLabel jlbLogoProgramaProducto;
     private javax.swing.JLabel jlbLogoProgramaProveedor;
     private javax.swing.JLabel jlbLogoProgramaProveedor1;
@@ -4185,6 +4603,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbNombreEmpleado2;
     private javax.swing.JLabel jlbNombreEmpresa;
     private javax.swing.JLabel jlbNombreProveedor;
+    private javax.swing.JLabel jlbNombreProveedor1;
     private javax.swing.JLabel jlbNssEmpleado;
     private javax.swing.JLabel jlbNumEmpleadosEmpresa;
     private javax.swing.JLabel jlbOpcionNombreRedes;
@@ -4200,20 +4619,25 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlbTelefonoCliente;
     private javax.swing.JLabel jlbTelefonoEmpleado;
     private javax.swing.JLabel jlbTelefonoEmpresa;
+    private javax.swing.JLabel jlbTelefonoPedido;
     private javax.swing.JLabel jlbTelefonoProveedor;
     private javax.swing.JLabel jlbTituloCliente;
     private javax.swing.JLabel jlbTituloEmpleado;
     private javax.swing.JLabel jlbTituloEmpresa;
     private javax.swing.JLabel jlbTituloPedido;
     private javax.swing.JLabel jlbTituloPedido1;
+    private javax.swing.JLabel jlbTituloPedido2;
+    private javax.swing.JLabel jlbTituloPedido3;
     private javax.swing.JLabel jlbTituloProducto;
     private javax.swing.JLabel jlbTituloProveedor;
     private javax.swing.JLabel jlbUsuarioEmpleado;
+    private javax.swing.JLabel jlbfolioPedido;
     private javax.swing.JPanel jpBarraInferiorCliente;
     private javax.swing.JPanel jpBarraInferiorCliente1;
     private javax.swing.JPanel jpBarraInferiorEmpresa;
     private javax.swing.JPanel jpBarraInferiorPedido;
     private javax.swing.JPanel jpBarraInferiorPedido1;
+    private javax.swing.JPanel jpBarraInferiorPedido2;
     private javax.swing.JPanel jpBarraInferiorProducto;
     private javax.swing.JPanel jpBarraSuperiorCliente;
     private javax.swing.JPanel jpBarraSuperiorEmpleado;
@@ -4221,12 +4645,16 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jpBarraSuperiorPedido;
     private javax.swing.JPanel jpBarraSuperiorPedido1;
     private javax.swing.JPanel jpBarraSuperiorPedido2;
+    private javax.swing.JPanel jpBarraSuperiorPedido3;
     private javax.swing.JPanel jpBarraSuperiorProducto;
     private javax.swing.JPanel jpCliente;
     private javax.swing.JPanel jpCompra;
     public javax.swing.JPanel jpContenidoLogoProducto;
+    private javax.swing.JPanel jpDescripcionPedido;
+    private javax.swing.JPanel jpDetallePedido;
     private javax.swing.JPanel jpEmpleado;
     private javax.swing.JPanel jpEmpresa;
+    private javax.swing.JPanel jpGeneral;
     private javax.swing.JPanel jpInferior;
     private javax.swing.JPanel jpInformacionAsistencia;
     public javax.swing.JPanel jpListaProd;
@@ -4240,6 +4668,10 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jpOpcionesPoliticas;
     private javax.swing.JPanel jpOpcionesyAsistencia;
     private javax.swing.JPanel jpPedido;
+    private javax.swing.JPanel jpPestañaCompletado;
+    private javax.swing.JPanel jpPestañaEnviado;
+    private javax.swing.JPanel jpPestañaRecibido;
+    private javax.swing.JPanel jpPestañaTransferido;
     private javax.swing.JPanel jpPoliticasAsistencia;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JPanel jpProducto;
@@ -4251,8 +4683,10 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTable jtbPedido;
     private javax.swing.JTable jtbPedido1;
     private javax.swing.JTable jtbPedido2;
-    private javax.swing.JTable jtbPedido3;
+    private javax.swing.JTable jtbPedidoRecibido;
+    private javax.swing.JTable jtbPedidogenral;
     private javax.swing.JTable jtbProveedor;
+    private javax.swing.JTable jtbTransferido;
     private javax.swing.JTextField jtxApellidosClientes;
     private javax.swing.JTextField jtxApellidosEmpleado;
     private javax.swing.JTextField jtxBuscarCliente;
@@ -4264,6 +4698,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jtxBuscarProveedor;
     private javax.swing.JTextField jtxCalleyNumCliente;
     private javax.swing.JTextField jtxCalleyNumEmpleado;
+    private javax.swing.JTextField jtxClientePedido;
     private javax.swing.JTextField jtxColoniaCliente;
     private javax.swing.JTextField jtxColoniaEmpleado;
     private javax.swing.JTextField jtxContrasenaCliente;
@@ -4271,6 +4706,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jtxCpCliente;
     private javax.swing.JTextField jtxCpEmpleado;
     private javax.swing.JTextField jtxDomicilioEmpresa;
+    private javax.swing.JTextField jtxDomicilioPedido;
     private javax.swing.JTextField jtxDomicilioProveedor;
     private javax.swing.JTextField jtxEmailCliente;
     private javax.swing.JTextField jtxEmailEmpleado;
@@ -4303,7 +4739,9 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jtxTelefonoCliente;
     private javax.swing.JTextField jtxTelefonoEmpleado;
     private javax.swing.JTextField jtxTelefonoEmpresa;
+    private javax.swing.JTextField jtxTelefonoPedido;
     private javax.swing.JTextField jtxTelefonoProveedor;
     private javax.swing.JTextField jtxUsuarioEmpleado;
+    private javax.swing.JTextField jtxfolioPedido;
     // End of variables declaration//GEN-END:variables
 }

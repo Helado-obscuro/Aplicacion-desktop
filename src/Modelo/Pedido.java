@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Pedido {
@@ -86,15 +87,50 @@ public int getIdCliente() {
 
      }
   public void consultaPedido(DefaultTableModel modeloPedido){
+           Object[] obj1= new Object[4];
+            PreparedStatement comando;
+            ResultSet resultado;
+            obj.conectar();
+     if(contadorPedido ==0){
+     modeloPedido.addColumn("Folio");
+     modeloPedido.addColumn("Fecha peido");
+     modeloPedido.addColumn("idCliene");
+     modeloPedido.addColumn("Estatus");
+     contadorPedido++;
+     }
+                
+    try {
+        comando=obj.conexion.prepareCall("Select * from pedido");
+        resultado=comando.executeQuery();
+                
+        while(resultado.next()){
+            
+            for (int i = 0; i <4; i++) {
+            obj1[i] = resultado.getObject(i+1);
+            }
+        modeloPedido.addRow(obj1);
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }//Fin del try catch        
+          }// fin del else
+              
+  public void consultaEstatus(DefaultTableModel modeloPedido){
+      
             Object[] obj1= new Object[4];
             PreparedStatement comando;
             ResultSet resultado;
             obj.conectar();
-      //If para verificar si  realizara busqueda por estatus o general
-          if(estatus!=null){
-             //Busqueda por estatus    
-        try {    
-            comando= obj.conexion.prepareCall("Select * from pedidos WHERE estatus=?");
+        if(contadorPedido==0){    
+     modeloPedido.addColumn("Folio");
+     modeloPedido.addColumn("Fecha pedido");
+     modeloPedido.addColumn("idCliene");
+     modeloPedido.addColumn("Estatus");
+     contadorPedido++;
+        }
+      
+    try {    
+            comando= obj.conexion.prepareCall("Select * from pedido WHERE estatus=?");
             comando.setString(1, estatus);
             resultado=comando.executeQuery();
             
@@ -108,44 +144,17 @@ public int getIdCliente() {
     } catch (SQLException ex) {
         System.out.println(ex);
     }//fin del try-catch
-          }//Fin del if
-          else{
-          //Busqueda general y llenado de la tabla
+          }
           
-     if(contadorPedido ==0){
-     modeloPedido.addColumn("ID");
-     modeloPedido.addColumn("Codigo");
-     modeloPedido.addColumn("Domicilio");
-     modeloPedido.addColumn("Estatus");
-     modeloPedido.addColumn("Cliente");
-     modeloPedido.addColumn("Hora");   
-     contadorPedido++;
-     }
-                
-    try {
-        comando=obj.conexion.prepareCall("Select * from pedido");
-        resultado=comando.executeQuery();
-                
-        while(resultado.next()){
-            
-            for (int i = 0; i <6; i++) {
-            obj1[i] = resultado.getObject(i+1);
-            }
-        modeloPedido.addRow(obj1);
-        }
-    } catch (SQLException ex) {
-        System.out.println(ex);
-    }//Fin del try catch        
-          }// fin del else
-              
-            
- }
+  
+  
+  
   public void modificarPedido(){
 
       PreparedStatement conectar;
         obj.conectar();
         try {
-            conectar = obj.conexion.prepareStatement("UPDATE pedidos SET estatus=? WHERE idPedido=?");
+            conectar = obj.conexion.prepareStatement("UPDATE pedido SET estatus=? WHERE folioPedido=?");
          
             conectar.setString(1, estatus);
             conectar.setInt(2, idPedido);
@@ -158,5 +167,25 @@ public int getIdCliente() {
           
         }    
  }
-     
-}
+  
+  public void modificarEstatus(String status, Integer idPed){
+   PreparedStatement conectar;
+    obj.conectar();
+        try {
+            conectar = obj.conexion.prepareStatement("UPDATE pedido SET estatus=? WHERE folioPedido=?");
+         
+            conectar.setString(1, status);
+            conectar.setInt(2, idPed);
+            
+             //ejecutar sentencia
+            int resp = conectar.executeUpdate();
+            JOptionPane.showMessageDialog(null, resp + "Fila(s)afecta(s)");
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, "Error al actualizar Status");
+          
+        }      
+   }
+  
+  
+ 
+  }    

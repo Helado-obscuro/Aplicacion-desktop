@@ -53,8 +53,6 @@ public class productosControlador {
         panel.revalidate();
 
     }
-
-
     
     public void agegarProducto(){
         dprod.setVisible(true);

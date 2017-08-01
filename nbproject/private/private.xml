@@ -3,9 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/alexi/Documents/clone_code/Aplicacion-desktop/src/Ventanas/frmMenu.java</file>
             <file>file:/C:/Users/alexi/Documents/clone_code/Aplicacion-desktop/src/Ventanas/dialogProductos.java</file>
             <file>file:/C:/Users/alexi/Documents/clone_code/Aplicacion-desktop/src/Controlador/productosControlador.java</file>
+=======
+            <file>file:/C:/Users/Usuario1/Documents/proyectoCuarto/Aplicacion-desktop/src/Modelo/DetallePedido.java</file>
+            <file>file:/C:/Users/Usuario1/Documents/proyectoCuarto/Aplicacion-desktop/src/Modelo/Pedido.java</file>
+            <file>file:/C:/Users/Usuario1/Documents/proyectoCuarto/Aplicacion-desktop/src/Ventanas/frmLogin.java</file>
+            <file>file:/C:/Users/Usuario1/Documents/proyectoCuarto/Aplicacion-desktop/src/Ventanas/frmMenu.java</file>
+>>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
         </group>
     </open-files>
 </project-private>

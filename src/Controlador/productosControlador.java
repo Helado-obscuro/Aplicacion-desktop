@@ -97,6 +97,7 @@ public class productosControlador {
     public void agegarProducto(){
         dprod.setVisible(true);
     }
+<<<<<<< HEAD
     
     public void llenarCategoria() throws IOException {
         obj.conectar();
@@ -134,6 +135,8 @@ public class productosControlador {
         Producto prod = menu.getProducto();
         return prod;
     }
+=======
+>>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
     
     public productosControlador getthisObj(){
         return this;

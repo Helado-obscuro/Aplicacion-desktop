@@ -233,7 +233,6 @@ public class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAceptarActionPerformed
-
     validarlog();
     }//GEN-LAST:event_jbnAceptarActionPerformed
 

@@ -27,29 +27,20 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
-<<<<<<< HEAD
+
 import Modelo.Producto;
-=======
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
->>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-<<<<<<< HEAD
-import javax.swing.JScrollPane;
-=======
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
->>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
 
 public class frmMenu extends javax.swing.JFrame implements ActionListener{
     //Instancia del jDialog
@@ -66,11 +57,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     Empresa objEmpresa=new Empresa();
     Cliente objCliente = new Cliente();
     Proveedor objProveedor = new Proveedor();
-<<<<<<< HEAD
     Producto objProducto = new Producto();
-=======
     Pedido objPedido = new Pedido();
->>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
     productosControlador pcontrol = new productosControlador(this);
     
     //Variables del JpopupMenu
@@ -4504,10 +4492,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-=======
     private javax.swing.JTable Prueba;
->>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -4527,14 +4512,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-<<<<<<< HEAD
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     public javax.swing.JPanel jPanel9;
-=======
->>>>>>> 6ca3db883648063e3ad5eaf9fbcd4b34aed6e323
     private javax.swing.JPanel jPedido1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;

@@ -23,6 +23,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import Ventanas.dialogDetalleProd;
 
 
 /**
@@ -35,6 +36,7 @@ public class productosControlador {
     frmMenu menu;
     dialogProductos dprod = new dialogProductos(menu, true, this);
     Conexion obj = new Conexion();
+    dialogDetalleProd ddp;
     
     
 
@@ -56,6 +58,9 @@ public class productosControlador {
 
     public void initUI() throws IOException {
         JPanel panel = menu.getPanelPord();//Make a panel
+                panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
 
         panel.setLayout(new GridLayout(4, 3, 5, 5)); //la ultima linea son las columnas
         llenarCategoria(); //cargar imagenes de productos en la bd
@@ -70,6 +75,9 @@ public class productosControlador {
     public void llenarCategoria() throws IOException {
         obj.conectar();
         JPanel panel = menu.getPanelPord();//Make a panel
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
 
         String query = "SELECT * FROM producto";
 
@@ -88,7 +96,6 @@ public class productosControlador {
                 JLabel label = new JLabel(icon);
                 label.setText(rs.getString("idProducto"));
                 label.setName(rs.getString("idProducto"));
-
 
                 //then adds the instance to the panel
                 panel.add(label);
@@ -115,6 +122,12 @@ public class productosControlador {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             JOptionPane.showMessageDialog(menu, "Si tu me tocaste "+ id);
+                            try {
+                                ddp = new dialogDetalleProd(menu, true, Integer.valueOf(id));
+                            } catch (IOException ex) {
+                                Logger.getLogger(productosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ddp.setVisible(true);
                         }
                     });
                     //fin de mouse event

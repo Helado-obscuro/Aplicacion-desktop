@@ -169,6 +169,7 @@ public Producto(){
             obj.conectar();
             conectar = obj.conexion.prepareStatement("SELECT * FROM producto WHERE idProducto = ?");
             conectar.setInt(1, idc);
+            System.out.println("Id a buscar: "+idc);
             //ejecutar sentencia
             ResultSet rs = conectar.executeQuery();
             while (rs.next()) {

@@ -84,6 +84,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         
         inicio= l;
         initComponents();
+        initProductos();
 //        init();
         
     // constructs the popup menu
@@ -536,7 +537,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jpListaProd = new javax.swing.JPanel();
         jpVenta = new javax.swing.JPanel();
         jpReportes = new javax.swing.JPanel();
@@ -3267,14 +3267,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
 
         jpProducto.add(jpContenidoLogoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 270, 550));
 
-        jButton2.setText("initui");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jpProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, -1, -1));
-
         jpListaProd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpListaProd.setAutoscrolls(true);
         jpListaProd.setName(""); // NOI18N
@@ -3853,7 +3845,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     }//GEN-LAST:event_jbnCerrarActionPerformed
 
     private void jbnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProductoActionPerformed
-        abrirOpcion(jpPrincipal,jpProducto);
+        initProductos();
+        abrirOpcion(jpPrincipal,jpProducto);   
     }//GEN-LAST:event_jbnProductoActionPerformed
 
     private void jbnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnPedidosActionPerformed
@@ -4346,14 +4339,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
        regresarMenu();
     }//GEN-LAST:event_jbnRegresarPedido1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
+    private void initProductos(){
+                try {
             pcontrol.initUI();
         } catch (IOException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+    }
+    
     private void jcbxEstatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEstatusPedidoActionPerformed
     if((jcbxEstatusPedido.getSelectedIndex())==0){
       modeloPedido.setRowCount(0);
@@ -4501,7 +4494,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Prueba;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

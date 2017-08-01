@@ -13,10 +13,15 @@ import Ventanas.frmMenu;
 import java.awt.*;
 import javax.swing.*;
 import Ventanas.dialogProductos;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 
@@ -52,23 +57,25 @@ public class productosControlador {
     }
 
     public void initUI() throws IOException {
-        
+            JPanel panel = menu.getPanelPord();//Make a panel
+
         String path = "C:\\Users\\alexi\\Pictures\\logos\\portabilidad.png";
         Image image = ImageIO.read(new File(path));
         ImageIcon icon = new ImageIcon(image);
         JLabel label = new JLabel(icon);
+       
 
-        JPanel panel = menu.getPanelPord();//Make a panel
-        JPanel contentPane = new JPanel(null);
+ 
         panel.setLayout(new GridLayout(4, 3,5,5)); //la ultima linea son las columnas
 
         
         JLabel label1 = new JLabel(icon);
         label1.setSize(40, 40);
         JLabel label2 = new JLabel("Imagen");
-        panel.add(label1);
-        panel.add(label2);
-        panel.add(label);
+        llenarCategoria();
+//        panel.add(label1);
+//        panel.add(label2);
+//        panel.add(label);
         
 //         JScrollPane scrollPane = new JScrollPane(contentPane);
 //        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -91,26 +98,36 @@ public class productosControlador {
         dprod.setVisible(true);
     }
     
-    public void llenarCategoria(){
-    CallableStatement conectar;
-    obj.conectar();
+    public void llenarCategoria() throws IOException {
+        obj.conectar();
+        JPanel panel = menu.getPanelPord();//Make a panel
+
+        String query = "SELECT * FROM producto";
+
         try {
-            conectar = obj.conexion.prepareCall("select categoria from producto");
-            
+            Statement stmnt = obj.conexion.createStatement();
             //ejecutar sentencia
-          ResultSet rs = conectar.executeQuery();
+            ResultSet rs = stmnt.executeQuery(query);
             while (rs.next()) {
-                String lastName = rs.getString("categoria");
+                String lastName = rs.getString("nombreProducto");
                 System.out.println(lastName + "\n");
-//                        JLabel label2 = new JLabel("Imagen");
+
+                //Instantiates a new instance of JLabel for each record
+                String path = rs.getString("imagen");
+                Image image = ImageIO.read(new File(path));
+                ImageIcon icon = new ImageIcon(image);
+                JLabel label = new JLabel(icon);
+
+                //then adds the instance to the panel
+                panel.add(label);
+
             }
 
-            System.out.println("Registro exitoso");
+            System.out.println("LLenada exitoso");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
 
-    
-        }  
+            System.out.println(ex);
+        }
     }
 
     public Producto obternetObjProd() {

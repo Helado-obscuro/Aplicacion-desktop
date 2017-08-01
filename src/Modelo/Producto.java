@@ -1,7 +1,11 @@
 package Modelo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Producto {
@@ -158,9 +162,35 @@ public Producto(){
  public void bajaProducto(){
 
  }
- public void consultaProducto(){
+ 
+    public void consultaProductoID(int idc) {
+        try {
+            PreparedStatement conectar;
+            obj.conectar();
+            conectar = obj.conexion.prepareStatement("SELECT * FROM producto WHERE idProducto = ?");
+            conectar.setInt(1, idc);
+            //ejecutar sentencia
+            ResultSet rs = conectar.executeQuery();
+            while (rs.next()) {
+                this.nombreProducto = rs.getString("nombreProducto");
+                this.idProducto = rs.getInt("idProducto");
+                this.pedimento = rs.getString("pedimento");
+                this.stok = rs.getInt("stock");
+                this.descripcionProd = rs.getString("descripcion");
+                this.precioCompra = rs.getDouble("precioCompra");
+                this.precioVenta = rs.getDouble("precioVenta");
+                this.ubicacion = rs.getString("ubicacion");
+                this.imagen = rs.getString("imagen");
+                this.cbarras = rs.getString("cbarras");
+                this.categoria = rs.getString("categoria");
+            }
 
- }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
  public void modificarProducto(){
 
  }

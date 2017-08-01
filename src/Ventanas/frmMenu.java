@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -497,7 +498,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         jpOpcionesContenido = new javax.swing.JPanel();
         jpOpcion1 = new javax.swing.JPanel();
         jbnCerrarOpciones1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jpOpciones = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jpOpcionesPoliticas = new javax.swing.JPanel();
@@ -525,7 +526,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         jbnActualizarProducto = new javax.swing.JButton();
         jbnAgregarProveedor1 = new javax.swing.JButton();
         jbnEliminarProducto = new javax.swing.JButton();
-        jlbLogoEmpresaProveedor1 = new javax.swing.JLabel();
         jpContenidoLogoProducto = new javax.swing.JPanel();
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
@@ -2774,16 +2774,16 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jpOpciones.setBackground(new java.awt.Color(153, 153, 153));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jpOpcionesLayout = new javax.swing.GroupLayout(jpOpciones);
+        jpOpciones.setLayout(jpOpcionesLayout);
+        jpOpcionesLayout.setHorizontalGroup(
+            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 787, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jpOpcionesLayout.setVerticalGroup(
+            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 340, Short.MAX_VALUE)
         );
 
@@ -2797,7 +2797,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
             jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpOpcion1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 45, Short.MAX_VALUE))
             .addGroup(jpOpcion1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2814,7 +2814,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
             .addGroup(jpOpcion1Layout.createSequentialGroup()
                 .addComponent(jbnCerrarOpciones1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOpcion1Layout.createSequentialGroup()
@@ -3172,10 +3172,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
 
         jpProducto.add(jpBarraInferiorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
-        jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
-
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3194,6 +3190,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         jLabel9.setText("Anzuelos");
 
         jLabel10.setText("Canas ");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         jLabel11.setText("misc");
 
@@ -4334,8 +4335,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
             jbnActualizarEmpleado.setEnabled(true);
             }
            }
-        
-        
     }//GEN-LAST:event_jtxBuscarProveedorKeyPressed
 
 
@@ -4405,6 +4404,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private void jbnRegresarPedido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarPedido2ActionPerformed
         abrirOpcion(jpPrincipal, jpPedido);
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+
+
+    String path = new File("src/images/productos/conf.properties")
+                                                           .getAbsolutePath();
+    System.out.println(path);
+
+    }//GEN-LAST:event_jLabel10MouseClicked
 
      
     //Metodos para cambiar color en el panel empresa
@@ -4507,15 +4515,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPMenuEmpresa;
     private javax.swing.JPanel jPMenuPedido;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     public javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPedido1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -4678,7 +4681,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
     private javax.swing.JLabel jlbLogoEmpresaProveedor;
-    private javax.swing.JLabel jlbLogoEmpresaProveedor1;
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
     private javax.swing.JLabel jlbLogoPrograma3;
@@ -4754,6 +4756,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jpOpcionDescuento;
     private javax.swing.JPanel jpOpcionRedesEmpresa;
     private javax.swing.JPanel jpOpcionTritonEmpresa;
+    private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpOpcionesContenido;
     private javax.swing.JPanel jpOpcionesMenu;
     private javax.swing.JPanel jpOpcionesPoliticas;

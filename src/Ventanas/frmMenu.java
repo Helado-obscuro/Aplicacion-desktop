@@ -27,6 +27,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
+import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -49,6 +50,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     DefaultTableModel modeloCliente = new DefaultTableModel();
     DefaultTableModel modeloProveedor = new DefaultTableModel();
     DefaultTableModel modeloPedido = new DefaultTableModel();
+    DefaultTableModel  modeloProducto = new DefaultTableModel();
+    
     //modelo para la fecha 
     Date date = new Date();   
     //Instancias de las clases 
@@ -61,6 +64,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     
     //Variables del JpopupMenu
     private final JPopupMenu popupMenu;
+    private final JPopupMenu popupMenuPoductoVenta;
+    private final JMenuItem menuItemAgregarProductoVenta;
     private final JMenuItem menuItemAdd;
     private final JMenuItem menuItemRemove;
     private final JMenuItem menuItemRecibido ;
@@ -85,6 +90,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         
     // constructs the popup menu
         popupMenu = new JPopupMenu();
+        popupMenuPoductoVenta = new JPopupMenu();
+        menuItemAgregarProductoVenta = new JMenuItem("Agregar producto");
         menuItemAdd = new JMenuItem("Agrgera nueva fila");
         menuItemRemove = new JMenuItem("Remover la fila actual");
         menuItemTransferido = new JMenuItem("Cambiar estatus a transferido");
@@ -92,7 +99,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         menuItemEnviado = new JMenuItem("Cambiar estatus a enviado");
         menuItemCompletado = new JMenuItem("Cambiar estatus a completado");
         menuItemDesglosarPedido = new JMenuItem("Detalle de pedido");
-    
+       
+        
         menuItemAdd.addActionListener(this);
         menuItemRemove.addActionListener(this);
         menuItemRecibido.addActionListener(this);
@@ -100,6 +108,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         menuItemEnviado.addActionListener(this);
         menuItemCompletado.addActionListener(this);
         menuItemDesglosarPedido.addActionListener(this);
+        menuItemAgregarProductoVenta.addActionListener(this);
         
         popupMenu.add(menuItemAdd);
         popupMenu.add(menuItemRemove);
@@ -108,10 +117,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         popupMenu.add(menuItemEnviado);
         popupMenu.add(menuItemCompletado);
         popupMenu.add(menuItemDesglosarPedido);
+        popupMenu.add(menuItemAgregarProductoVenta);
         
         // sets the popup menu for the table
         jtbPedido.setComponentPopupMenu(popupMenu);
         jtbPedido.addMouseListener(new TableMouseListener(jtbPedido));
+        
+        jtbProductoVenta.setComponentPopupMenu(popupMenuPoductoVenta);
+        jtbProductoVenta.addMouseListener(new TableMouseListener(jtbProductoVenta));
         
     }
     public class TableMouseListener extends MouseAdapter {
@@ -244,7 +257,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     public void filtroPedido(){
      String buscarPedido=jtxBuscarPedido.getText();
      trsfiltro.setRowFilter(RowFilter.regexFilter(String.valueOf(buscarPedido)));
-      } 
+      }
+    public void filtroProducto(){
+     String buscarProductoVenta=jtxBuscarProductoVenta.getText();
+     trsfiltro.setRowFilter(RowFilter.regexFilter(String.valueOf(buscarProductoVenta)));
+      }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -525,6 +542,37 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         jButton2 = new javax.swing.JButton();
         jpListaProd = new javax.swing.JPanel();
         jpVenta = new javax.swing.JPanel();
+        jpPanelSuperiorVenta = new javax.swing.JPanel();
+        jtxBuscarProductoVenta = new javax.swing.JTextField();
+        jSeparator50 = new javax.swing.JSeparator();
+        jlbBuscarPedido2 = new javax.swing.JLabel();
+        jbnCerrarVenta = new javax.swing.JButton();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jtbProductoVenta = new javax.swing.JTable();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        jtbDetalleVenta = new javax.swing.JTable();
+        jlbBuscarPedido3 = new javax.swing.JLabel();
+        jlbBuscarPedido4 = new javax.swing.JLabel();
+        jcbxEstatusPedido1 = new javax.swing.JComboBox<>();
+        jlbEstatusPedido1 = new javax.swing.JLabel();
+        jtxTotalVenta = new javax.swing.JTextField();
+        jlbIva = new javax.swing.JLabel();
+        jSeparator54 = new javax.swing.JSeparator();
+        jlbSignoTotal = new javax.swing.JLabel();
+        jlbTotalVenta1 = new javax.swing.JLabel();
+        jlbCambio = new javax.swing.JLabel();
+        jtxIva = new javax.swing.JTextField();
+        jtxSubtotalVenta = new javax.swing.JTextField();
+        jlbTotalVenta3 = new javax.swing.JLabel();
+        jtxCambio = new javax.swing.JTextField();
+        jSeparator55 = new javax.swing.JSeparator();
+        jlbPago = new javax.swing.JLabel();
+        jSeparator61 = new javax.swing.JSeparator();
+        jtxPagoPor1 = new javax.swing.JTextField();
+        jbnFinalizarVenta = new javax.swing.JButton();
+        jbnCancelarVenta1 = new javax.swing.JButton();
+        jpPanelInferiorVenta = new javax.swing.JPanel();
+        jSeparator62 = new javax.swing.JSeparator();
         jpReportes = new javax.swing.JPanel();
         jpCompra = new javax.swing.JPanel();
         jPedido1 = new javax.swing.JPanel();
@@ -3217,16 +3265,281 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
 
         jpPrincipal.add(jpProducto, "card3");
 
-        javax.swing.GroupLayout jpVentaLayout = new javax.swing.GroupLayout(jpVenta);
-        jpVenta.setLayout(jpVentaLayout);
-        jpVentaLayout.setHorizontalGroup(
-            jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jpVenta.setBackground(new java.awt.Color(255, 255, 255));
+        jpVenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpPanelSuperiorVenta.setBackground(new java.awt.Color(22, 114, 185));
+
+        jtxBuscarProductoVenta.setBackground(new java.awt.Color(22, 114, 185));
+        jtxBuscarProductoVenta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxBuscarProductoVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jtxBuscarProductoVenta.setBorder(null);
+        jtxBuscarProductoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxBuscarProductoVentaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxBuscarProductoVentaKeyTyped(evt);
+            }
+        });
+
+        jSeparator50.setForeground(new java.awt.Color(255, 255, 255));
+
+        jlbBuscarPedido2.setDisplayedMnemonic('b');
+        jlbBuscarPedido2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbBuscarPedido2.setForeground(new java.awt.Color(255, 255, 255));
+        jlbBuscarPedido2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Search_48px.png"))); // NOI18N
+        jlbBuscarPedido2.setText("Buscar  ");
+        jlbBuscarPedido2.setToolTipText("");
+        jlbBuscarPedido2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbBuscarPedido2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jbnCerrarVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCerrarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
+        jbnCerrarVenta.setBorderPainted(false);
+        jbnCerrarVenta.setContentAreaFilled(false);
+        jbnCerrarVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_1.png"))); // NOI18N
+        jbnCerrarVenta.setSelected(true);
+        jbnCerrarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnCerrarVentaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpPanelSuperiorVentaLayout = new javax.swing.GroupLayout(jpPanelSuperiorVenta);
+        jpPanelSuperiorVenta.setLayout(jpPanelSuperiorVentaLayout);
+        jpPanelSuperiorVentaLayout.setHorizontalGroup(
+            jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbBuscarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                    .addComponent(jSeparator50))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 723, Short.MAX_VALUE)
+                .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpPanelSuperiorVentaLayout.setVerticalGroup(
+            jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
+                        .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlbBuscarPedido2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
+                .addComponent(jbnCerrarVenta)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jpVenta.add(jpPanelSuperiorVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 70));
+
+        jScrollPane14.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane14.setBorder(null);
+        jScrollPane14.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jtbProductoVenta.setAutoCreateRowSorter(true);
+        jtbProductoVenta.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbProductoVenta.setModel(modeloProveedor);
+        jtbProductoVenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbProductoVenta.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbProductoVenta.setRowHeight(25);
+        jtbProductoVenta.setRowMargin(8);
+        jtbProductoVenta.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane14.setViewportView(jtbProductoVenta);
+
+        jpVenta.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 590, 159));
+
+        jScrollPane15.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane15.setBorder(null);
+        jScrollPane15.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jtbDetalleVenta.setAutoCreateRowSorter(true);
+        jtbDetalleVenta.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbDetalleVenta.setModel(modeloProveedor);
+        jtbDetalleVenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbDetalleVenta.setGridColor(new java.awt.Color(255, 255, 255));
+        jtbDetalleVenta.setRowHeight(25);
+        jtbDetalleVenta.setRowMargin(8);
+        jtbDetalleVenta.setSelectionBackground(new java.awt.Color(22, 114, 185));
+        jScrollPane15.setViewportView(jtbDetalleVenta);
+
+        jpVenta.add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 630, 170));
+
+        jlbBuscarPedido3.setBackground(new java.awt.Color(255, 255, 255));
+        jlbBuscarPedido3.setDisplayedMnemonic('b');
+        jlbBuscarPedido3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jlbBuscarPedido3.setForeground(new java.awt.Color(51, 51, 51));
+        jlbBuscarPedido3.setText("Detalle Venta");
+        jlbBuscarPedido3.setToolTipText("");
+        jlbBuscarPedido3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbBuscarPedido3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jpVenta.add(jlbBuscarPedido3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 157, 35));
+
+        jlbBuscarPedido4.setDisplayedMnemonic('b');
+        jlbBuscarPedido4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jlbBuscarPedido4.setText("Productos");
+        jlbBuscarPedido4.setToolTipText("");
+        jlbBuscarPedido4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbBuscarPedido4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jpVenta.add(jlbBuscarPedido4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 120, 35));
+
+        jcbxEstatusPedido1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbxEstatusPedido1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Recibido", "Enviado", "Transferido", "Completado" }));
+        jcbxEstatusPedido1.setBorder(null);
+        jcbxEstatusPedido1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jcbxEstatusPedido1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxEstatusPedido1ActionPerformed(evt);
+            }
+        });
+        jpVenta.add(jcbxEstatusPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 80, 370, 30));
+
+        jlbEstatusPedido1.setDisplayedMnemonic('b');
+        jlbEstatusPedido1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbEstatusPedido1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbEstatusPedido1.setText("Cliente");
+        jlbEstatusPedido1.setToolTipText("");
+        jlbEstatusPedido1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbEstatusPedido1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpVenta.add(jlbEstatusPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 120, 30));
+
+        jtxTotalVenta.setEditable(false);
+        jtxTotalVenta.setBackground(new java.awt.Color(204, 204, 204));
+        jtxTotalVenta.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jtxTotalVenta.setBorder(null);
+        jpVenta.add(jtxTotalVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 430, 170, 40));
+
+        jlbIva.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jlbIva.setText("Iva:");
+        jpVenta.add(jlbIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 390, 50, -1));
+
+        jSeparator54.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator54.setForeground(new java.awt.Color(204, 204, 204));
+        jpVenta.add(jSeparator54, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 270, 180, 10));
+
+        jlbSignoTotal.setBackground(new java.awt.Color(204, 204, 204));
+        jlbSignoTotal.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jlbSignoTotal.setText("$");
+        jpVenta.add(jlbSignoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 430, -1, -1));
+
+        jlbTotalVenta1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jlbTotalVenta1.setText("Total: ");
+        jpVenta.add(jlbTotalVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 440, 110, -1));
+
+        jlbCambio.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jlbCambio.setText("Cambio:");
+        jpVenta.add(jlbCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 90, -1));
+
+        jtxIva.setEditable(false);
+        jtxIva.setBackground(new java.awt.Color(204, 204, 204));
+        jtxIva.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jtxIva.setBorder(null);
+        jpVenta.add(jtxIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 390, 120, 40));
+
+        jtxSubtotalVenta.setEditable(false);
+        jtxSubtotalVenta.setBackground(new java.awt.Color(204, 204, 204));
+        jtxSubtotalVenta.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jtxSubtotalVenta.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jtxSubtotalVenta.setBorder(null);
+        jpVenta.add(jtxSubtotalVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 350, 180, 40));
+
+        jlbTotalVenta3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jlbTotalVenta3.setText("SubTotal:");
+        jpVenta.add(jlbTotalVenta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 340, 90, -1));
+
+        jtxCambio.setEditable(false);
+        jtxCambio.setBackground(new java.awt.Color(204, 204, 204));
+        jtxCambio.setFont(new java.awt.Font("Century Gothic", 0, 28)); // NOI18N
+        jtxCambio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxCambio.setBorder(null);
+        jpVenta.add(jtxCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 230, 180, 40));
+
+        jSeparator55.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator55.setForeground(new java.awt.Color(204, 204, 204));
+        jpVenta.add(jSeparator55, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 470, 200, 10));
+
+        jlbPago.setDisplayedMnemonic('p');
+        jlbPago.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jlbPago.setText("Pago: ");
+        jpVenta.add(jlbPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 70, -1));
+
+        jSeparator61.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator61.setForeground(new java.awt.Color(204, 204, 204));
+        jpVenta.add(jSeparator61, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 200, 190, 10));
+
+        jtxPagoPor1.setFont(new java.awt.Font("Century Gothic", 0, 28)); // NOI18N
+        jtxPagoPor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxPagoPor1.setBorder(null);
+        jtxPagoPor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxPagoPor1ActionPerformed(evt);
+            }
+        });
+        jtxPagoPor1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxPagoPor1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxPagoPor1KeyTyped(evt);
+            }
+        });
+        jpVenta.add(jtxPagoPor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 160, 190, -1));
+
+        jbnFinalizarVenta.setBackground(new java.awt.Color(22, 114, 185));
+        jbnFinalizarVenta.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jbnFinalizarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnFinalizarVenta.setText("Finalizar");
+        jbnFinalizarVenta.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(22, 114, 185), null));
+        jbnFinalizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnFinalizarVenta.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jbnFinalizarVenta.setSelected(true);
+        jbnFinalizarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnFinalizarVentaActionPerformed(evt);
+            }
+        });
+        jpVenta.add(jbnFinalizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 510, 160, 50));
+
+        jbnCancelarVenta1.setBackground(new java.awt.Color(22, 114, 185));
+        jbnCancelarVenta1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jbnCancelarVenta1.setForeground(new java.awt.Color(255, 255, 255));
+        jbnCancelarVenta1.setText("Cancelar");
+        jbnCancelarVenta1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(22, 114, 185), null));
+        jbnCancelarVenta1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnCancelarVenta1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jbnCancelarVenta1.setSelected(true);
+        jbnCancelarVenta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnCancelarVenta1ActionPerformed(evt);
+            }
+        });
+        jpVenta.add(jbnCancelarVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 510, 160, 50));
+
+        jpPanelInferiorVenta.setBackground(new java.awt.Color(22, 114, 185));
+
+        javax.swing.GroupLayout jpPanelInferiorVentaLayout = new javax.swing.GroupLayout(jpPanelInferiorVenta);
+        jpPanelInferiorVenta.setLayout(jpPanelInferiorVentaLayout);
+        jpPanelInferiorVentaLayout.setHorizontalGroup(
+            jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1200, Short.MAX_VALUE)
         );
-        jpVentaLayout.setVerticalGroup(
-            jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+        jpPanelInferiorVentaLayout.setVerticalGroup(
+            jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
         );
+
+        jpVenta.add(jpPanelInferiorVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, -1, 70));
+
+        jSeparator62.setForeground(new java.awt.Color(102, 102, 102));
+        jSeparator62.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jpVenta.add(jSeparator62, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 10, 530));
 
         jpPrincipal.add(jpVenta, "card11");
 
@@ -3804,7 +4117,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     }//GEN-LAST:event_jbnProveedorActionPerformed
 
     private void jbnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnVentaActionPerformed
-        
+        abrirOpcion(jpPrincipal, jpVenta);       
     }//GEN-LAST:event_jbnVentaActionPerformed
 
     private void jbnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClientesActionPerformed
@@ -4326,6 +4639,60 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
         abrirOpcion(jpPrincipal, jpPedido);
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
+    private void jtxBuscarProductoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxBuscarProductoVentaKeyPressed
+
+    private void jtxBuscarProductoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyTyped
+         jtxBuscarProductoVenta.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyTyped(final KeyEvent e){
+             repaint();
+             filtroPedido();     
+    }
+         });
+        trsfiltro = new TableRowSorter(modeloPedido);
+        jtbPedido.setRowSorter(trsfiltro); 
+    }//GEN-LAST:event_jtxBuscarProductoVentaKeyTyped
+
+    private void jcbxEstatusPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEstatusPedido1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbxEstatusPedido1ActionPerformed
+
+    private void jtxPagoPor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxPagoPor1ActionPerformed
+       // jbnFinalizarVenta.requestFocus();
+    }//GEN-LAST:event_jtxPagoPor1ActionPerformed
+
+    private void jtxPagoPor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyPressed
+//        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+//            pago=Double.parseDouble(jtxPagoPor1.getText());
+//            cambio=Double.parseDouble(jtxTotalVenta.getText());
+//            cambio=pago-cambio;
+//            jtxCambio.setText(String.valueOf(cambio));
+//        }
+    }//GEN-LAST:event_jtxPagoPor1KeyPressed
+
+    private void jtxPagoPor1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyTyped
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxPagoPor1KeyTyped
+
+    private void jbnCerrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarVentaActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jbnCerrarVentaActionPerformed
+
+    private void jbnFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnFinalizarVentaActionPerformed
+    }//GEN-LAST:event_jbnFinalizarVentaActionPerformed
+
+    private void jbnCancelarVenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCancelarVenta1ActionPerformed
+    }//GEN-LAST:event_jbnCancelarVenta1ActionPerformed
+
      
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label){
@@ -4432,6 +4799,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -4482,15 +4851,20 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JSeparator jSeparator48;
     private javax.swing.JSeparator jSeparator49;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator50;
     private javax.swing.JSeparator jSeparator51;
     private javax.swing.JSeparator jSeparator52;
     private javax.swing.JSeparator jSeparator53;
+    private javax.swing.JSeparator jSeparator54;
+    private javax.swing.JSeparator jSeparator55;
     private javax.swing.JSeparator jSeparator56;
     private javax.swing.JSeparator jSeparator57;
     private javax.swing.JSeparator jSeparator58;
     private javax.swing.JSeparator jSeparator59;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator60;
+    private javax.swing.JSeparator jSeparator61;
+    private javax.swing.JSeparator jSeparator62;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
@@ -4505,6 +4879,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton jbnAgregarEmpresa;
     private javax.swing.JButton jbnAgregarProveedor;
     private javax.swing.JButton jbnAgregarProveedor1;
+    private javax.swing.JButton jbnCancelarVenta1;
     private javax.swing.JButton jbnCerrar;
     private javax.swing.JButton jbnCerrar1;
     private javax.swing.JButton jbnCerrarEmpleado;
@@ -4517,6 +4892,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton jbnCerrarPedido2;
     private javax.swing.JButton jbnCerrarProducto;
     private javax.swing.JButton jbnCerrarProveedor;
+    private javax.swing.JButton jbnCerrarVenta;
     private javax.swing.JButton jbnClientes;
     private javax.swing.JButton jbnCompra;
     private javax.swing.JButton jbnDescuento;
@@ -4527,6 +4903,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton jbnEliminarProveedor;
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
+    private javax.swing.JButton jbnFinalizarVenta;
     private javax.swing.JButton jbnPedidos;
     private javax.swing.JButton jbnProducto;
     private javax.swing.JButton jbnProveedor;
@@ -4544,6 +4921,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JComboBox<String> jcbxEmpresaCliente;
     private javax.swing.JComboBox<String> jcbxEmpresaEmpleado;
     private javax.swing.JComboBox<String> jcbxEstatusPedido;
+    private javax.swing.JComboBox<String> jcbxEstatusPedido1;
     private javax.swing.JLabel jlbApellidosCliente;
     private javax.swing.JLabel jlbApellidosEmpleado;
     private javax.swing.JLabel jlbBuscarCliente2;
@@ -4551,10 +4929,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbBuscarEmpresa;
     private javax.swing.JLabel jlbBuscarPedido;
     private javax.swing.JLabel jlbBuscarPedido1;
+    private javax.swing.JLabel jlbBuscarPedido2;
+    private javax.swing.JLabel jlbBuscarPedido3;
+    private javax.swing.JLabel jlbBuscarPedido4;
     private javax.swing.JLabel jlbBuscarProducto;
     private javax.swing.JLabel jlbBuscarProveedor;
     private javax.swing.JLabel jlbCalleyNumCliente;
     private javax.swing.JLabel jlbCalleyNumEmpleado;
+    private javax.swing.JLabel jlbCambio;
     private javax.swing.JLabel jlbColoniaCliente;
     private javax.swing.JLabel jlbColoniaEmpleado;
     private javax.swing.JLabel jlbContrasenaCliente;
@@ -4571,6 +4953,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbEstadoCliente;
     private javax.swing.JLabel jlbEstadoEmpleado;
     private javax.swing.JLabel jlbEstatusPedido;
+    private javax.swing.JLabel jlbEstatusPedido1;
     private javax.swing.JLabel jlbFechaNacCliente;
     private javax.swing.JLabel jlbFechaNacEmpleado;
     private javax.swing.JLabel jlbIconoEmpleado;
@@ -4583,6 +4966,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbIdCliente;
     private javax.swing.JLabel jlbIdEmpleado;
     private javax.swing.JLabel jlbIdProveedor;
+    private javax.swing.JLabel jlbIva;
     private javax.swing.JLabel jlbLocalidadEmpresa;
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
@@ -4610,12 +4994,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbOpcionNombreRedes1;
     private javax.swing.JLabel jlbOpcionNombreRedes2;
     private javax.swing.JLabel jlbOpcionNombreTriton;
+    private javax.swing.JLabel jlbPago;
     private javax.swing.JLabel jlbReferencialiente;
     private javax.swing.JLabel jlbReferenciasEmpleado;
     private javax.swing.JLabel jlbRfcCliente;
     private javax.swing.JLabel jlbRfcEmpleado;
     private javax.swing.JLabel jlbRfcEmpresa;
     private javax.swing.JLabel jlbRfcProveedor;
+    private javax.swing.JLabel jlbSignoTotal;
     private javax.swing.JLabel jlbTelefonoCliente;
     private javax.swing.JLabel jlbTelefonoEmpleado;
     private javax.swing.JLabel jlbTelefonoEmpresa;
@@ -4630,6 +5016,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jlbTituloPedido3;
     private javax.swing.JLabel jlbTituloProducto;
     private javax.swing.JLabel jlbTituloProveedor;
+    private javax.swing.JLabel jlbTotalVenta1;
+    private javax.swing.JLabel jlbTotalVenta3;
     private javax.swing.JLabel jlbUsuarioEmpleado;
     private javax.swing.JLabel jlbfolioPedido;
     private javax.swing.JPanel jpBarraInferiorCliente;
@@ -4667,6 +5055,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jpOpcionesMenu;
     private javax.swing.JPanel jpOpcionesPoliticas;
     private javax.swing.JPanel jpOpcionesyAsistencia;
+    private javax.swing.JPanel jpPanelInferiorVenta;
+    private javax.swing.JPanel jpPanelSuperiorVenta;
     private javax.swing.JPanel jpPedido;
     private javax.swing.JPanel jpPestañaCompletado;
     private javax.swing.JPanel jpPestañaEnviado;
@@ -4679,12 +5069,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jpReportes;
     private javax.swing.JPanel jpVenta;
     private javax.swing.JTable jtbCliente;
+    private javax.swing.JTable jtbDetalleVenta;
     private javax.swing.JTable jtbEmpleado;
     private javax.swing.JTable jtbPedido;
     private javax.swing.JTable jtbPedido1;
     private javax.swing.JTable jtbPedido2;
     private javax.swing.JTable jtbPedidoRecibido;
     private javax.swing.JTable jtbPedidogenral;
+    private javax.swing.JTable jtbProductoVenta;
     private javax.swing.JTable jtbProveedor;
     private javax.swing.JTable jtbTransferido;
     private javax.swing.JTextField jtxApellidosClientes;
@@ -4695,9 +5087,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JTextField jtxBuscarPedido;
     private javax.swing.JTextField jtxBuscarPedido1;
     private javax.swing.JTextField jtxBuscarProducto;
+    private javax.swing.JTextField jtxBuscarProductoVenta;
     private javax.swing.JTextField jtxBuscarProveedor;
     private javax.swing.JTextField jtxCalleyNumCliente;
     private javax.swing.JTextField jtxCalleyNumEmpleado;
+    private javax.swing.JTextField jtxCambio;
     private javax.swing.JTextField jtxClientePedido;
     private javax.swing.JTextField jtxColoniaCliente;
     private javax.swing.JTextField jtxColoniaEmpleado;
@@ -4719,6 +5113,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JTextField jtxIdCliente;
     private javax.swing.JTextField jtxIdEmpleado;
     private javax.swing.JTextField jtxIdProveedor;
+    public javax.swing.JTextField jtxIva;
     private javax.swing.JTextField jtxLocalidadEmpresa;
     private javax.swing.JTextField jtxMunicipioCliente;
     private javax.swing.JTextField jtxMunicipioEmpleado;
@@ -4729,6 +5124,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JTextField jtxNombreProveedor;
     private javax.swing.JTextField jtxNssEmpleado;
     private javax.swing.JTextField jtxNumEmpleadosEmpresa;
+    private javax.swing.JTextField jtxPagoPor1;
     private javax.swing.JTextField jtxReferenciaCliente;
     private javax.swing.JTextField jtxReferenciasEmpleado;
     private javax.swing.JTextField jtxRfcCliente;
@@ -4736,11 +5132,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JTextField jtxRfcEmpleado;
     private javax.swing.JTextField jtxRfcEmpresa;
     private javax.swing.JTextField jtxRfcProveedor;
+    public javax.swing.JTextField jtxSubtotalVenta;
     private javax.swing.JTextField jtxTelefonoCliente;
     private javax.swing.JTextField jtxTelefonoEmpleado;
     private javax.swing.JTextField jtxTelefonoEmpresa;
     private javax.swing.JTextField jtxTelefonoPedido;
     private javax.swing.JTextField jtxTelefonoProveedor;
+    public javax.swing.JTextField jtxTotalVenta;
     private javax.swing.JTextField jtxUsuarioEmpleado;
     private javax.swing.JTextField jtxfolioPedido;
     // End of variables declaration//GEN-END:variables

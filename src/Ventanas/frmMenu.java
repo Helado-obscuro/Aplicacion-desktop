@@ -588,8 +588,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jSeparator50 = new javax.swing.JSeparator();
         jlbBuscarPedido2 = new javax.swing.JLabel();
         jbnCerrarVenta = new javax.swing.JButton();
-        jbnEliminarProducto2 = new javax.swing.JButton();
-        jbnRegresarEmpleado1 = new javax.swing.JButton();
+        jbnCarritoVenta = new javax.swing.JButton();
+        jbnRegresarVenta = new javax.swing.JButton();
         jScrollPane14 = new javax.swing.JScrollPane();
         jtbProductoVenta = new javax.swing.JTable();
         jScrollPane15 = new javax.swing.JScrollPane();
@@ -612,7 +612,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jSeparator61 = new javax.swing.JSeparator();
         jtxPagoPor1 = new javax.swing.JTextField();
         jpPanelInferiorVenta = new javax.swing.JPanel();
-        jbnAgregarProveedor2 = new javax.swing.JButton();
+        jbnFinalizarVenta = new javax.swing.JButton();
         jbnCerrarSesionVenta = new javax.swing.JButton();
         jbnCancelarVenta = new javax.swing.JButton();
         jpPanelContenedor = new javax.swing.JPanel();
@@ -3412,34 +3412,34 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jbnEliminarProducto2.setBackground(new java.awt.Color(145, 36, 36));
-        jbnEliminarProducto2.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
-        jbnEliminarProducto2.setForeground(new java.awt.Color(255, 255, 255));
-        jbnEliminarProducto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Shopping Cart_50px.png"))); // NOI18N
-        jbnEliminarProducto2.setText("0");
-        jbnEliminarProducto2.setBorderPainted(false);
-        jbnEliminarProducto2.setContentAreaFilled(false);
-        jbnEliminarProducto2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jbnEliminarProducto2.setSelected(true);
-        jbnEliminarProducto2.addActionListener(new java.awt.event.ActionListener() {
+        jbnCarritoVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCarritoVenta.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        jbnCarritoVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnCarritoVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Shopping Cart_50px.png"))); // NOI18N
+        jbnCarritoVenta.setText("0");
+        jbnCarritoVenta.setBorderPainted(false);
+        jbnCarritoVenta.setContentAreaFilled(false);
+        jbnCarritoVenta.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jbnCarritoVenta.setSelected(true);
+        jbnCarritoVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnEliminarProducto2ActionPerformed(evt);
+                jbnCarritoVentaActionPerformed(evt);
             }
         });
 
-        jbnRegresarEmpleado1.setBackground(new java.awt.Color(145, 36, 36));
-        jbnRegresarEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jbnRegresarEmpleado1.setForeground(new java.awt.Color(255, 255, 255));
-        jbnRegresarEmpleado1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
-        jbnRegresarEmpleado1.setText("Regresar a menu");
-        jbnRegresarEmpleado1.setBorderPainted(false);
-        jbnRegresarEmpleado1.setContentAreaFilled(false);
-        jbnRegresarEmpleado1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jbnRegresarEmpleado1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
-        jbnRegresarEmpleado1.setSelected(true);
-        jbnRegresarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
+        jbnRegresarVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnRegresarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jbnRegresarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnRegresarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
+        jbnRegresarVenta.setText("Regresar a menu");
+        jbnRegresarVenta.setBorderPainted(false);
+        jbnRegresarVenta.setContentAreaFilled(false);
+        jbnRegresarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnRegresarVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnRegresarVenta.setSelected(true);
+        jbnRegresarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnRegresarEmpleado1ActionPerformed(evt);
+                jbnRegresarVentaActionPerformed(evt);
             }
         });
 
@@ -3455,10 +3455,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                     .addComponent(jSeparator50))
                 .addGap(67, 67, 67)
-                .addComponent(jbnRegresarEmpleado1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
-                .addComponent(jbnEliminarProducto2)
-                .addGap(139, 139, 139)
+                .addComponent(jbnRegresarVenta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addComponent(jbnCarritoVenta)
+                .addGap(150, 150, 150)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jpPanelSuperiorVentaLayout.setVerticalGroup(
@@ -3474,9 +3474,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbBuscarPedido2)
-                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbnRegresarEmpleado1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbnEliminarProducto2, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbnCarritoVenta)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3633,18 +3633,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpPanelInferiorVenta.setBackground(new java.awt.Color(22, 114, 185));
 
-        jbnAgregarProveedor2.setBackground(new java.awt.Color(145, 36, 36));
-        jbnAgregarProveedor2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jbnAgregarProveedor2.setForeground(new java.awt.Color(255, 255, 255));
-        jbnAgregarProveedor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Ok_48px.png"))); // NOI18N
-        jbnAgregarProveedor2.setText("Finalizar Venta");
-        jbnAgregarProveedor2.setBorderPainted(false);
-        jbnAgregarProveedor2.setContentAreaFilled(false);
-        jbnAgregarProveedor2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Ok_48px_4.png"))); // NOI18N
-        jbnAgregarProveedor2.setSelected(true);
-        jbnAgregarProveedor2.addActionListener(new java.awt.event.ActionListener() {
+        jbnFinalizarVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnFinalizarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jbnFinalizarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnFinalizarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Ok_48px.png"))); // NOI18N
+        jbnFinalizarVenta.setText("Finalizar Venta");
+        jbnFinalizarVenta.setBorderPainted(false);
+        jbnFinalizarVenta.setContentAreaFilled(false);
+        jbnFinalizarVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Ok_48px_4.png"))); // NOI18N
+        jbnFinalizarVenta.setSelected(true);
+        jbnFinalizarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnAgregarProveedor2ActionPerformed(evt);
+                jbnFinalizarVentaActionPerformed(evt);
             }
         });
 
@@ -3688,7 +3688,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
                 .addComponent(jbnCancelarVenta)
                 .addGap(63, 63, 63)
-                .addComponent(jbnAgregarProveedor2)
+                .addComponent(jbnFinalizarVenta)
                 .addGap(61, 61, 61))
         );
         jpPanelInferiorVentaLayout.setVerticalGroup(
@@ -3699,7 +3699,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     .addComponent(jbnCerrarSesionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbnCancelarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jbnAgregarProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jbnFinalizarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -4903,17 +4903,39 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         System.exit(0);
     }//GEN-LAST:event_jbnCerrarVentaActionPerformed
 
-    private void jbnAgregarProveedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAgregarProveedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnAgregarProveedor2ActionPerformed
+    private void jbnFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnFinalizarVentaActionPerformed
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        abrirOpcion(jpPrincipal, jpMenu);
+        LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
+        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
+        objVenta.setSubtotal(Double.parseDouble(jtxSubtotalVenta.getText()));
+        objVenta.setTotal(objDetalleVenta.TotalVenta(objVenta.MaximoidOrden()));
+        objVenta.setTotalaDescontar(0);
+        objVenta.setIva(Double.parseDouble(jtxIva.getText()));
+        objVenta.setIdDescuento(0);
+        objVenta.modificarVenta();
+         
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        objOrdenes.setIdCliente(31);
+//        objOrdenes.setCosto(Double.parseDouble(jtxTotalVenta.getText()));
+//        objOrdenes.setStatus("Completado");
+//        objOrdenes.setFecha((java.sql.Date.valueOf(dateFormat.format(date))) );
+//        objOrdenes.setCodigoTransaccion(objOrdenes.consultaCodigo(objOrdenes.MaximoidOrden()));
+//        objOrdenes.setMetodoPago("efectivo");
+//        objOrdenes.modificarOrden(objOrdenes.MaximoidOrden());
+//        JOptionPane.showMessageDialog(this, "Venta finalizada","",EXIT_ON_CLOSE);
+//        cotadorPizza=0;
+        
+    }//GEN-LAST:event_jbnFinalizarVentaActionPerformed
 
     private void jbnCerrarSesionVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarSesionVentaActionPerformed
         
     }//GEN-LAST:event_jbnCerrarSesionVentaActionPerformed
 
-    private void jbnEliminarProducto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarProducto2ActionPerformed
+    private void jbnCarritoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCarritoVentaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbnEliminarProducto2ActionPerformed
+    }//GEN-LAST:event_jbnCarritoVentaActionPerformed
 
     private void jbnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCancelarVentaActionPerformed
         regresarMenu();
@@ -4922,19 +4944,20 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
         objVenta.bajaVenta();
+        banderitaDetalleVentecita=0;
         
      JOptionPane.showMessageDialog(null,"Venta cancelada");
     }//GEN-LAST:event_jbnCancelarVentaActionPerformed
 
-    private void jbnRegresarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarEmpleado1ActionPerformed
-     regresarMenu();
+    private void jbnRegresarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarVentaActionPerformed
+        regresarMenu();
         objVenta.setIdVenta(objVenta.MaximoidOrden());
         if(banderitaDetalleVentecita!=0){
         objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
         objVenta.bajaVenta();
-        
-    }//GEN-LAST:event_jbnRegresarEmpleado1ActionPerformed
+        banderitaDetalleVentecita=0;
+    }//GEN-LAST:event_jbnRegresarVentaActionPerformed
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
@@ -5127,8 +5150,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnAgregarEmpresa;
     private javax.swing.JButton jbnAgregarProveedor;
     private javax.swing.JButton jbnAgregarProveedor1;
-    private javax.swing.JButton jbnAgregarProveedor2;
     private javax.swing.JButton jbnCancelarVenta;
+    public javax.swing.JButton jbnCarritoVenta;
     private javax.swing.JButton jbnCerrar;
     private javax.swing.JButton jbnCerrar1;
     private javax.swing.JButton jbnCerrarEmpleado;
@@ -5150,16 +5173,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnEliminarCliente2;
     private javax.swing.JButton jbnEliminarEmpleado;
     private javax.swing.JButton jbnEliminarProducto;
-    private javax.swing.JButton jbnEliminarProducto2;
     private javax.swing.JButton jbnEliminarProveedor;
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
+    private javax.swing.JButton jbnFinalizarVenta;
     private javax.swing.JButton jbnPedidos;
     private javax.swing.JButton jbnProducto;
     private javax.swing.JButton jbnProveedor;
     private javax.swing.JButton jbnRegresarCliente;
     private javax.swing.JButton jbnRegresarEmpleado;
-    private javax.swing.JButton jbnRegresarEmpleado1;
     private javax.swing.JButton jbnRegresarEmpresa;
     private javax.swing.JButton jbnRegresarOpciones;
     private javax.swing.JButton jbnRegresarPedido;
@@ -5167,6 +5189,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnRegresarPedido2;
     private javax.swing.JButton jbnRegresarProducto;
     private javax.swing.JButton jbnRegresarProveedor;
+    public javax.swing.JButton jbnRegresarVenta;
     private javax.swing.JButton jbnRerportes;
     private javax.swing.JButton jbnVenta;
     private javax.swing.JComboBox<String> jcbxClienteVenta;

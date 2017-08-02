@@ -5,7 +5,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import Modelo.Empleado;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
+import java.awt.event.KeyEvent; 
 import javax.swing.JOptionPane;
 
 

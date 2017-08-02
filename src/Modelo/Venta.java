@@ -16,11 +16,28 @@ public class Venta {
  private double subtotal;
  private double iva;
  
+ 
  private double totalaDescontar;
  private int idDescuento;
        
  
  Conexion  obj = new Conexion();
+
+    public double getTotalaDescontar() {
+        return totalaDescontar;
+    }
+
+    public void setTotalaDescontar(double totalaDescontar) {
+        this.totalaDescontar = totalaDescontar;
+    }
+
+    public int getIdDescuento() {
+        return idDescuento;
+    }
+
+    public void setIdDescuento(int idDescuento) {
+        this.idDescuento = idDescuento;
+    }
  
  
     public Venta(){
@@ -71,7 +88,7 @@ public class Venta {
  PreparedStatement conectar;
     obj.conectar();
         try {
-            conectar = obj.conexion.prepareStatement("insert into ordenes venta values(?,?,?,?,?,?,?)");
+            conectar = obj.conexion.prepareStatement("insert into venta values(?,?,?,?,?,?,?)");
             conectar.setInt(1, idVenta);
             conectar.setDate(2, (java.sql.Date) fechaVenta);
             conectar.setDouble(3, subtotal);
@@ -96,7 +113,7 @@ public class Venta {
             comando=obj.conexion.prepareStatement("Delete from venta where idVenta=?");
             comando.setInt(1, idVenta);
             int resp = comando.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se elimino con exito la venta");    
+            //JOptionPane.showMessageDialog(null, "Se elimino con exito la venta");    
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede eliminar"+ex);
         }
@@ -159,6 +176,27 @@ public class Venta {
         }
         
    }
+ 
+ public int MaximoidOrden(){
+ int i=0;   
+ PreparedStatement comando;
+ ResultSet resultado;
+ obj.conectar();
+ 
+    try {
+        comando=obj.conexion.prepareCall("Select max(idVenta) from venta");
+        resultado=comando.executeQuery();
+        
+         if(resultado.first()){
+            i=resultado.getInt("max(idVenta)");
+         }                
+    }catch (SQLException ex) {
+       JOptionPane.showMessageDialog(null, ex);
+    }
+
+
+return i;
+}
 
     
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -101,7 +102,7 @@ public class Cliente extends Persona{
  //metodo para llenar la tabla Cliente
  public void consultaCliente(DefaultTableModel tablaCliente){
      
-     Object[] obj1= new Object[6];
+     Object[] obj1= new Object[5];
 
  PreparedStatement com;
  ResultSet res;
@@ -110,7 +111,6 @@ public class Cliente extends Persona{
      if(contadorcitoCliente ==0){
      tablaCliente.addColumn("idCliente");
      tablaCliente.addColumn("Nombre");
-     tablaCliente.addColumn("Apellidos");
      tablaCliente.addColumn("Teléfono");
      tablaCliente.addColumn("Email");
      tablaCliente.addColumn("Domicilio");
@@ -124,7 +124,7 @@ public class Cliente extends Persona{
                 
         while(res.next()){
             
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 5; i++) {
             obj1[i] = res.getObject(i+1);
             }
         tablaCliente.addRow(obj1);
@@ -140,7 +140,7 @@ public class Cliente extends Persona{
                 ResultSet resultado;
                 obj.conectar();
             try {     
-                comando= obj.conexion.prepareCall("select * from vista_clientepersona where (upper(idCliente) like '%"+buscar+"%') or (upper(nombre) like '%"+buscar+"%') or (upper(apellidos) like '%"+buscar+"%') or (upper(telefono) like '%"+buscar+"%') or (upper(email) like '%"+buscar+"%') or (upper(domicilio) like '%"+buscar+"%')");
+                comando= obj.conexion.prepareCall("select * from vista_clientepersona where (upper(idCliente) like '%"+buscar+"%') or (upper(Nombre) like '%"+buscar+"%') or (upper(telefono) like '%"+buscar+"%') or (upper(email) like '%"+buscar+"%') or (upper(domicilio) like '%"+buscar+"%')");
              
                 resultado=comando.executeQuery();
                 
@@ -227,6 +227,25 @@ PreparedStatement conectar;
           
         }
  }
-    
+    public void ConsultarNombre(DefaultComboBoxModel model){
+ 
+ 
+ PreparedStatement comando;
+ ResultSet resultado;
+ obj.conectar();
+    try {
+        comando=obj.conexion.prepareCall("select Nombre from vista_clientepersona");
+        
+        resultado=comando.executeQuery();
+        
+        while(resultado.next()){
+           for (int i = 0; i < 1; i++){
+                model.addElement(resultado.getString(i+1));
+            }
+        }
+    } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }// fin del try-cach
+}
     
 }

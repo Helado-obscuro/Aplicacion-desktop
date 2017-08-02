@@ -1,12 +1,22 @@
 package Modelo;
 
 import java.sql.PreparedStatement;
+<<<<<<< HEAD
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+=======
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> upstream/dnop
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
+
 
 public class Producto {
 
@@ -18,11 +28,14 @@ private String descripcionProd;
 private double precioCompra;
 private double precioVenta;
 private String ubicacion;
+int contadorcito =0;
+
 private String imagen;
 private String cbarras;
 private String categoria;
 
 Conexion obj= new Conexion();
+
 
 public Producto(){
     
@@ -94,11 +107,11 @@ public Producto(){
         this.pedimento = pedimento;
     }
 
-    public int getStok() {
+    public int getStock() {
         return stok;
     }
 
-    public void setStok(int stok) {
+    public void setStock(int stok) {
         this.stok = stok;
     }
 
@@ -162,6 +175,7 @@ public Producto(){
  public void bajaProducto(){
 
  }
+<<<<<<< HEAD
  
     public void consultaProductoID(int idc) {
         try {
@@ -193,8 +207,67 @@ public Producto(){
 
     
  public void modificarProducto(){
-
+=======
+ public void consultaProducto(DefaultTableModel tablaProducto){
+Object[] obj1= new Object[4];
+ PreparedStatement com;
+ ResultSet res;
+ obj.conectar();
+ 
+     if(contadorcito ==0){
+     tablaProducto.addColumn("idProducto");
+     tablaProducto.addColumn("Producto");
+     tablaProducto.addColumn("stock");
+     tablaProducto.addColumn("Precio");    
+     contadorcito++; 
+     }
+                
+    try {
+        com=obj.conexion.prepareCall("Select * from vista_producto");
+        res=com.executeQuery();
+                
+        while(res.next()){
+            
+            for (int i = 0; i < 4; i++) {
+            obj1[i] = res.getObject(i+1);
+            }
+        tablaProducto.addRow(obj1);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,"No se puede realizar la consulta por este momento");
+    }  
  }
+public void consultaDatosProducto(){
+
+            PreparedStatement comando;
+            ResultSet resultado;
+            obj.conectar();
+        try {    
+            comando= obj.conexion.prepareCall("Select * from producto WHERE idProducto=?");
+            comando.setInt(1,idProducto);
+            resultado=comando.executeQuery();
+            
+            if(resultado.first()){
+            idProducto=resultado.getInt("idProducto");
+            nombreProducto=resultado.getString("nombreProducto");
+            stok=resultado.getInt("stock");
+            precioVenta=resultado.getDouble("precioVenta");
+            
+            }else{
+            
+            JOptionPane.showMessageDialog(null,"No se puede realizar la consulta");
+            idProducto=resultado.getInt("idProducto");
+            nombreProducto=resultado.getString("nombreProducto");
+            stok=resultado.getInt("stock");
+            precioVenta=resultado.getDouble("precioVenta");
+            
+            }// fin del else 
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }// fin del try-cach
+    }
+>>>>>>> upstream/dnop
+
 
    
 }

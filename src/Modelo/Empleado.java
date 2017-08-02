@@ -15,6 +15,8 @@ private String usuario;
 private String contrasena;
 private int nss;
 
+private String id;
+
 Conexion obj= new Conexion();
 
  int contador=0;
@@ -222,6 +224,7 @@ public Empleado (){
          if(resultado.first()){
              
              if((getContrasena()).equals(resultado.getString("contrasena"))){
+               this.id =  resultado.getString("rfcEmpleado");
                 i=1;
              }else
                  i=2;
@@ -237,6 +240,10 @@ public Empleado (){
 
     return i;
 
+ }
+ 
+ public String getID(){
+     return this.id;
  }
 
 public void bajaEmpleado(){

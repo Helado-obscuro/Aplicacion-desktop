@@ -12,13 +12,16 @@ public class frmSplash extends javax.swing.JFrame {
     
     private Timer t;
     private final ActionListener al;
+    private int idemp;
     frmMenu menu;
     frmLogin inicio;
     /* Creates new form frmSplash
      */
-    public frmSplash(frmLogin l, frmMenu m) {
+    public frmSplash(frmLogin l, frmMenu m, int idEmp) {
         inicio=l;
         menu = m;
+        idemp = idEmp;
+        
        
         al = new ActionListener() {
             @Override

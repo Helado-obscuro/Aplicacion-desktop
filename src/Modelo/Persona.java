@@ -2,8 +2,11 @@ package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Persona {
@@ -195,6 +198,30 @@ public Persona(){
           
         }
 
+ }
+ 
+ public int buscarPersonaRFC(String rfcp){
+     int idE=-1;
+     
+      try {
+            PreparedStatement conectar;
+            obj.conectar();
+            conectar = obj.conexion.prepareStatement("SELECT * FROM persona WHERE rfcPersona = ?");
+            conectar.setString(1, rfcp);
+            System.out.println("RFC a buscar: "+rfcp);
+            //ejecutar sentencia
+            ResultSet rs = conectar.executeQuery();
+            while (rs.next()) {
+                idE = rs.getInt("idEmp");
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+     return idE;
+     
  }
 
 

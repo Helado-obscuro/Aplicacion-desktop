@@ -268,6 +268,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         return jpListaProd;
     }
 
+    public Producto getProducto(){
+        return objProducto;
+    }
     //Metodo de filtros   
     public void filtroEmpleado() {
         String buscarEmpleado = jtxBuscarEmpleado.getText();

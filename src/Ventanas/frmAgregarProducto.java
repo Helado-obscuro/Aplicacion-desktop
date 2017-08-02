@@ -13,19 +13,22 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sun.invoke.empty.Empty;
 import Modelo.Producto;
+import Modelo.DetalleVenta;
+import Modelo.Venta;
 
 public class frmAgregarProducto extends javax.swing.JDialog {
  //Modelo del combobox
  DefaultComboBoxModel comboTamano = new DefaultComboBoxModel();
-  Date date = new Date();    
+ Date date = new Date();    
  java.util.Date dt = new java.util.Date();
  java.text.DecimalFormat formato = new java.text.DecimalFormat("#.##");
 //Instancia de las clase pizza
 frmMenu objMenu; 
 //Variable auxiliar
- private int categoria=0; 
  
  Producto objProducto = new Producto();
+Venta ObjVenta = new Venta();
+ DetalleVenta objDetalle = new DetalleVenta();
  //Variables par el contsto total
  
  public frmAgregarProducto(java.awt.Frame parent, boolean modal,int id,  frmMenu f) {
@@ -33,7 +36,7 @@ frmMenu objMenu;
         super(parent, modal);
         this.objProducto.setIdProducto(id);
         objMenu = f;
-//        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icono.png")).getImage());
+
         initComponents();
 //        
         jtxPrecioProducto.setText(String.valueOf(objProducto.getIdProducto()));
@@ -41,9 +44,6 @@ frmMenu objMenu;
         jlbNombreProducto.setText(String.valueOf(objProducto.getNombreProducto()));
         jtxPrecioProducto.setText(String.valueOf(objProducto.getPrecioVenta()));
         
-//        //LLenado del combobox
-//        objPizzas.ConsultarTamano(comboTamano, this.categoria);  
-//        
  }
        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,7 +56,7 @@ frmMenu objMenu;
         jPanel2 = new javax.swing.JPanel();
         jlbNombreProducto = new javax.swing.JLabel();
         jlbFoto = new javax.swing.JLabel();
-        jlbCostoPizza = new javax.swing.JLabel();
+        jlbCostoProducto = new javax.swing.JLabel();
         jlbCantidadProducto = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jbnAgregar = new javax.swing.JButton();
@@ -109,9 +109,9 @@ frmMenu objMenu;
         jlbFoto.setOpaque(true);
         jPanel1.add(jlbFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 140));
 
-        jlbCostoPizza.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        jlbCostoPizza.setForeground(new java.awt.Color(255, 102, 0));
-        jPanel1.add(jlbCostoPizza, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, 40));
+        jlbCostoProducto.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        jlbCostoProducto.setForeground(new java.awt.Color(255, 102, 0));
+        jPanel1.add(jlbCostoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, 40));
 
         jlbCantidadProducto.setDisplayedMnemonic('c');
         jlbCantidadProducto.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
@@ -124,9 +124,10 @@ frmMenu objMenu;
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 160, 20));
 
         jbnAgregar.setBackground(new java.awt.Color(145, 36, 36));
+        jbnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px_1_1.png"))); // NOI18N
         jbnAgregar.setBorderPainted(false);
         jbnAgregar.setContentAreaFilled(false);
-        jbnAgregar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px.png"))); // NOI18N
+        jbnAgregar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_54px.png"))); // NOI18N
         jbnAgregar.setSelected(true);
         jbnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,8 +194,8 @@ frmMenu objMenu;
 
     private void jbnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAgregarActionPerformed
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        
-//        if(objMenu.cotadorPizza==0){
+       
+          // if(objMenu.contadorVenta==0){
 //         codiguito=getCadenaAlfanumAleatoria(8);
 //         objOrdenes.setIdCliente(31);
 //         objOrdenes.setCosto(0);
@@ -205,16 +206,23 @@ frmMenu objMenu;
 //         objOrdenes.altaOrden();
 //         objMenu.cotadorPizza++;
 //        }
-//        
-//        objDetalle.setIdOrden(objOrdenes.MaximoidOrden());
-//        objDetalle.setCantidad(Integer.parseInt(jtxCantidadProducto.getText()));
-//        objDetalle.setPrecio(objPizzas.ConsultarPrecio((String) jcmTamano.getSelectedItem(), categoria));
-//        objDetalle.setTotal(Precio());
-//        objDetalle.setNombrePizza(jlbNombrePizza.getText());
-//        objDetalle.setTamanoPizza((String) jcmTamano.getSelectedItem());
-//        objDetalle.setCodigoTransaccion(objOrdenes.consultaCodigo(objOrdenes.MaximoidOrden()));
-//        objDetalle.altaDetalle();
-//
+  
+          if(jtxCantidadProducto.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this,"Ingresa la cantidad de producto a vender");
+          }else{
+              
+          jlbCostoProducto.setText(String.valueOf(Precio()));
+          objDetalle.setIdProducto(this.objProducto.getIdProducto());
+          objDetalle.setCantidad(Integer.valueOf(jtxCantidadProducto.getText()));
+          objDetalle.setMonto(Double.parseDouble(jlbCostoProducto.getText()));
+          objDetalle.setIdVenta(ObjVenta.MaximoidOrden());
+          objDetalle.altaDetalleVenta();
+          objMenu.banderitaDetalleVentecita=1;
+          objMenu.LimpiarTabla(objMenu.jtbDetalleVenta, objMenu.modeloDetalleVenta);
+          objMenu.objDetalleVenta.ConsultaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
+          objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta());
+          
+          }
 //        objMenu.jlbPasosVenta1.setText("Paso 2  Click al carro de venta");
 //        objMenu.jlbPasosVenta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Circled 2 C_48px.png")));
 //        //Control de pizzas y cantidad con consulta a base de datos
@@ -236,7 +244,7 @@ frmMenu objMenu;
     private void jtxCantidadProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxCantidadProductoKeyPressed
            if(evt.getKeyCode() == KeyEvent.VK_ENTER){
           
-           jlbCostoPizza.setText(String.valueOf(Precio()));
+           jlbCostoProducto.setText(String.valueOf(Precio()));
            }
     }//GEN-LAST:event_jtxCantidadProductoKeyPressed
 
@@ -274,13 +282,13 @@ frmMenu objMenu;
          
  public double Precio(){
          //Variables para el costo del detalle
-         int sum1=0;
-         double  sum3=0, sum2=0;
-           sum1=Integer.parseInt(jtxCantidadProducto.getText());
-           //sum2=objPizzas.ConsultarPrecio((String) jcmTamano.getSelectedItem(), categoria);
-           sum3=sum1*sum2;
            
-          return sum3;       
+           int sum1=0;
+           double  sum3=0, sum2=0;
+           sum1=Integer.parseInt(jtxCantidadProducto.getText());
+           sum3=sum1*objProducto.getPrecioVenta();
+           
+           return sum3;       
 }
     /**
      * @param args the command line arguments
@@ -337,8 +345,8 @@ frmMenu objMenu;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JButton jbnAgregar;
     private javax.swing.JLabel jlbCantidadProducto;
-    private javax.swing.JLabel jlbCostoPizza;
     private javax.swing.JLabel jlbCostoPizza1;
+    private javax.swing.JLabel jlbCostoProducto;
     private javax.swing.JLabel jlbFoto;
     public javax.swing.JLabel jlbNombreProducto;
     private javax.swing.JLabel jlbPrecioProducto;

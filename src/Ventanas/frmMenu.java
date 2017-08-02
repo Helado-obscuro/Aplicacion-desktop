@@ -47,6 +47,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 public class frmMenu extends javax.swing.JFrame implements ActionListener {
@@ -58,7 +59,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     DefaultTableModel modeloProveedor = new DefaultTableModel();
     DefaultTableModel modeloPedido = new DefaultTableModel();
     DefaultTableModel modeloProductoVenta = new DefaultTableModel();
-
+    DefaultTableModel modeloDetalleVenta = new DefaultTableModel();
     //Modelo Combox
     DefaultComboBoxModel comboClienteVenta = new DefaultComboBoxModel();
     //modelo para la fecha 
@@ -89,6 +90,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private final JMenuItem menuItemDesglosarPedido;
 
     frmLogin inicio;
+    
+    //variables auxiliares 
+    int banderitaDetalleVentecita=0;
 
     //Variables para mover la pantaña
     int x = 0, y = 0;
@@ -581,6 +585,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbBuscarPedido2 = new javax.swing.JLabel();
         jbnCerrarVenta = new javax.swing.JButton();
         jbnEliminarProducto2 = new javax.swing.JButton();
+        jbnRegresarEmpleado1 = new javax.swing.JButton();
         jScrollPane14 = new javax.swing.JScrollPane();
         jtbProductoVenta = new javax.swing.JTable();
         jScrollPane15 = new javax.swing.JScrollPane();
@@ -604,8 +609,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxPagoPor1 = new javax.swing.JTextField();
         jpPanelInferiorVenta = new javax.swing.JPanel();
         jbnAgregarProveedor2 = new javax.swing.JButton();
-        jbnEliminarProducto1 = new javax.swing.JButton();
-        jbnEliminarProducto3 = new javax.swing.JButton();
+        jbnCerrarSesionVenta = new javax.swing.JButton();
+        jbnCancelarVenta = new javax.swing.JButton();
         jpPanelContenedor = new javax.swing.JPanel();
         jlbBuscarPedido3 = new javax.swing.JLabel();
         jpReportes = new javax.swing.JPanel();
@@ -3418,6 +3423,22 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        jbnRegresarEmpleado1.setBackground(new java.awt.Color(145, 36, 36));
+        jbnRegresarEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jbnRegresarEmpleado1.setForeground(new java.awt.Color(255, 255, 255));
+        jbnRegresarEmpleado1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
+        jbnRegresarEmpleado1.setText("Regresar a menu");
+        jbnRegresarEmpleado1.setBorderPainted(false);
+        jbnRegresarEmpleado1.setContentAreaFilled(false);
+        jbnRegresarEmpleado1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnRegresarEmpleado1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnRegresarEmpleado1.setSelected(true);
+        jbnRegresarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnRegresarEmpleado1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpPanelSuperiorVentaLayout = new javax.swing.GroupLayout(jpPanelSuperiorVenta);
         jpPanelSuperiorVenta.setLayout(jpPanelSuperiorVentaLayout);
         jpPanelSuperiorVentaLayout.setHorizontalGroup(
@@ -3429,7 +3450,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                     .addComponent(jSeparator50))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 477, Short.MAX_VALUE)
+                .addGap(67, 67, 67)
+                .addComponent(jbnRegresarEmpleado1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addComponent(jbnEliminarProducto2)
                 .addGap(139, 139, 139)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3447,7 +3470,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbBuscarPedido2)
-                    .addComponent(jbnEliminarProducto2))
+                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jbnRegresarEmpleado1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbnEliminarProducto2, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3477,7 +3502,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jtbDetalleVenta.setAutoCreateRowSorter(true);
         jtbDetalleVenta.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtbDetalleVenta.setModel(modeloProveedor);
+        jtbDetalleVenta.setModel(modeloDetalleVenta);
         jtbDetalleVenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtbDetalleVenta.setGridColor(new java.awt.Color(255, 255, 255));
         jtbDetalleVenta.setRowHeight(25);
@@ -3619,33 +3644,33 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jbnEliminarProducto1.setBackground(new java.awt.Color(145, 36, 36));
-        jbnEliminarProducto1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jbnEliminarProducto1.setForeground(new java.awt.Color(255, 255, 255));
-        jbnEliminarProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Door Opened_50px.png"))); // NOI18N
-        jbnEliminarProducto1.setText("Cerrar sesión");
-        jbnEliminarProducto1.setBorderPainted(false);
-        jbnEliminarProducto1.setContentAreaFilled(false);
-        jbnEliminarProducto1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Door Closed_50px_1.png"))); // NOI18N
-        jbnEliminarProducto1.setSelected(true);
-        jbnEliminarProducto1.addActionListener(new java.awt.event.ActionListener() {
+        jbnCerrarSesionVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCerrarSesionVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jbnCerrarSesionVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnCerrarSesionVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Door Opened_50px.png"))); // NOI18N
+        jbnCerrarSesionVenta.setText("Cerrar sesión");
+        jbnCerrarSesionVenta.setBorderPainted(false);
+        jbnCerrarSesionVenta.setContentAreaFilled(false);
+        jbnCerrarSesionVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Door Closed_50px_1.png"))); // NOI18N
+        jbnCerrarSesionVenta.setSelected(true);
+        jbnCerrarSesionVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnEliminarProducto1ActionPerformed(evt);
+                jbnCerrarSesionVentaActionPerformed(evt);
             }
         });
 
-        jbnEliminarProducto3.setBackground(new java.awt.Color(145, 36, 36));
-        jbnEliminarProducto3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jbnEliminarProducto3.setForeground(new java.awt.Color(255, 255, 255));
-        jbnEliminarProducto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
-        jbnEliminarProducto3.setText("Cancelar Venta");
-        jbnEliminarProducto3.setBorderPainted(false);
-        jbnEliminarProducto3.setContentAreaFilled(false);
-        jbnEliminarProducto3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_1.png"))); // NOI18N
-        jbnEliminarProducto3.setSelected(true);
-        jbnEliminarProducto3.addActionListener(new java.awt.event.ActionListener() {
+        jbnCancelarVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCancelarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jbnCancelarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jbnCancelarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
+        jbnCancelarVenta.setText("Cancelar Venta");
+        jbnCancelarVenta.setBorderPainted(false);
+        jbnCancelarVenta.setContentAreaFilled(false);
+        jbnCancelarVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_1.png"))); // NOI18N
+        jbnCancelarVenta.setSelected(true);
+        jbnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbnEliminarProducto3ActionPerformed(evt);
+                jbnCancelarVentaActionPerformed(evt);
             }
         });
 
@@ -3655,9 +3680,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPanelInferiorVentaLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(jbnEliminarProducto1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 406, Short.MAX_VALUE)
-                .addComponent(jbnEliminarProducto3)
+                .addComponent(jbnCerrarSesionVenta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+                .addComponent(jbnCancelarVenta)
                 .addGap(63, 63, 63)
                 .addComponent(jbnAgregarProveedor2)
                 .addGap(61, 61, 61))
@@ -3667,10 +3692,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             .addGroup(jpPanelInferiorVentaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbnEliminarProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbnCerrarSesionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpPanelInferiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbnEliminarProducto3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE)
-                        .addComponent(jbnAgregarProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE)))
+                        .addComponent(jbnCancelarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jbnAgregarProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -4283,11 +4308,20 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jbnProveedorActionPerformed
 
     private void jbnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnVentaActionPerformed
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         abrirOpcion(jpPrincipal, jpVenta);
         LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
         objProductoVenta.consultaProducto(modeloProductoVenta);
         objCliente.ConsultarNombre(comboClienteVenta);
-
+        objVenta.setIdVenta(objVenta.MaximoidOrden()+1);
+        objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
+        objVenta.setSubtotal(0);
+        objVenta.setTotal(0);
+        objVenta.setTotalaDescontar(0);
+        objVenta.setIva(0);
+        objVenta.setIdDescuento(0);
+        objVenta.altaVenta();
+            
     }//GEN-LAST:event_jbnVentaActionPerformed
 
     private void jbnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClientesActionPerformed
@@ -4857,6 +4891,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jtxPagoPor1KeyTyped
 
     private void jbnCerrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarVentaActionPerformed
+        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        if(banderitaDetalleVentecita!=0){
+        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        }
+        objVenta.bajaVenta();
         System.exit(0);
     }//GEN-LAST:event_jbnCerrarVentaActionPerformed
 
@@ -4864,17 +4903,34 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbnAgregarProveedor2ActionPerformed
 
-    private void jbnEliminarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarProducto1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnEliminarProducto1ActionPerformed
+    private void jbnCerrarSesionVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarSesionVentaActionPerformed
+        
+    }//GEN-LAST:event_jbnCerrarSesionVentaActionPerformed
 
     private void jbnEliminarProducto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarProducto2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbnEliminarProducto2ActionPerformed
 
-    private void jbnEliminarProducto3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarProducto3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbnEliminarProducto3ActionPerformed
+    private void jbnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCancelarVentaActionPerformed
+        regresarMenu();
+        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        if(banderitaDetalleVentecita!=0){
+        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        }
+        objVenta.bajaVenta();
+        
+     JOptionPane.showMessageDialog(null,"Venta cancelada");
+    }//GEN-LAST:event_jbnCancelarVentaActionPerformed
+
+    private void jbnRegresarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarEmpleado1ActionPerformed
+     regresarMenu();
+        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        if(banderitaDetalleVentecita!=0){
+        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        }
+        objVenta.bajaVenta();
+        
+    }//GEN-LAST:event_jbnRegresarEmpleado1ActionPerformed
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
@@ -5068,6 +5124,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnAgregarProveedor;
     private javax.swing.JButton jbnAgregarProveedor1;
     private javax.swing.JButton jbnAgregarProveedor2;
+    private javax.swing.JButton jbnCancelarVenta;
     private javax.swing.JButton jbnCerrar;
     private javax.swing.JButton jbnCerrar1;
     private javax.swing.JButton jbnCerrarEmpleado;
@@ -5080,6 +5137,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnCerrarPedido2;
     private javax.swing.JButton jbnCerrarProducto;
     private javax.swing.JButton jbnCerrarProveedor;
+    private javax.swing.JButton jbnCerrarSesionVenta;
     private javax.swing.JButton jbnCerrarVenta;
     private javax.swing.JButton jbnClientes;
     private javax.swing.JButton jbnCompra;
@@ -5088,9 +5146,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnEliminarCliente2;
     private javax.swing.JButton jbnEliminarEmpleado;
     private javax.swing.JButton jbnEliminarProducto;
-    private javax.swing.JButton jbnEliminarProducto1;
     private javax.swing.JButton jbnEliminarProducto2;
-    private javax.swing.JButton jbnEliminarProducto3;
     private javax.swing.JButton jbnEliminarProveedor;
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
@@ -5099,6 +5155,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnProveedor;
     private javax.swing.JButton jbnRegresarCliente;
     private javax.swing.JButton jbnRegresarEmpleado;
+    private javax.swing.JButton jbnRegresarEmpleado1;
     private javax.swing.JButton jbnRegresarEmpresa;
     private javax.swing.JButton jbnRegresarOpciones;
     private javax.swing.JButton jbnRegresarPedido;
@@ -5262,7 +5319,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel jpReportes;
     private javax.swing.JPanel jpVenta;
     private javax.swing.JTable jtbCliente;
-    private javax.swing.JTable jtbDetalleVenta;
+    public javax.swing.JTable jtbDetalleVenta;
     private javax.swing.JTable jtbEmpleado;
     private javax.swing.JTable jtbPedido;
     private javax.swing.JTable jtbPedido1;

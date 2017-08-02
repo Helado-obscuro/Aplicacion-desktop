@@ -4,26 +4,38 @@ package Ventanas;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import Modelo.Empleado;
+import Modelo.Persona;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent; 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 
 public class frmLogin extends javax.swing.JFrame {
 
  private frmMenu menu;
  private frmSplash splash;
+ PrintWriter out;
  
  
  //Instancia de la clase
  Empleado objEmpleado =new Empleado();
+  Persona objPersona =new Persona();
     
  //Variable para mover la pantalla de un lado a otro
  int x=0, y=0;
  //variable para validar contraseña o usuario 
  int validar=0;
-       public frmLogin() {
+ int idEmpresa =0;
+       public frmLogin() throws FileNotFoundException {
         initComponents();
+           out = new PrintWriter("UserLogged.txt");
+
     }
 
  
@@ -341,20 +353,29 @@ public class frmLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmLogin().setVisible(true);
+                try {
+                    new frmLogin().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(frmLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
-    
-    private void validarlog(){
+
+    private void validarlog() {
         objEmpleado.setUsuario(jtxUsuario.getText());
         objEmpleado.setContrasena(jpsContrasena.getText());
         validar = objEmpleado.validarUsuario();
 
+
         menu = new frmMenu(this);
         //if para validar usuario si es 1 usuario y contraseña correctos
         if (validar == 1) {
-            splash = new frmSplash(this, menu);
+            System.out.println("Id retornado del usuario: " + String.valueOf(objEmpleado.getID()));
+            idEmpresa = conocerEmpresa(objEmpleado.getID());
+            out.println(String.valueOf(idEmpresa));
+            out.close();
+            splash = new frmSplash(this, menu, idEmpresa);
             splash.setVisible(true);
             this.dispose();
 //          menu.jlbLogin.setText(jtxUsuario.getText());
@@ -372,6 +393,14 @@ public class frmLogin extends javax.swing.JFrame {
 //            menu.jbnConfiguracion.setToolTipText("No tienes permisos para acceder a esta opción");
 //
         //}
+    }
+    
+    private int conocerEmpresa(String IDe) {
+        int e = 0;
+        String rfcE = IDe;
+        e = objPersona.buscarPersonaRFC(rfcE);
+
+        return e;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

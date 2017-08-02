@@ -37,6 +37,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -99,11 +102,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
 //instancia para el filtro de busqueda 
     private TableRowSorter trsfiltro;
-
+    
+    //Leer idEmpresa
+    BufferedReader in ;
     public frmMenu(frmLogin l) {
 
         inicio = l;
         initComponents();
+           actualizarListaProductos();
+           
+           checarempresa();
+ 
+
 //        init();
 
         // constructs the popup menu
@@ -205,6 +215,33 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         for (int i = 0; i < rowCount; i++) {
             modeloPedido.removeRow(0);
         }
+    }
+    
+    private void checarempresa() {
+        try {
+            in = new BufferedReader(new FileReader("UserLogged.txt"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String line;
+        try {
+            while ((line = in.readLine()) != null) {
+                System.out.println("ID Empresa: " + line);
+                if (line.equals("1")) {
+                    System.out.println("Empresa 1 en uso ");
+                } else {
+                     System.out.println("Empresa 2 en uso ");
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            in.close();
+        } catch (IOException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     //Fin 
@@ -580,7 +617,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jpListaProd = new javax.swing.JPanel();
         jpVenta = new javax.swing.JPanel();
         jpPanelSuperiorVenta = new javax.swing.JPanel();
@@ -3263,7 +3299,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbLogoProgramaProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
 
         jLabel7.setText("Arpones");
 
@@ -3343,14 +3379,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         );
 
         jpProducto.add(jpContenidoLogoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 270, 550));
-
-        jButton2.setText("initui");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jpProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, -1, -1));
 
         jpListaProd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpListaProd.setAutoscrolls(true);
@@ -3474,9 +3502,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbBuscarPedido2)
-                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbnRegresarEmpleado1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbnEliminarProducto2, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addComponent(jbnRegresarEmpleado1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbnEliminarProducto2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -4285,6 +4312,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProductoActionPerformed
         abrirOpcion(jpPrincipal, jpProducto);
+        actualizarListaProductos();
     }//GEN-LAST:event_jbnProductoActionPerformed
 
     private void jbnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnPedidosActionPerformed
@@ -4791,14 +4819,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         regresarMenu();
     }//GEN-LAST:event_jbnRegresarPedido1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            pcontrol.initUI();
-        } catch (IOException ex) {
-            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jcbxEstatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEstatusPedidoActionPerformed
         if ((jcbxEstatusPedido.getSelectedIndex()) == 0) {
             modeloPedido.setRowCount(0);
@@ -4973,6 +4993,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         panelito.repaint();
         panelito.revalidate();
     }
+    
+    void actualizarListaProductos(){
+                try {
+            pcontrol.initUI();
+        } catch (IOException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     //Metodos para limpiar campos y tablas cada vez que entras a una opción
     public void LimpiarTabla(JTable tablita, DefaultTableModel modelito) {
@@ -5024,7 +5052,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Prueba;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

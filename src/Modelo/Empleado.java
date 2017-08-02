@@ -1,4 +1,4 @@
-package Modelo;
+  package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -192,7 +192,7 @@ public Empleado (){
      PreparedStatement conectar;
     obj.conectar();
         try {
-            conectar = obj.conexion.prepareStatement("UPDATE empleado SET usuario=?,contraseña=?,nss=?, rfcEmpleado=? where idEmpleado=?");
+            conectar = obj.conexion.prepareStatement("UPDATE empleado SET usuario=?,contrasena=?,nss=?, rfcEmpleado=? where idEmpleado=?");
           
             conectar.setString(1, usuario);
             conectar.setString(2, contrasena);
@@ -221,7 +221,7 @@ public Empleado (){
         
          if(resultado.first()){
              
-             if((getContrasena()).equals(resultado.getString("contraseña"))){
+             if((getContrasena()).equals(resultado.getString("contrasena"))){
                 i=1;
              }else
                  i=2;

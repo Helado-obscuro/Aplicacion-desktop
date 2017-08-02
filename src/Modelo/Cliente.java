@@ -212,7 +212,7 @@ public class Cliente extends Persona{
 PreparedStatement conectar;
     obj.conectar();
         try {
-            conectar = obj.conexion.prepareStatement("UPDATE cliente SET contraseña=?, noCompras=?, rfcCliente=?, idDescuento=? where idCliente=?");
+            conectar = obj.conexion.prepareStatement("UPDATE cliente SET contrasena=?, noCompras=?, rfcCliente=?, idDescuento=? where idCliente=?");
           
             conectar.setString(1, contrasena);
             conectar.setInt(2, noCompras);

@@ -73,6 +73,11 @@ public class frmLogin extends javax.swing.JFrame {
         jlbOlvidaste.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jlbOlvidaste.setForeground(new java.awt.Color(255, 255, 255));
         jlbOlvidaste.setText("¿Olvidaste tu contraseña?");
+        jlbOlvidaste.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbOlvidasteMouseClicked(evt);
+            }
+        });
         jpContenido.add(jlbOlvidaste, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 170, -1));
 
         jlbInicioSesion.setBackground(new java.awt.Color(0, 0, 0));
@@ -299,6 +304,11 @@ public class frmLogin extends javax.swing.JFrame {
             validarlog();
         }
     }//GEN-LAST:event_jbnAceptarKeyTyped
+
+    private void jlbOlvidasteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbOlvidasteMouseClicked
+       
+     
+    }//GEN-LAST:event_jlbOlvidasteMouseClicked
 
     /**
      * @param args the command line arguments

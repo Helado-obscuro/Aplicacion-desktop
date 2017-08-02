@@ -52,6 +52,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import sun.swing.ImageIconUIResource;
 
 public class frmMenu extends javax.swing.JFrame implements ActionListener {
     //Instancia del jDialog
@@ -228,9 +229,20 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             while ((line = in.readLine()) != null) {
                 System.out.println("ID Empresa: " + line);
                 if (line.equals("1")) {
-                    System.out.println("Empresa 1 en uso ");
+                    System.out.println("Empresa 1 en uso, color azul");
+                    jPanel11.setBackground(Color.decode("#1672b9"));
+                    jpInferior.setBackground(Color.decode("#1672b9"));
+
                 } else {
-                     System.out.println("Empresa 2 en uso ");
+                    System.out.println("Empresa 2 en uso, color rojo ");
+
+                    jPanel11.setBackground(Color.red);
+                    jpInferior.setBackground(Color.red);
+                    jpBarraInferiorCliente.setBackground(Color.red);
+                    
+
+                                            
+
                 }
             }
         } catch (IOException ex) {
@@ -241,7 +253,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         } catch (IOException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     //Fin 
@@ -711,6 +722,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jpPrincipal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -4955,6 +4971,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objVenta.bajaVenta();
         
     }//GEN-LAST:event_jbnRegresarEmpleado1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        System.out.println("Checando empresa...");
+        checarempresa();
+    }//GEN-LAST:event_formWindowOpened
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {

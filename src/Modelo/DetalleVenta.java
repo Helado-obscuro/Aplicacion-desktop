@@ -64,7 +64,7 @@ PreparedStatement conectar;
             
             //ejecutar sentencia
             int resp = conectar.executeUpdate();
-            //JOptionPane.showMessageDialog(null, resp + "Fila(s)afecta(s)");
+            JOptionPane.showMessageDialog(null,  "Operación exitosa");
         } catch (SQLException ex) {
     JOptionPane.showMessageDialog(null, "Error al registrar "+ex); 
  
@@ -154,14 +154,14 @@ public void modificarDetalleVenta(){
           
         }
 }
-    public int TotalVenta(int idOrden){
-int canti=0;
+    public double TotalVenta(int id){
+double canti=0;
 ResultSet resultado;   
 PreparedStatement comando;
     obj.conectar();
         try {
             comando = obj.conexion.prepareStatement("select sum(monto) from detalleVenta where idVenta=?");
-            comando.setInt(1, idOrden);
+            comando.setInt(1, id);
             resultado=comando.executeQuery();
               if(resultado.first()){
             canti=resultado.getInt("sum(monto)");
@@ -173,4 +173,26 @@ PreparedStatement comando;
 }
   return canti;
 }
+    
+public int TotalCantidad(int id){
+int canti=0;
+ResultSet resultado;   
+PreparedStatement comando;
+    obj.conectar();
+        try {
+            comando = obj.conexion.prepareStatement("select sum(cantidad) from detalleVenta where idVenta=?");
+            comando.setInt(1, id);
+            resultado=comando.executeQuery();
+              if(resultado.first()){
+            canti=resultado.getInt("sum(cantidad)");
+              }
+           
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, "Error al consultar a la base de datos");
+
+}
+  return canti;
+}
+
+
 }

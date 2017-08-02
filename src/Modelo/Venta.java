@@ -152,11 +152,11 @@ public class Venta {
            JOptionPane.showMessageDialog(null, "No se puede realizar la consulta");
         }// fin del try-cach    
  }
- public void modificarOrden(){
+ public void modificarVenta(){
    PreparedStatement conectar;
     obj.conectar();
         try {
-            conectar = obj.conexion.prepareStatement("UPDATE venta SET fechaVenta=?,subTotal=?,iva=?,totalDescontar=?,total=?, idDescuento=? WHERE idDescuento=?");
+            conectar = obj.conexion.prepareStatement("UPDATE venta SET fechaVenta=?,subTotal=?,iva=?,totalaDescontar=?,total=?, idDescuento=? WHERE idVenta=?");
           
             conectar.setDate(1,(java.sql.Date) fechaVenta);
             conectar.setDouble(2, subtotal);

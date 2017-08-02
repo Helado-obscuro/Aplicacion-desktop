@@ -641,7 +641,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -762,7 +762,7 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -1002,7 +1002,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -1978,7 +1978,7 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -2149,7 +2149,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -3234,7 +3234,7 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -3397,7 +3397,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -4216,7 +4216,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -5204,7 +5204,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -5386,7 +5386,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -5795,10 +5795,10 @@
                               <Component id="jSeparator50" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                          <Component id="jbnRegresarEmpleado1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="181" max="32767" attributes="0"/>
-                          <Component id="jbnEliminarProducto2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
+                          <Component id="jbnRegresarVenta" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="170" max="32767" attributes="0"/>
+                          <Component id="jbnCarritoVenta" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           <Component id="jbnCerrarVenta" min="-2" pref="59" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -5818,8 +5818,10 @@
                                   <Component id="jSeparator50" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jlbBuscarPedido2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jbnRegresarEmpleado1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jbnEliminarProducto2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="jbnRegresarVenta" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="jbnCarritoVenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -5891,7 +5893,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnCerrarVentaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jbnEliminarProducto2">
+                <Component class="javax.swing.JButton" name="jbnCarritoVenta">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="24" green="24" red="91" type="rgb"/>
@@ -5912,10 +5914,13 @@
                     <Property name="selected" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnEliminarProducto2ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnCarritoVentaActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jbnRegresarEmpleado1">
+                <Component class="javax.swing.JButton" name="jbnRegresarVenta">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="24" green="24" red="91" type="rgb"/>
@@ -5933,7 +5938,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -5941,8 +5946,11 @@
                     <Property name="selected" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnRegresarEmpleado1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnRegresarVentaActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -6076,7 +6084,7 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -6374,7 +6382,7 @@
                           <EmptySpace pref="394" max="32767" attributes="0"/>
                           <Component id="jbnCancelarVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                          <Component id="jbnAgregarProveedor2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbnFinalizarVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -6387,7 +6395,7 @@
                               <Component id="jbnCerrarSesionVenta" min="-2" pref="48" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="jbnCancelarVenta" alignment="3" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jbnAgregarProveedor2" alignment="3" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jbnFinalizarVenta" alignment="3" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -6396,7 +6404,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jbnAgregarProveedor2">
+                <Component class="javax.swing.JButton" name="jbnFinalizarVenta">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="24" green="24" red="91" type="rgb"/>
@@ -6419,7 +6427,7 @@
                     <Property name="selected" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnAgregarProveedor2ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnFinalizarVentaActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jbnCerrarSesionVenta">
@@ -6597,7 +6605,7 @@
               <Properties>
                 <Property name="tabLayoutPolicy" type="int" value="1"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -7081,7 +7089,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>
@@ -7347,7 +7355,7 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px_1.png"/>

@@ -27,8 +27,10 @@ frmMenu objMenu;
 //Variable auxiliar
  
  Producto objProducto = new Producto();
-Venta ObjVenta = new Venta();
+ Venta ObjVenta = new Venta();
  DetalleVenta objDetalle = new DetalleVenta();
+ 
+ double subtotal=0.0, iva=0.0;
  //Variables par el contsto total
  
  public frmAgregarProducto(java.awt.Frame parent, boolean modal,int id,  frmMenu f) {
@@ -43,6 +45,8 @@ Venta ObjVenta = new Venta();
         objProducto.consultaDatosProducto();
         jlbNombreProducto.setText(String.valueOf(objProducto.getNombreProducto()));
         jtxPrecioProducto.setText(String.valueOf(objProducto.getPrecioVenta()));
+        
+        //jlbFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource(objProducto.getImagen())));
         
  }
        @SuppressWarnings("unchecked")
@@ -220,7 +224,15 @@ Venta ObjVenta = new Venta();
           objMenu.banderitaDetalleVentecita=1;
           objMenu.LimpiarTabla(objMenu.jtbDetalleVenta, objMenu.modeloDetalleVenta);
           objMenu.objDetalleVenta.ConsultaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
-          objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta());
+          objMenu.jtxTotalVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta())));
+          objMenu.jbnCarritoVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalCantidad(objDetalle.getIdVenta())));
+       
+       
+       subtotal=(objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta()))/1.16;
+       iva=objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta())-subtotal;
+       //Imprimir resultados
+       objMenu.jtxIva.setText(formato.format(iva));
+       objMenu.jtxSubtotalVenta.setText(formato.format(subtotal));
           
           }
 //        objMenu.jlbPasosVenta1.setText("Paso 2  Click al carro de venta");

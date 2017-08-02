@@ -55,7 +55,7 @@ public class dialogDetalleProd extends javax.swing.JDialog {
         prod.getPedimento();
         jtxPrecioCom.setText(String.valueOf(prod.getPrecioCompra()));
         jtcPrecioVent.setText(String.valueOf(prod.getPrecioVenta()));
-        jtxStock.setText(String.valueOf(prod.getStok()));
+        jtxStock.setText(String.valueOf(prod.getStock()));
         jtxUbicacion.setText(prod.getUbicacion());
     }
 

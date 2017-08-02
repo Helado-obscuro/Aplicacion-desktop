@@ -1,15 +1,15 @@
 package Modelo;
 
 import java.sql.PreparedStatement;
-<<<<<<< HEAD
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-=======
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
->>>>>>> upstream/dnop
+import java.sql.Statement;
+
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -175,7 +175,7 @@ public Producto(){
  public void bajaProducto(){
 
  }
-<<<<<<< HEAD
+
  
     public void consultaProductoID(int idc) {
         try {
@@ -207,7 +207,9 @@ public Producto(){
 
     
  public void modificarProducto(){
-=======
+     
+ }
+
  public void consultaProducto(DefaultTableModel tablaProducto){
 Object[] obj1= new Object[4];
  PreparedStatement com;
@@ -266,7 +268,7 @@ public void consultaDatosProducto(){
             JOptionPane.showMessageDialog(null, ex);
         }// fin del try-cach
     }
->>>>>>> upstream/dnop
+
 
 
    

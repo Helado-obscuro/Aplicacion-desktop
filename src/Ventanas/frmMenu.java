@@ -37,7 +37,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -105,7 +104,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         inicio = l;
         initComponents();
-        initProductos();
 //        init();
 
         // constructs the popup menu
@@ -197,6 +195,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         int selectedRow = jtbPedido.getSelectedRow();
         modeloPedido.removeRow(selectedRow);
     }
+    
+    public Producto getProducto(){
+        return objProducto;
+    }
 
     private void removeAllRows() {
         int rowCount = modeloPedido.getRowCount();
@@ -270,9 +272,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         return jpListaProd;
     }
 
-    public Producto getProducto(){
-        return objProducto;
-    }
     //Metodo de filtros   
     public void filtroEmpleado() {
         String buscarEmpleado = jtxBuscarEmpleado.getText();
@@ -542,11 +541,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpOpcionesContenido = new javax.swing.JPanel();
         jpOpcion1 = new javax.swing.JPanel();
         jbnCerrarOpciones1 = new javax.swing.JButton();
-<<<<<<< HEAD
-        jpOpciones = new javax.swing.JPanel();
-=======
         jpPanelInformacion = new javax.swing.JPanel();
->>>>>>> upstream/dnop
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jpOpcionesPoliticas = new javax.swing.JPanel();
@@ -574,6 +569,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnActualizarProducto = new javax.swing.JButton();
         jbnAgregarProveedor1 = new javax.swing.JButton();
         jbnEliminarProducto = new javax.swing.JButton();
+        jlbLogoEmpresaProveedor1 = new javax.swing.JLabel();
         jpContenidoLogoProducto = new javax.swing.JPanel();
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
@@ -584,6 +580,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jpListaProd = new javax.swing.JPanel();
         jpVenta = new javax.swing.JPanel();
         jpPanelSuperiorVenta = new javax.swing.JPanel();
@@ -2855,18 +2852,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-<<<<<<< HEAD
-        jpOpciones.setBackground(new java.awt.Color(153, 153, 153));
-
-        javax.swing.GroupLayout jpOpcionesLayout = new javax.swing.GroupLayout(jpOpciones);
-        jpOpciones.setLayout(jpOpcionesLayout);
-        jpOpcionesLayout.setHorizontalGroup(
-            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 787, Short.MAX_VALUE)
-        );
-        jpOpcionesLayout.setVerticalGroup(
-            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-=======
         jpPanelInformacion.setBackground(new java.awt.Color(153, 153, 153));
 
         javax.swing.GroupLayout jpPanelInformacionLayout = new javax.swing.GroupLayout(jpPanelInformacion);
@@ -2877,7 +2862,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         );
         jpPanelInformacionLayout.setVerticalGroup(
             jpPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
->>>>>>> upstream/dnop
             .addGap(0, 340, Short.MAX_VALUE)
         );
 
@@ -2891,11 +2875,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             jpOpcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpOpcion1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-<<<<<<< HEAD
-                .addComponent(jpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
                 .addComponent(jpPanelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> upstream/dnop
                 .addGap(0, 45, Short.MAX_VALUE))
             .addGroup(jpOpcion1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2912,11 +2892,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             .addGroup(jpOpcion1Layout.createSequentialGroup()
                 .addComponent(jbnCerrarOpciones1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-<<<<<<< HEAD
-                .addComponent(jpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
                 .addComponent(jpPanelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> upstream/dnop
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOpcion1Layout.createSequentialGroup()
@@ -3274,6 +3250,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpProducto.add(jpBarraInferiorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
+        jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
+        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
+
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3292,11 +3272,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jLabel9.setText("Anzuelos");
 
         jLabel10.setText("Canas ");
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
-            }
-        });
 
         jLabel11.setText("misc");
 
@@ -3368,6 +3343,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         );
 
         jpProducto.add(jpContenidoLogoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 270, 550));
+
+        jButton2.setText("initui");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jpProducto.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, -1, -1));
 
         jpListaProd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpListaProd.setAutoscrolls(true);
@@ -4301,12 +4284,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jbnCerrarActionPerformed
 
     private void jbnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProductoActionPerformed
-<<<<<<< HEAD
-        initProductos();
-        abrirOpcion(jpPrincipal,jpProducto);   
-=======
         abrirOpcion(jpPrincipal, jpProducto);
->>>>>>> upstream/dnop
     }//GEN-LAST:event_jbnProductoActionPerformed
 
     private void jbnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnPedidosActionPerformed
@@ -4799,13 +4777,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 jbnEliminarEmpleado.setEnabled(true);
                 jbnActualizarEmpleado.setEnabled(true);
             }
-<<<<<<< HEAD
-           }
-=======
         }
 
 
->>>>>>> upstream/dnop
     }//GEN-LAST:event_jtxBuscarProveedorKeyPressed
 
 
@@ -4817,14 +4791,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         regresarMenu();
     }//GEN-LAST:event_jbnRegresarPedido1ActionPerformed
 
-    private void initProductos(){
-                try {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
             pcontrol.initUI();
         } catch (IOException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jcbxEstatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEstatusPedidoActionPerformed
         if ((jcbxEstatusPedido.getSelectedIndex()) == 0) {
             modeloPedido.setRowCount(0);
@@ -4876,18 +4850,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         abrirOpcion(jpPrincipal, jpPedido);
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
-<<<<<<< HEAD
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-
-
-    String path = new File("src/images/productos/conf.properties")
-                                                           .getAbsolutePath();
-    System.out.println(path);
-
-    }//GEN-LAST:event_jLabel10MouseClicked
-
-     
-=======
     private void jtxBuscarProductoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyPressed
@@ -4974,7 +4936,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         
     }//GEN-LAST:event_jbnRegresarEmpleado1ActionPerformed
 
->>>>>>> upstream/dnop
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
         panel.setBackground(new Color(22, 114, 185));
@@ -5063,6 +5024,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Prueba;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -5079,10 +5041,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-<<<<<<< HEAD
-    private javax.swing.JPanel jPanel4;
-=======
->>>>>>> upstream/dnop
     public javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPedido1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -5264,6 +5222,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
     private javax.swing.JLabel jlbLogoEmpresaProveedor;
+    private javax.swing.JLabel jlbLogoEmpresaProveedor1;
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
     private javax.swing.JLabel jlbLogoPrograma3;
@@ -5343,7 +5302,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel jpOpcionDescuento;
     private javax.swing.JPanel jpOpcionRedesEmpresa;
     private javax.swing.JPanel jpOpcionTritonEmpresa;
-    private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpOpcionesContenido;
     private javax.swing.JPanel jpOpcionesMenu;
     private javax.swing.JPanel jpOpcionesPoliticas;

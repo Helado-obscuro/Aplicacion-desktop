@@ -9,8 +9,13 @@ package Ventanas;
 import Controlador.productosControlador;
 import Modelo.Producto;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
+import org.apache.*;
 
 
 /**
@@ -69,8 +74,24 @@ public class dialogProductos extends javax.swing.JDialog {
         this.precioCompra = Double.parseDouble(jtxPrecioCom.getText());
         this.precioVenta = Double.parseDouble(jtcPrecioVent.getText());
         this.ubicacion = jtxNombreProducto.getText();
-        this.imagen = jtxImagen.getText();
+//        this.imagen = jtxImagen.getText();
         this.categoria = jcbCategorias.getSelectedItem().toString();
+
+        String path = "src/imagenes/productos/";
+        File source = new File(jtxImagen.getText());
+        String[] parts = jtxImagen.getText().split("\\\\");
+        String filename =  parts[parts.length - 1];
+        System.out.println("Nombre de la imagen: " + parts[parts.length - 1]);
+        File dest = new File(System.getProperty("user.dir") + "\\src\\imagenes\\productos\\"+filename);
+ 
+        try {
+            FileUtils.copyFile(source, dest);
+            this.imagen = path+filename;
+            System.out.println("Imagen movida: " + path+filename);
+        } catch (IOException ex) {
+            Logger.getLogger(dialogProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
         

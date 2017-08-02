@@ -4834,7 +4834,11 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+<<<<<<< HEAD
+                              <Component id="jpOpciones" min="-2" max="-2" attributes="0"/>
+=======
                               <Component id="jpPanelInformacion" min="-2" max="-2" attributes="0"/>
+>>>>>>> upstream/dnop
                               <EmptySpace min="0" pref="45" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -4856,7 +4860,11 @@
                           <Group type="102" attributes="0">
                               <Component id="jbnCerrarOpciones1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
+                              <Component id="jpOpciones" min="-2" max="-2" attributes="0"/>
+=======
                               <Component id="jpPanelInformacion" min="-2" max="-2" attributes="0"/>
+>>>>>>> upstream/dnop
                               <EmptySpace pref="21" max="32767" attributes="0"/>
                               <Component id="jLabel3" min="-2" pref="244" max="-2" attributes="0"/>
                           </Group>
@@ -4888,7 +4896,11 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnCerrarOpciones1ActionPerformed"/>
                       </Events>
                     </Component>
+<<<<<<< HEAD
+                    <Container class="javax.swing.JPanel" name="jpOpciones">
+=======
                     <Container class="javax.swing.JPanel" name="jpPanelInformacion">
+>>>>>>> upstream/dnop
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="99" green="99" red="99" type="rgb"/>
@@ -5540,19 +5552,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="jlbLogoEmpresaProveedor1">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/logo.png"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="1100" y="80" width="80" height="60"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Container class="javax.swing.JPanel" name="jpContenidoLogoProducto">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -5703,6 +5702,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Canas "/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel11">
                       <Properties>
@@ -5718,19 +5720,6 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="initui"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-              </Events>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="610" y="70" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Container class="javax.swing.JPanel" name="jpListaProd">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

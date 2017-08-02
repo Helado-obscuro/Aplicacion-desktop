@@ -23,6 +23,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import Ventanas.dialogDetalleProd;
 
 
 /**
@@ -31,18 +32,17 @@ import javax.imageio.ImageIO;
  */
 
 public class productosControlador {
+
     frmMenu menu;
     dialogProductos dprod = new dialogProductos(menu, true, this);
-    Conexion obj= new Conexion();
+    Conexion obj = new Conexion();
+    dialogDetalleProd ddp;
     
     
-    
-
-
 
     public productosControlador(frmMenu fmenu) {
         menu = fmenu;
-        
+
     }
     
     public void seleccionarImagen(JFrame frame) {
@@ -57,51 +57,27 @@ public class productosControlador {
     }
 
     public void initUI() throws IOException {
-            JPanel panel = menu.getPanelPord();//Make a panel
+        JPanel panel = menu.getPanelPord();//Make a panel
+                panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
 
-        String path = "C:\\Users\\alexi\\Pictures\\logos\\portabilidad.png";
-        Image image = ImageIO.read(new File(path));
-        ImageIcon icon = new ImageIcon(image);
-        JLabel label = new JLabel(icon);
-       
-
- 
-        panel.setLayout(new GridLayout(4, 3,5,5)); //la ultima linea son las columnas
-
-        
-        JLabel label1 = new JLabel(icon);
-        label1.setSize(40, 40);
-        JLabel label2 = new JLabel("Imagen");
-        llenarCategoria();
-//        panel.add(label1);
-//        panel.add(label2);
-//        panel.add(label);
-        
-//         JScrollPane scrollPane = new JScrollPane(contentPane);
-//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//
-//        scrollPane.setBounds(72, 72, panel.getWidth()-70, panel.getHeight()-70);
-//
-//        panel.add(scrollPane);
-
+        panel.setLayout(new GridLayout(4, 3, 5, 5)); //la ultima linea son las columnas
+        llenarCategoria(); //cargar imagenes de productos en la bd
 
         panel.validate();
         panel.repaint();
         panel.setVisible(true);
 
         panel.revalidate();
-        
     }
 
-    public void agegarProducto(){
-        dprod.setVisible(true);
-    }
-
-    
     public void llenarCategoria() throws IOException {
         obj.conectar();
         JPanel panel = menu.getPanelPord();//Make a panel
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
 
         String query = "SELECT * FROM producto";
 
@@ -110,14 +86,16 @@ public class productosControlador {
             //ejecutar sentencia
             ResultSet rs = stmnt.executeQuery(query);
             while (rs.next()) {
-                String lastName = rs.getString("nombreProducto");
-                System.out.println(lastName + "\n");
 
                 //Instantiates a new instance of JLabel for each record
                 String path = rs.getString("imagen");
-                Image image = ImageIO.read(new File(path));
+                String Finalpath = new File(path).getAbsolutePath();
+                System.out.println("Ruta completa  de la imagen: " + Finalpath);
+                Image image = ImageIO.read(new File(Finalpath));
                 ImageIcon icon = new ImageIcon(image);
                 JLabel label = new JLabel(icon);
+                label.setText(rs.getString("idProducto"));
+                label.setName(rs.getString("idProducto"));
 
                 //then adds the instance to the panel
                 panel.add(label);
@@ -125,10 +103,42 @@ public class productosControlador {
             }
 
             System.out.println("LLenada exitoso");
+            asignarActionsLabels(panel);
         } catch (SQLException ex) {
 
             System.out.println(ex);
         }
+    }
+    
+    public void asignarActionsLabels(JPanel panel) {
+        Component[] component = panel.getComponents();
+
+        for (int i = 0; i < component.length; i++) {
+            if (component[i] instanceof JLabel) {
+               final String id = component[i].getName();
+                if (component[i].getName().equals(String.valueOf((i + 1)))) {
+                    /*add a mouselistener instead and listen to mouse clicks*/
+                    component[i].addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            JOptionPane.showMessageDialog(menu, "Si tu me tocaste "+ id);
+                            try {
+                                ddp = new dialogDetalleProd(menu, true, Integer.valueOf(id));
+                            } catch (IOException ex) {
+                                Logger.getLogger(productosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            ddp.setVisible(true);
+                        }
+                    });
+                    //fin de mouse event
+                    System.out.println("Encontrado el " + (i + 1));
+                } else {
+                    System.out.println("Encontrado jlabel " + (i + 1) + " pero no con nombre de producto");
+
+                }
+            }
+        }
+
     }
 
     public Producto obternetObjProd() {
@@ -136,8 +146,11 @@ public class productosControlador {
         return prod;
     }
 
-    
-    public productosControlador getthisObj(){
+    public void agegarProducto() {
+        dprod.setVisible(true);
+    }
+
+    public productosControlador getthisObj() {
         return this;
     }
 

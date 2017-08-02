@@ -158,6 +158,11 @@ public class frmLogin extends javax.swing.JFrame {
                 jbnAceptarActionPerformed(evt);
             }
         });
+        jbnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jbnAceptarKeyTyped(evt);
+            }
+        });
         jpContenido.add(jbnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 100, 50));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -276,13 +281,24 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jpContenidoMouseDragged
 
     private void jpsContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpsContrasenaKeyTyped
-         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        System.out.println("Codigo"+evt.getKeyChar());
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Toolkit.getDefaultToolkit().beep();
             System.out.println("enter pressed");
+            validarlog();
         }
 
 
     }//GEN-LAST:event_jpsContrasenaKeyTyped
+
+    private void jbnAceptarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbnAceptarKeyTyped
+               System.out.println("Codigo"+evt.getKeyCode());
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("enter pressed");
+            validarlog();
+        }
+    }//GEN-LAST:event_jbnAceptarKeyTyped
 
     /**
      * @param args the command line arguments

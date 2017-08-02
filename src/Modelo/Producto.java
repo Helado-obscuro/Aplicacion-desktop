@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -8,21 +9,74 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
+
+
 public class Producto {
 
 private int idProducto;
 private String nombreProducto;
 private String pedimento;
-private int stock;
+private int stok;
 private String descripcionProd;
 private double precioCompra;
 private double precioVenta;
 private String ubicacion;
-Conexion obj = new Conexion();
 int contadorcito =0;
+
+private String imagen;
+private String cbarras;
+private String categoria;
+
+Conexion obj= new Conexion();
+
+
 public Producto(){
+    
 
 }
+
+    public Producto(int idProducto, String nombreProducto, String pedimento, int stok, String descripcionProd, double precioCompra, double precioVenta, String ubicacion, String imagen, String cbarras, String categoria) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.pedimento = pedimento;
+        this.stok = stok;
+        this.descripcionProd = descripcionProd;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
+        this.ubicacion = ubicacion;
+        this.imagen = imagen;
+        this.cbarras = cbarras;
+        this.categoria = categoria;
+    }
+
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCbarras() {
+        return cbarras;
+    }
+
+    public void setCbarras(String cbarras) {
+        this.cbarras = cbarras;
+    }
+    
     public int getIdProducto() {
         return idProducto;
     }
@@ -48,11 +102,11 @@ public Producto(){
     }
 
     public int getStock() {
-        return stock;
+        return stok;
     }
 
     public void setStock(int stok) {
-        this.stock = stock;
+        this.stok = stok;
     }
 
     public String getDescripcionProd() {
@@ -87,9 +141,31 @@ public Producto(){
         this.ubicacion = ubicacion;
     }
 
- public void altaProducto(){
- 
- }
+    public int altaProducto(String nombre, int stock, String desp, double precioCom, 
+            double precioVent, String ubi, String image, String cat ) {
+
+        PreparedStatement  conectar;
+        obj.conectar();
+        try {
+            conectar = obj.conexion.prepareStatement("INSERT INTO producto VALUES (null,?,null,?,?,?,?,?,null,?,?,null)");
+            conectar.setString(1, nombre);
+            conectar.setInt(2, stock);
+            conectar.setString(3, desp);
+            conectar.setDouble(4, precioCom);
+            conectar.setDouble(5, precioVent);
+            conectar.setString(6, ubi);
+            conectar.setString(7, image);
+            conectar.setString(8, cat);
+
+            //ejecutar sentencia
+            conectar.executeUpdate();
+            return 0;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            return 1;
+        }
+    }
+    
  public void bajaProducto(){
 
  }
@@ -135,7 +211,7 @@ public void consultaDatosProducto(){
             if(resultado.first()){
             idProducto=resultado.getInt("idProducto");
             nombreProducto=resultado.getString("nombreProducto");
-            stock=resultado.getInt("stock");
+            stok=resultado.getInt("stock");
             precioVenta=resultado.getDouble("precioVenta");
             
             }else{
@@ -143,7 +219,7 @@ public void consultaDatosProducto(){
             JOptionPane.showMessageDialog(null,"No se puede realizar la consulta");
             idProducto=resultado.getInt("idProducto");
             nombreProducto=resultado.getString("nombreProducto");
-            stock=resultado.getInt("stock");
+            stok=resultado.getInt("stock");
             precioVenta=resultado.getDouble("precioVenta");
             
             }// fin del else 

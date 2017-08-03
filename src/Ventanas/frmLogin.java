@@ -26,6 +26,7 @@ public class frmLogin extends javax.swing.JFrame {
  //Instancia de la clase
  Empleado objEmpleado =new Empleado();
   Persona objPersona =new Persona();
+  dialogRestaurarContrasena dcontra;
     
  //Variable para mover la pantalla de un lado a otro
  int x=0, y=0;
@@ -35,6 +36,7 @@ public class frmLogin extends javax.swing.JFrame {
        public frmLogin() throws FileNotFoundException {
         initComponents();
            out = new PrintWriter("UserLogged.txt");
+           dcontra = new dialogRestaurarContrasena(menu, true);
 
     }
 
@@ -318,7 +320,7 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jbnAceptarKeyTyped
 
     private void jlbOlvidasteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbOlvidasteMouseClicked
-       
+       dcontra.setVisible(true);
      
     }//GEN-LAST:event_jlbOlvidasteMouseClicked
 

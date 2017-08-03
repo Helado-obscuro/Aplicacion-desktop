@@ -5,10 +5,12 @@
  */
 package Ventanas;
 
+import Modelo.Empleado;
 import com.sun.glass.ui.Cursor;
 import com.sun.glass.ui.Pixels;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,13 +21,15 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
     /**
      * Creates new form dialogRestaurarContrasena
      */
+    Empleado objEmp;
     public dialogRestaurarContrasena(java.awt.Frame parent, boolean modal) {
 
         super(parent, modal);
         initComponents();
         jpContra.setVisible(false);
+        objEmp = new Empleado();
     }
- 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +42,7 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jlbUsuario1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jtfEmail = new javax.swing.JTextField();
+        jtfUsuario = new javax.swing.JTextField();
         jcbRobot = new javax.swing.JCheckBox();
         jpContra = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -46,6 +50,9 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Recuperar password");
+        setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(15, 125, 199));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
@@ -65,7 +72,7 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
             }
         });
 
-        jtfEmail.setToolTipText("ingresa coreo electronico");
+        jtfUsuario.setToolTipText("ingresa coreo electronico");
 
         jcbRobot.setText("No soy un robot");
         jcbRobot.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,7 +126,7 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jpContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -143,7 +150,7 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(2, 2, 2)
-                .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jcbRobot)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -154,6 +161,7 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcbRobotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRobotActionPerformed
@@ -161,29 +169,38 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbRobotActionPerformed
 
     private void jcbRobotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbRobotMouseClicked
-  
+
+
         if (jcbRobot.isSelected()) {
             jpContra.setVisible(true);
             System.out.println("Seleccionado");
 //                Thread.sleep(1000);
+
+  
         }
         if (!jcbRobot.isSelected()) {
             jpContra.setVisible(false);
-             System.out.println("no seleccionado");
-            
+            System.out.println("no seleccionado");
+
         }
     }//GEN-LAST:event_jcbRobotMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String newContra, emai;
-        
-        newContra=jtfContra.getText();
-       emai = jtfEmail.getText();
+
+        String usuario, contra;
+
+            usuario = jtfUsuario.getText();
+            contra = jtfContra.getText(); 
+          int res=  objEmp.modificarEmpleadoContra(usuario, contra);
+            if (res > 0) {
+                JOptionPane.showMessageDialog(this, "Actualizado");
+                this.dispose();
+            }else
+                JOptionPane.showMessageDialog(this, "Error al actualizar");
+  
        
-       
-       
-       
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -237,6 +254,6 @@ public class dialogRestaurarContrasena extends javax.swing.JDialog {
     private javax.swing.JLabel jlbUsuario1;
     private javax.swing.JPanel jpContra;
     private javax.swing.JTextField jtfContra;
-    private javax.swing.JTextField jtfEmail;
+    private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 }

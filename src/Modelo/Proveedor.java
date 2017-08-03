@@ -7,12 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 
 public class Proveedor {
 
 private int idProveedor;
 private String nombre;
-private String rfc;
+public String rfc;
 private String domicilio;
 private String telefono;
 private String email;
@@ -158,6 +159,26 @@ public Proveedor(){
         }
      
  }
+ public void consultaRfcProveedor(DefaultComboBoxModel rfcProveedor){
+        PreparedStatement com;
+ ResultSet res;
+ obj.conectar();
+ 
+                
+    try {
+        com=obj.conexion.prepareCall("Select rfc from provedor");
+        res=com.executeQuery();
+                
+        while(res.next()){
+            
+          for(int i=0; i<1;i++){
+              rfcProveedor.addElement(res.getObject("rfc"));
+    }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,"No se puede realizar la consulta por este momento");
+    } 
+ }
  
  public void buscarProveedor(String buscadorcito){
         PreparedStatement comando;
@@ -192,4 +213,75 @@ public Proveedor(){
             JOptionPane.showMessageDialog(null, ex);
         }// fin del try-cach
  }
+  public void compraProveedor(){
+     PreparedStatement conectar;
+        ResultSet resultado;
+    obj.conectar();
+    
+        try {
+            conectar = obj.conexion.prepareStatement("select idProv,nombreProveedor,domicilio,telefono,email from  provedor WHERE rfc=?");
+         
+            conectar.setString(1, rfc);
+         
+                resultado=conectar.executeQuery();
+            if(resultado.first()){
+            idProveedor=resultado.getInt("idProv");
+            nombre=resultado.getString("nombreProveedor");
+            domicilio=resultado.getString("domicilio");
+            telefono=resultado.getString("telefono");
+            email=resultado.getString("email");
+            
+                
+            }else{
+           
+            JOptionPane.showMessageDialog(null,"Consulta no exitosa");
+        idProveedor=0;
+            nombre="";
+            domicilio="";
+            telefono="";
+            email="";
+            
+            }// fin del else 
+            
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, "Error al consultar");
+          
+        }
+}
+  public void compraProveedor2(){
+    
+    PreparedStatement conectar;
+    ResultSet resultado;
+    obj.conectar();
+    
+        try {
+            conectar = obj.conexion.prepareStatement("select nombreProveedor,domicilio,telefono,email from  provedor WHERE idProv=?");
+         
+            conectar.setInt(1, idProveedor);
+         
+                resultado=conectar.executeQuery();
+            if(resultado.first()){
+            
+            nombre=resultado.getString("nombreProveedor");
+            domicilio=resultado.getString("domicilio");
+            telefono=resultado.getString("telefono");
+            email=resultado.getString("email");
+            
+                
+            }else{
+           
+            JOptionPane.showMessageDialog(null,"Consulta no exitosa");
+        
+            nombre="";
+            domicilio="";
+            telefono="";
+            email="";
+            
+            }// fin del else 
+            
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, "Error al consultar");
+          
+        }
+}
 }

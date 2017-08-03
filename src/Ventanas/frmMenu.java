@@ -86,11 +86,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     Producto objProductoVenta = new Producto();
     productosControlador pcontrol = new productosControlador(this);
     Venta objVenta = new Venta();
-<<<<<<< HEAD
+
    
-=======
     Venta objetoVenta = new Venta();
->>>>>>> dnop
+
     DetalleVenta objDetalleVenta = new DetalleVenta();
     Conexion obj = new Conexion();
     //Instancia Ventanas
@@ -738,7 +737,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jSeparator47 = new javax.swing.JSeparator();
         jtxEmailProveedor = new javax.swing.JTextField();
         jlbEmailProveedor = new javax.swing.JLabel();
-        jlbLogoEmpresaProveedor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jlbIconoProveedor = new javax.swing.JLabel();
         jlbLogoProgramaProveedor = new javax.swing.JLabel();
@@ -779,7 +777,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnActualizarProducto = new javax.swing.JButton();
         jbnAgregarProveedor1 = new javax.swing.JButton();
         jbnEliminarProducto = new javax.swing.JButton();
-        jlbLogoEmpresaProveedor1 = new javax.swing.JLabel();
         jpContenidoLogoProducto = new javax.swing.JPanel();
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
@@ -881,58 +878,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxfolioPedido = new javax.swing.JTextField();
         jScrollPane12 = new javax.swing.JScrollPane();
         jtbPedido1 = new javax.swing.JTable();
-<<<<<<< HEAD
-        jpCompra = new javax.swing.JPanel();
-        jpBarraSuperiorCompras = new javax.swing.JPanel();
-        jlbTituloCompras = new javax.swing.JLabel();
-        jtxBuscarCompras = new javax.swing.JTextField();
-        jSeparator62 = new javax.swing.JSeparator();
-        jbnCerrarCompras = new javax.swing.JButton();
-        jbnBuscarCompra = new javax.swing.JButton();
-        jbnRegresarCompras = new javax.swing.JButton();
-        jpBarraInferiorCompras = new javax.swing.JPanel();
-        jbnActualizarProducto1 = new javax.swing.JButton();
-        jbnAgregarProveedor2 = new javax.swing.JButton();
-        jlbNombreProveedorCompras = new javax.swing.JLabel();
-        jSeparator63 = new javax.swing.JSeparator();
-        jSeparator64 = new javax.swing.JSeparator();
-        jlbDomicilioProveedorCompras = new javax.swing.JLabel();
-        jlbTelefonoProveedorCompras = new javax.swing.JLabel();
-        jlbEmailProveedorCompras = new javax.swing.JLabel();
-        jScrollPane16 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
-        jlbLogoEmpresaCompras = new javax.swing.JLabel();
-        jpContenidoLogoCompras = new javax.swing.JPanel();
-        jlbLogoProgramaProducto1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jlbNombreProveedorCompras2 = new javax.swing.JLabel();
-        jlbDomicilioProveedorCompras2 = new javax.swing.JLabel();
-        jlbTelefonoProveedorCompras2 = new javax.swing.JLabel();
-        jlbEmailProveedorCompras2 = new javax.swing.JLabel();
-        jlbFechaCompra = new javax.swing.JLabel();
-        jSeparator65 = new javax.swing.JSeparator();
-        jlbSubTotalCompra = new javax.swing.JLabel();
-        jlbIvaCompra = new javax.swing.JLabel();
-        jlbTotalCompra = new javax.swing.JLabel();
-        jlbEstatusCompra = new javax.swing.JLabel();
-        jlbIdProductoCompra = new javax.swing.JLabel();
-        jtfIdProductoCompra = new javax.swing.JTextField();
-        jSeparator66 = new javax.swing.JSeparator();
-        jSeparator67 = new javax.swing.JSeparator();
-        jlbNombreProductoCompra = new javax.swing.JLabel();
-        jbtAgreegarPartidaCompra = new javax.swing.JButton();
-        jlbRfcProveedorCompras1 = new javax.swing.JLabel();
-        jcbEstatusCompra = new javax.swing.JComboBox<>();
-        jcbRfcProveedor1 = new javax.swing.JComboBox<>();
-        jcbNombreProductoCompras1 = new javax.swing.JComboBox<>();
-        jlbPrecioUni1 = new javax.swing.JLabel();
-        jlbPrecioUni2 = new javax.swing.JLabel();
-        jbnInicioVenta = new javax.swing.JButton();
-        jtfFecCom = new javax.swing.JTextField();
-        jlbNombreFecha = new javax.swing.JLabel();
-        jtfFechaEntrega = new javax.swing.JTextField();
-        jlbEstatusom = new javax.swing.JLabel();
-=======
         jSeparator62 = new javax.swing.JSeparator();
         jtxRfcPedido1 = new javax.swing.JTextField();
         jlbTelefonoPedido1 = new javax.swing.JLabel();
@@ -956,7 +901,56 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTotalPedido1 = new javax.swing.JTextField();
         jtxSubtotalPedido1 = new javax.swing.JTextField();
         jlbIDProd = new javax.swing.JLabel();
->>>>>>> dnop
+        jpCompra = new javax.swing.JPanel();
+        jpBarraSuperiorCompras = new javax.swing.JPanel();
+        jlbTituloCompras = new javax.swing.JLabel();
+        jtxBuscarCompras = new javax.swing.JTextField();
+        jSeparator68 = new javax.swing.JSeparator();
+        jbnCerrarCompras = new javax.swing.JButton();
+        jbnBuscarCompra = new javax.swing.JButton();
+        jbnRegresarCompras = new javax.swing.JButton();
+        jpBarraInferiorCompras = new javax.swing.JPanel();
+        jbnActualizarProducto1 = new javax.swing.JButton();
+        jbnAgregarProveedor2 = new javax.swing.JButton();
+        jlbNombreProveedorCompras = new javax.swing.JLabel();
+        jSeparator69 = new javax.swing.JSeparator();
+        jSeparator70 = new javax.swing.JSeparator();
+        jlbDomicilioProveedorCompras = new javax.swing.JLabel();
+        jlbTelefonoProveedorCompras = new javax.swing.JLabel();
+        jlbEmailProveedorCompras = new javax.swing.JLabel();
+        jScrollPane16 = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
+        jlbLogoEmpresaCompras = new javax.swing.JLabel();
+        jpContenidoLogoCompras = new javax.swing.JPanel();
+        jlbLogoProgramaProducto1 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jlbNombreProveedorCompras2 = new javax.swing.JLabel();
+        jlbDomicilioProveedorCompras2 = new javax.swing.JLabel();
+        jlbTelefonoProveedorCompras2 = new javax.swing.JLabel();
+        jlbEmailProveedorCompras2 = new javax.swing.JLabel();
+        jlbFechaCompra = new javax.swing.JLabel();
+        jSeparator71 = new javax.swing.JSeparator();
+        jlbSubTotalCompra = new javax.swing.JLabel();
+        jlbIvaCompra = new javax.swing.JLabel();
+        jlbTotalCompra = new javax.swing.JLabel();
+        jlbEstatusCompra = new javax.swing.JLabel();
+        jlbIdProductoCompra = new javax.swing.JLabel();
+        jtfIdProductoCompra = new javax.swing.JTextField();
+        jSeparator72 = new javax.swing.JSeparator();
+        jSeparator67 = new javax.swing.JSeparator();
+        jlbNombreProductoCompra = new javax.swing.JLabel();
+        jbtAgreegarPartidaCompra = new javax.swing.JButton();
+        jlbRfcProveedorCompras1 = new javax.swing.JLabel();
+        jcbEstatusCompra = new javax.swing.JComboBox<>();
+        jcbRfcProveedor1 = new javax.swing.JComboBox<>();
+        jcbNombreProductoCompras1 = new javax.swing.JComboBox<>();
+        jlbPrecioUni1 = new javax.swing.JLabel();
+        jlbPrecioUni2 = new javax.swing.JLabel();
+        jbnInicioVenta = new javax.swing.JButton();
+        jtfFecCom = new javax.swing.JTextField();
+        jlbNombreFecha = new javax.swing.JLabel();
+        jtfFechaEntrega = new javax.swing.JTextField();
+        jlbEstatusom = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -3050,10 +3044,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbEmailProveedor.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpProveedor.add(jlbEmailProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 100, 20));
 
-        jlbLogoEmpresaProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProveedor.add(jlbLogoEmpresaProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 250, 230));
-
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3541,10 +3531,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpProducto.add(jpBarraInferiorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
-        jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
-
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3554,7 +3540,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbLogoProgramaProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
 
         jLabel7.setText("Arpones");
 
@@ -3714,7 +3700,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnRegresarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jbnRegresarVenta.setForeground(new java.awt.Color(255, 255, 255));
         jbnRegresarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
-        jbnRegresarVenta.setText("Regresar a menu");
         jbnRegresarVenta.setBorderPainted(false);
         jbnRegresarVenta.setContentAreaFilled(false);
         jbnRegresarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -3731,15 +3716,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpPanelSuperiorVentaLayout.setHorizontalGroup(
             jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jbnRegresarVenta)
+                .addGap(59, 59, 59)
                 .addComponent(jlbBuscarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                    .addComponent(jSeparator50))
-                .addGap(59, 59, 59)
-                .addComponent(jbnRegresarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                    .addComponent(jtxBuscarProductoVenta)
+                    .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                 .addComponent(jbnCarritoVenta)
                 .addGap(150, 150, 150)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3750,15 +3734,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jbnCerrarVenta)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                        .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlbBuscarPedido2)
-                    .addComponent(jbnCarritoVenta)
-                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbnCarritoVenta, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlbBuscarPedido2)
+                                .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -4685,7 +4672,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jSeparator62.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator68.setForeground(new java.awt.Color(255, 255, 255));
 
         jbnCerrarCompras.setBackground(new java.awt.Color(145, 36, 36));
         jbnCerrarCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
@@ -4742,7 +4729,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtxBuscarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator62, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator68, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(119, 119, 119)
                 .addComponent(jbnCerrarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -4751,7 +4738,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraSuperiorComprasLayout.createSequentialGroup()
                 .addComponent(jtxBuscarCompras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator62, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator68, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
             .addGroup(jpBarraSuperiorComprasLayout.createSequentialGroup()
                 .addComponent(jbnCerrarCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -4836,11 +4823,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbNombreProveedorCompras.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpCompra.add(jlbNombreProveedorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 130, -1));
 
-        jSeparator63.setForeground(new java.awt.Color(0, 0, 0));
-        jpCompra.add(jSeparator63, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 460, 10));
+        jSeparator69.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator69, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 460, 10));
 
-        jSeparator64.setForeground(new java.awt.Color(0, 0, 0));
-        jpCompra.add(jSeparator64, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 550, 10));
+        jSeparator70.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator70, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 550, 10));
 
         jlbDomicilioProveedorCompras.setDisplayedMnemonic('d');
         jlbDomicilioProveedorCompras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -4902,9 +4889,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbLogoProgramaProducto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbLogoProgramaProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compra_128.png"))); // NOI18N
-        jLabel6.setToolTipText("");
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compra_128.png"))); // NOI18N
+        jLabel15.setToolTipText("");
 
         javax.swing.GroupLayout jpContenidoLogoComprasLayout = new javax.swing.GroupLayout(jpContenidoLogoCompras);
         jpContenidoLogoCompras.setLayout(jpContenidoLogoComprasLayout);
@@ -4917,7 +4904,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jlbLogoProgramaProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, Short.MAX_VALUE))
                     .addGroup(jpContenidoLogoComprasLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4927,7 +4914,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap(71, Short.MAX_VALUE)
                 .addComponent(jlbLogoProgramaProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74))
         );
 
@@ -4950,8 +4937,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbFechaCompra.setText("Fecha:");
         jpCompra.add(jlbFechaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 90, 40));
 
-        jSeparator65.setForeground(new java.awt.Color(0, 0, 0));
-        jpCompra.add(jSeparator65, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 60, 10));
+        jSeparator71.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator71, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 60, 10));
 
         jlbSubTotalCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlbSubTotalCompra.setText("0");
@@ -4983,8 +4970,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         });
         jpCompra.add(jtfIdProductoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 60, 40));
 
-        jSeparator66.setForeground(new java.awt.Color(0, 0, 0));
-        jpCompra.add(jSeparator66, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 190, 10));
+        jSeparator72.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator72, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 190, 10));
 
         jSeparator67.setForeground(new java.awt.Color(0, 0, 0));
         jpCompra.add(jSeparator67, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 260, 10));
@@ -5105,14 +5092,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEmpleadoActionPerformed
         abrirOpcion(jpPrincipal, jpEmpleado);
-        LimpiarTabla(jtbEmpleado, modeloEmpleado);
+        limpiarEmpleado();
         objEmpleado.consultaEmpleado(modeloEmpleado);
+        
 
     }//GEN-LAST:event_jbnEmpleadoActionPerformed
 
     private void jbnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProveedorActionPerformed
         abrirOpcion(jpPrincipal, jpProveedor);
-        LimpiarTabla(jtbProveedor, modeloProveedor);
+        limpiarProveedor();
         objProveedor.consultaProveedor(modeloProveedor);
 
     }//GEN-LAST:event_jbnProveedorActionPerformed
@@ -5136,7 +5124,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClientesActionPerformed
         abrirOpcion(jpPrincipal, jpCliente);
-        LimpiarTabla(jtbCliente, modeloCliente);
+        limpiarCliente();
         objCliente.consultaCliente(modeloCliente);
     }//GEN-LAST:event_jbnClientesActionPerformed
 
@@ -5579,9 +5567,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             jtxRfcProveedor.setText(objProveedor.getRfc());
             //se habilitan los botones en caso de que la consulta sea valida
 
-            if (objEmpleado.getIdEmpleado() >= 1) {
-                jbnEliminarEmpleado.setEnabled(true);
-                jbnActualizarEmpleado.setEnabled(true);
+            if (objProveedor.getIdProveedor()>= 1) {
+                jbnEliminarProveedor.setEnabled(true);
+                jbnActualizarProveedor.setEnabled(true);
             }
         }
 
@@ -5649,7 +5637,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
     private void jtxBuscarProductoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyPressed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyPressed
 
     private void jtxBuscarProductoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyTyped
@@ -5657,11 +5645,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             @Override
             public void keyTyped(final KeyEvent e) {
                 repaint();
-                filtroPedido();
+                filtroProducto();
             }
         });
-        trsfiltro = new TableRowSorter(modeloPedido);
-        jtbPedido.setRowSorter(trsfiltro);
+        trsfiltro = new TableRowSorter(modeloProductoVenta);
+        jtbProductoVenta.setRowSorter(trsfiltro);
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyTyped
 
     private void jcbxClienteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxClienteVentaActionPerformed
@@ -5764,7 +5752,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         checarempresa();
     }//GEN-LAST:event_formWindowOpened
 
-<<<<<<< HEAD
+
     private void jtxBuscarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxBuscarComprasActionPerformed
        objCompra.setIdCompra(Integer.parseInt(jtxBuscarCompras.getText()));
      objCompra.consultaCompra();
@@ -5849,14 +5837,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objCompra.setIdProv(objProveedor.getIdProveedor());
         objCompra.altaCompra();
     }//GEN-LAST:event_jbnInicioVentaActionPerformed
-=======
+
     private void jbnGenerarVentaDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnGenerarVentaDetallePedidoActionPerformed
         objetoVenta.altaVenta();
         System.out.println("Venta generada");
         objDetalleVenta.altaDetalleVenta();
         System.out.println("Detalle Venta generada");
     }//GEN-LAST:event_jbnGenerarVentaDetallePedidoActionPerformed
->>>>>>> dnop
+
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
@@ -5887,9 +5875,58 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     jtxSubtotalVenta.setText(null);
     jtxBuscarProductoVenta.setText(null);
     jbnCarritoVenta.setText("0");
-    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);
+    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);   
+    }
+    void limpiarCliente(){
+    jtxIdCliente.setText(null);
+    jtxNombreCliente.setText(null);
+    jtxNoComprasCliente.setText(null);
+    jtxApellidosClientes.setText(null);
+    jtxFechaNacimiento.setText(null);
+    jtxTelefonoCliente.setText(null);
+    jtxRfcCliente.setText(null);
+    jtxEmailCliente.setText(null);
+    jtxContrasenaCliente.setText(null);
+    jtxCalleyNumCliente.setText(null);
+    jtxColoniaCliente.setText(null);
+    jtxReferenciaCliente.setText(null);
+    jtxCpCliente.setText(null);
+    jtxMunicipioCliente.setText(null);
+    jtxEstadoCliente.setText(null);
+    jtxBuscarCliente.setText(null);
+    LimpiarTabla(jtbCliente, modeloCliente);   
+    }
+    void limpiarEmpleado(){
+    jtxIdEmpleado.setText(null);
+    jtxNombreEmpleado.setText(null);
+    jtxApellidosEmpleado.setText(null);
+    jtxFechaNacimientoEmpl.setText(null);
+    jtxTelefonoEmpleado.setText(null);
+    jtxRfcEmpleado.setText(null);
+    jtxEmailEmpleado.setText(null);
+    jtxUsuarioEmpleado.setText(null);
+    jtxContrasenaEmpleado.setText(null);
+    jtxCalleyNumEmpleado.setText(null);
+    jtxColoniaEmpleado.setText(null);
+    jtxReferenciasEmpleado.setText(null);
+    jtxCpEmpleado.setText(null);
+    jtxMunicipioEmpleado.setText(null);
+    jtxEstadoEmpleado.setText(null);
+    jtxBuscarEmpleado.setText(null);
+    LimpiarTabla(jtbEmpleado, modeloEmpleado);    
+    }
     
-    
+    void limpiarProveedor(){
+    jtxIdProveedor.setText(null);
+    jtxNombreProveedor.setText(null);
+    jtxDomicilioProveedor.setText(null);
+    jtxTelefonoProveedor.setText(null);
+    jtxEmailProveedor.setText(null);
+    jtxRfcProveedor.setText(null);
+    jtxBuscarProveedor.setText(null);
+    LimpiarTabla(jtbProveedor, modeloProveedor);
+    jbnEliminarProveedor.setEnabled(false);
+    jbnActualizarProveedor.setEnabled(false);
     }
 
     //Metodo para regrsar al menu desde cualquier ventana
@@ -5983,6 +6020,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -6074,11 +6112,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JSeparator jSeparator64;
     private javax.swing.JSeparator jSeparator65;
     private javax.swing.JSeparator jSeparator66;
-<<<<<<< HEAD
     private javax.swing.JSeparator jSeparator67;
-=======
->>>>>>> dnop
+    private javax.swing.JSeparator jSeparator68;
+    private javax.swing.JSeparator jSeparator69;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator70;
+    private javax.swing.JSeparator jSeparator71;
+    private javax.swing.JSeparator jSeparator72;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -6124,11 +6164,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
     private javax.swing.JButton jbnFinalizarVenta;
-<<<<<<< HEAD
-    private javax.swing.JButton jbnInicioVenta;
-=======
     private javax.swing.JButton jbnGenerarVentaDetallePedido;
->>>>>>> dnop
+    private javax.swing.JButton jbnInicioVenta;
     private javax.swing.JButton jbnPedidos;
     private javax.swing.JButton jbnProducto;
     private javax.swing.JButton jbnProveedor;
@@ -6188,11 +6225,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbEmailProveedorCompras2;
     private javax.swing.JLabel jlbEstadoCliente;
     private javax.swing.JLabel jlbEstadoEmpleado;
-<<<<<<< HEAD
     private javax.swing.JLabel jlbEstatusCompra;
-=======
     private javax.swing.JLabel jlbEstatusDetallePedido;
->>>>>>> dnop
     private javax.swing.JLabel jlbEstatusPedido;
     private javax.swing.JLabel jlbEstatusom;
     private javax.swing.JLabel jlbFechaCompra;
@@ -6216,8 +6250,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
     private javax.swing.JLabel jlbLogoEmpresaCompras;
-    private javax.swing.JLabel jlbLogoEmpresaProveedor;
-    private javax.swing.JLabel jlbLogoEmpresaProveedor1;
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
     private javax.swing.JLabel jlbLogoPrograma3;

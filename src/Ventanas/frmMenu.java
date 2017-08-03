@@ -236,12 +236,34 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 } else {
                     System.out.println("Empresa 2 en uso, color rojo ");
 
-                    jPanel11.setBackground(Color.red);
-                    jpInferior.setBackground(Color.red);
-                    jpBarraInferiorCliente.setBackground(Color.red);
+                    jPanel11.setBackground(Color.decode("#990000"));
+                    jpInferior.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorCliente.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorEmpresa.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorPedido.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorPedido1.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorPedido2.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorCliente1.setBackground(Color.decode("#990000"));
+                    jpBarraInferiorProducto.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorCliente.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorEmpleado.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorEmpresa.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorPedido.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorPedido2.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorPedido3.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorProducto.setBackground(Color.decode("#990000"));
+                    jpBarraSuperiorPedido1.setBackground(Color.decode("#990000"));
+                    jpPanelSuperiorVenta.setBackground(Color.decode("#990000"));
+                    jpPanelInferiorVenta.setBackground(Color.decode("#990000"));
+                    jtxBuscarCliente.setBackground(Color.decode("#990000"));
+                    jtxBuscarEmpleado.setBackground(Color.decode("#990000"));
+                    jtxBuscarEmpresa.setBackground(Color.decode("#990000"));
+                    jtxBuscarPedido.setBackground(Color.decode("#990000"));
+                    jtxBuscarPedido1.setBackground(Color.decode("#990000"));
+                    jtxBuscarProducto.setBackground(Color.decode("#990000"));
+                    jtxBuscarProductoVenta.setBackground(Color.decode("#990000"));
+                    jtxBuscarProveedor.setBackground(Color.decode("#990000"));
                     
-
-                                            
 
                 }
             }
@@ -2055,7 +2077,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpEmpleado.add(jtxIdEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 120, 20));
 
         jlbIconoEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/empleado_128.png"))); // NOI18N
-        jpEmpleado.add(jlbIconoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 120, 130));
+        jpEmpleado.add(jlbIconoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 120, 130));
 
         jlbUsuarioEmpleado.setDisplayedMnemonic('b');
         jlbUsuarioEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -3518,14 +3540,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbBuscarPedido2)
-<<<<<<< HEAD
-                    .addComponent(jbnRegresarEmpleado1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbnEliminarProducto2))
-=======
                     .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbnCarritoVenta)))
->>>>>>> dnop
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

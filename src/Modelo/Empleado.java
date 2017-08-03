@@ -208,8 +208,27 @@ public Empleado (){
     JOptionPane.showMessageDialog(null, ex);
           
         }
+ }
+ 
+ 
+  public int modificarEmpleadoContra(String user, String contra){
+     PreparedStatement conectar;
+    obj.conectar();
+        try {
+            conectar = obj.conexion.prepareStatement("UPDATE empleado SET contrasena=? where usuario=?");
+          
+            conectar.setString(1, contra);
+            conectar.setString(2, user);
+             //ejecutar sentencia
+            int resp = conectar.executeUpdate();
+            return resp;
+        } catch (SQLException ex) {
+    JOptionPane.showMessageDialog(null, ex);
+          return-1;
+        }
 
  }
+  
  public int validarUsuario(){    
  int i=0, j=0;   
  PreparedStatement comando;

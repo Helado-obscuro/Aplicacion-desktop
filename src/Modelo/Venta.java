@@ -23,6 +23,18 @@ public class Venta {
  
  Conexion  obj = new Conexion();
 
+    public Venta(int idVenta, Date fechaVenta, double total, double subtotal, double iva, double totalaDescontar, int idDescuento) {
+        this.idVenta = idVenta;
+        this.fechaVenta = fechaVenta;
+        this.total = total;
+        this.subtotal = subtotal;
+        this.iva = iva;
+        this.totalaDescontar = totalaDescontar;
+        this.idDescuento = idDescuento;
+    }
+ 
+ 
+
     public double getTotalaDescontar() {
         return totalaDescontar;
     }
@@ -195,7 +207,7 @@ public class Venta {
     }
 
 
-return i;
+return i+1;
 }
 
     

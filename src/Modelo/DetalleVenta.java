@@ -18,6 +18,18 @@ public class DetalleVenta {
     int contador=0;
 
     Conexion obj = new Conexion();
+
+    
+    public DetalleVenta(int idProducto, int idVenta, double cantidad, double monto) {
+        this.idProducto = idProducto;
+        this.idVenta = idVenta;
+        this.cantidad = cantidad;
+        this.monto = monto;
+    }
+
+    public DetalleVenta() {
+    }
+
     
     public int getIdProducto() {
         return idProducto;
@@ -52,23 +64,23 @@ public class DetalleVenta {
     }
     
     
- public void altaDetalleVenta(){
-PreparedStatement conectar;
-    obj.conectar();
+    public void altaDetalleVenta() {
+        PreparedStatement conectar;
+        obj.conectar();
         try {
             conectar = obj.conexion.prepareStatement("insert into detalleVenta values(?,?,?,?)");
             conectar.setInt(1, idProducto);
-            conectar.setInt(2,idVenta);
-            conectar.setDouble(3,cantidad);
-            conectar.setDouble(4,monto);
-            
+            conectar.setInt(2, idVenta);
+            conectar.setDouble(3, cantidad);
+            conectar.setDouble(4, monto);
+
             //ejecutar sentencia
             int resp = conectar.executeUpdate();
-            JOptionPane.showMessageDialog(null,  "Operación exitosa");
+            JOptionPane.showMessageDialog(null, "Operación exitosa");
         } catch (SQLException ex) {
-    JOptionPane.showMessageDialog(null, "Error al registrar "+ex); 
- 
- }
+            JOptionPane.showMessageDialog(null, "Error al registrar " + ex);
+
+        }
  
  }
 public void bajaDetalleVentaProducto(){
@@ -115,23 +127,22 @@ public void ConsultaDetalle(DefaultTableModel model, int id){
      contador++;
      
      }
-    try {
-        comando=obj.conexion.prepareCall("Select * from detalleVenta where idVenta=?");
-        comando.setInt(1,id);
-        resultado=comando.executeQuery();
-        
-        while(resultado.next()){
-           for (int i = 0; i < 4; i++){
-                      obj1[i] = resultado.getObject(i+1);
-            }
-         model.addRow(obj1);
+        try {
+            comando = obj.conexion.prepareCall("Select * from detalleVenta where idVenta=?");
+            comando.setInt(1, id);
+            resultado = comando.executeQuery();
 
-        }
-    } catch (SQLException ex) {
+            while (resultado.next()) {
+                for (int i = 0; i < 4; i++) {
+                    obj1[i] = resultado.getObject(i + 1);
+                }
+                model.addRow(obj1);
+            }
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }// fin del try-cach
 
-}
+    }
 
 public void modificarDetalleVenta(){
 

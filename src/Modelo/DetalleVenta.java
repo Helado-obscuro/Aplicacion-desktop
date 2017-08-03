@@ -19,6 +19,8 @@ public class DetalleVenta {
 
     Conexion obj = new Conexion();
 
+
+    
     public DetalleVenta(int idProducto, int idVenta, double cantidad, double monto) {
         this.idProducto = idProducto;
         this.idVenta = idVenta;
@@ -28,6 +30,8 @@ public class DetalleVenta {
 
     public DetalleVenta() {
     }
+
+    
 
     public int getIdProducto() {
         return idProducto;
@@ -61,6 +65,11 @@ public class DetalleVenta {
         this.monto = monto;
     }
 
+
+
+    
+    
+
     public void altaDetalleVenta() {
         PreparedStatement conectar;
         obj.conectar();
@@ -73,21 +82,26 @@ public class DetalleVenta {
 
             //ejecutar sentencia
             int resp = conectar.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Operación exitosa");
+
+            // JOptionPane.showMessageDialog(null,  "Operación exitosa");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al registrar " + ex);
 
         }
 
+
     }
 
-    public void bajaDetalleVentaProducto() {
-        PreparedStatement comando;
+
+public void bajaDetalleVentaProducto(){
+PreparedStatement comando;
+
         obj.conectar();
 
         try {
-            comando = obj.conexion.prepareStatement("Delete from detalleVenta where idProducto=?");
-            comando.setInt(1, idProducto);
+            comando = obj.conexion.prepareStatement("Delete from detalleVenta where idVenta=? and idProducto=?");
+            comando.setInt(1,idVenta);
+            comando.setInt(2, idProducto);
             int resp = comando.executeUpdate();
             //JOptionPane.showMessageDialog(null, resp+"Se cancela ");    
         } catch (SQLException ex) {
@@ -126,7 +140,7 @@ public class DetalleVenta {
 
         }
         try {
-            comando = obj.conexion.prepareCall("Select * from detalleVenta where idVenta=?");
+            comando = obj.conexion.prepareCall("Select * from detalleVenta where idProducto=?");
             comando.setInt(1, id);
             resultado = comando.executeQuery();
 
@@ -135,12 +149,53 @@ public class DetalleVenta {
                     obj1[i] = resultado.getObject(i + 1);
                 }
                 model.addRow(obj1);
+
+
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }// fin del try-cach
 
     }
+
+    public void ConsultaVistaDetalle(DefaultTableModel model, int id) throws SQLException {
+        Object[] obj1 = new Object[6];
+        PreparedStatement comando;
+        ResultSet resultado;
+        obj.conectar();
+
+        if (contador == 0) {
+            model.addColumn("idProducto");
+            model.addColumn("idVenta");
+            model.addColumn("Nombre");
+            model.addColumn("Precio");
+            model.addColumn("Cantidad");
+            model.addColumn("Monto");
+            contador++;
+
+        }
+        try {
+            
+            comando = obj.conexion.prepareCall("Select * from vista_detalleventa where idVenta=?");
+            comando.setInt(1, id);
+            resultado = comando.executeQuery();
+
+            while (resultado.next()) {
+                for (int i = 0; i < 6; i++) {
+                    obj1[i] = resultado.getObject(i + 1);
+                }
+                model.addRow(obj1);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }// fin del try-cach
+        
+    }
+    
+
+
+
+
 
     public void modificarDetalleVenta() {
 
@@ -203,4 +258,39 @@ public class DetalleVenta {
         return canti;
     }
 
+    public void buscarDetalleVenta(int id,int idv) {
+
+        PreparedStatement comando;
+        ResultSet resultado;
+        obj.conectar();
+
+        try {
+            comando = obj.conexion.prepareCall("Select * from detalleVenta where idProducto=? and idventa=?");
+            comando.setInt(1, idProducto);
+            comando.setInt(1, idVenta);
+            
+            resultado=comando.executeQuery();
+            
+            if(resultado.first()){
+            idProducto=resultado.getInt("idProducto");
+            idVenta=resultado.getInt("idVenta");
+            cantidad=resultado.getDouble("rfcEmpresa");
+            monto=resultado.getDouble("domicilio");
+                
+            }else{
+           
+            JOptionPane.showMessageDialog(null,"No se puede realizar la consulta");
+            idProducto=0;
+            idVenta=0;
+            cantidad=0;
+            monto=0;
+            
+            }// fin del else 
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }// fin del try-cach
+    }
+     
+    
 }

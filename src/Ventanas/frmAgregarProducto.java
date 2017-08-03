@@ -15,6 +15,9 @@ import sun.invoke.empty.Empty;
 import Modelo.Producto;
 import Modelo.DetalleVenta;
 import Modelo.Venta;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class frmAgregarProducto extends javax.swing.JDialog {
  //Modelo del combobox
@@ -203,7 +206,7 @@ frmMenu objMenu;
 //         codiguito=getCadenaAlfanumAleatoria(8);
 //         objOrdenes.setIdCliente(31);
 //         objOrdenes.setCosto(0);
-//         objOrdenes.setStatus("Completado");
+//            objOrdenes.setStatus("Completado");
 //         objOrdenes.setFecha((java.sql.Date.valueOf(dateFormat.format(date))) );
 //         objOrdenes.setCodigoTransaccion(codiguito);
 //         objOrdenes.setMetodoPago("efectivo");
@@ -219,11 +222,15 @@ frmMenu objMenu;
           objDetalle.setIdProducto(this.objProducto.getIdProducto());
           objDetalle.setCantidad(Integer.valueOf(jtxCantidadProducto.getText()));
           objDetalle.setMonto(Double.parseDouble(jlbCostoProducto.getText()));
-          objDetalle.setIdVenta(ObjVenta.MaximoidOrden());
+          objDetalle.setIdVenta(ObjVenta.MaximoidOrden()-1);
           objDetalle.altaDetalleVenta();
           objMenu.banderitaDetalleVentecita=1;
           objMenu.LimpiarTabla(objMenu.jtbDetalleVenta, objMenu.modeloDetalleVenta);
-          objMenu.objDetalleVenta.ConsultaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
+              try {
+                  objMenu.objDetalleVenta.ConsultaVistaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
+              } catch (SQLException ex) {
+                  Logger.getLogger(frmAgregarProducto.class.getName()).log(Level.SEVERE, null, ex);
+              }
           objMenu.jtxTotalVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta())));
           objMenu.jbnCarritoVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalCantidad(objDetalle.getIdVenta())));
        
@@ -233,13 +240,9 @@ frmMenu objMenu;
        //Imprimir resultados
        objMenu.jtxIva.setText(formato.format(iva));
        objMenu.jtxSubtotalVenta.setText(formato.format(subtotal));
-          
+          this.dispose();
           }
-//        objMenu.jlbPasosVenta1.setText("Paso 2  Click al carro de venta");
-//        objMenu.jlbPasosVenta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Circled 2 C_48px.png")));
-//        //Control de pizzas y cantidad con consulta a base de datos
-//        objMenu.jlbTotal.setText(formato.format(objDetalle.TotalOrden(objOrdenes.MaximoidOrden())));
-//        objMenu.jbnContadorPizza.setText(String.valueOf(objDetalle.CantidadDetalleOrden(objOrdenes.MaximoidOrden())));
+
     }//GEN-LAST:event_jbnAgregarActionPerformed
 
     private void jtxCantidadProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxCantidadProductoKeyTyped

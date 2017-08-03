@@ -86,11 +86,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     Producto objProductoVenta = new Producto();
     productosControlador pcontrol = new productosControlador(this);
     Venta objVenta = new Venta();
-<<<<<<< HEAD
+
    
-=======
     Venta objetoVenta = new Venta();
->>>>>>> dnop
+
     DetalleVenta objDetalleVenta = new DetalleVenta();
     Conexion obj = new Conexion();
     //Instancia Ventanas
@@ -881,7 +880,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxfolioPedido = new javax.swing.JTextField();
         jScrollPane12 = new javax.swing.JScrollPane();
         jtbPedido1 = new javax.swing.JTable();
-<<<<<<< HEAD
+
         jpCompra = new javax.swing.JPanel();
         jpBarraSuperiorCompras = new javax.swing.JPanel();
         jlbTituloCompras = new javax.swing.JLabel();
@@ -932,7 +931,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbNombreFecha = new javax.swing.JLabel();
         jtfFechaEntrega = new javax.swing.JTextField();
         jlbEstatusom = new javax.swing.JLabel();
-=======
         jSeparator62 = new javax.swing.JSeparator();
         jtxRfcPedido1 = new javax.swing.JTextField();
         jlbTelefonoPedido1 = new javax.swing.JLabel();
@@ -956,7 +954,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTotalPedido1 = new javax.swing.JTextField();
         jtxSubtotalPedido1 = new javax.swing.JTextField();
         jlbIDProd = new javax.swing.JLabel();
->>>>>>> dnop
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -5764,7 +5761,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         checarempresa();
     }//GEN-LAST:event_formWindowOpened
 
-<<<<<<< HEAD
+
     private void jtxBuscarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxBuscarComprasActionPerformed
        objCompra.setIdCompra(Integer.parseInt(jtxBuscarCompras.getText()));
      objCompra.consultaCompra();
@@ -5849,14 +5846,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objCompra.setIdProv(objProveedor.getIdProveedor());
         objCompra.altaCompra();
     }//GEN-LAST:event_jbnInicioVentaActionPerformed
-=======
+
     private void jbnGenerarVentaDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnGenerarVentaDetallePedidoActionPerformed
         objetoVenta.altaVenta();
         System.out.println("Venta generada");
         objDetalleVenta.altaDetalleVenta();
         System.out.println("Detalle Venta generada");
     }//GEN-LAST:event_jbnGenerarVentaDetallePedidoActionPerformed
->>>>>>> dnop
+
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
@@ -6074,10 +6071,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JSeparator jSeparator64;
     private javax.swing.JSeparator jSeparator65;
     private javax.swing.JSeparator jSeparator66;
-<<<<<<< HEAD
     private javax.swing.JSeparator jSeparator67;
-=======
->>>>>>> dnop
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
@@ -6124,11 +6118,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
     private javax.swing.JButton jbnFinalizarVenta;
-<<<<<<< HEAD
     private javax.swing.JButton jbnInicioVenta;
-=======
     private javax.swing.JButton jbnGenerarVentaDetallePedido;
->>>>>>> dnop
     private javax.swing.JButton jbnPedidos;
     private javax.swing.JButton jbnProducto;
     private javax.swing.JButton jbnProveedor;
@@ -6188,11 +6179,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbEmailProveedorCompras2;
     private javax.swing.JLabel jlbEstadoCliente;
     private javax.swing.JLabel jlbEstadoEmpleado;
-<<<<<<< HEAD
     private javax.swing.JLabel jlbEstatusCompra;
-=======
     private javax.swing.JLabel jlbEstatusDetallePedido;
->>>>>>> dnop
     private javax.swing.JLabel jlbEstatusPedido;
     private javax.swing.JLabel jlbEstatusom;
     private javax.swing.JLabel jlbFechaCompra;

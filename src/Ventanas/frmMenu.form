@@ -5795,9 +5795,9 @@
                               <Component id="jtxBuscarProductoVenta" pref="247" max="32767" attributes="0"/>
                               <Component id="jSeparator50" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="jbnRegresarVenta" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="170" max="32767" attributes="0"/>
+                          <EmptySpace pref="178" max="32767" attributes="0"/>
                           <Component id="jbnCarritoVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           <Component id="jbnCerrarVenta" min="-2" pref="59" max="-2" attributes="0"/>
@@ -5819,10 +5819,8 @@
                                   <Component id="jSeparator50" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jlbBuscarPedido2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="jbnRegresarVenta" alignment="3" max="32767" attributes="0"/>
-                                  <Component id="jbnCarritoVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jbnCarritoVenta" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jbnRegresarVenta" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -6216,7 +6214,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtxIva">
+            <Component class="javax.swing.JTextField" name="jtxIvaVenta">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

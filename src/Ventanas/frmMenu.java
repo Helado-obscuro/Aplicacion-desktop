@@ -82,9 +82,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     Producto objProductoVenta = new Producto();
     productosControlador pcontrol = new productosControlador(this);
     Venta objVenta = new Venta();
-        Venta objetoVenta = new Venta();
+    Venta objetoVenta = new Venta();
     DetalleVenta objDetalleVenta = new DetalleVenta();
-        Conexion obj=  new Conexion();
+    Conexion obj = new Conexion();
     //Instancia Ventanas
     frmAgregarProducto agregarPartida;
     //Variables del JpopupMenu
@@ -244,13 +244,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     System.out.println("Empresa 1 en uso, color azul");
                     jPanel11.setBackground(Color.decode("#1672b9"));
                     jpInferior.setBackground(Color.decode("#1672b9"));
-                    
+
                     jcbxEmpresaEmpleado.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
                     jcbxEmpresaEmpleado.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
-                    
+
                     jcbxEmpresaCliente.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
                     jcbxEmpresaCliente.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
-
 
                 } else {
                     System.out.println("Empresa 2 en uso, color rojo ");
@@ -282,10 +281,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     jtxBuscarProducto.setBackground(Color.decode("#990000"));
                     jtxBuscarProductoVenta.setBackground(Color.decode("#990000"));
                     jtxBuscarProveedor.setBackground(Color.decode("#990000"));
-                    
+
                     jcbxEmpresaEmpleado.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
                     jcbxEmpresaEmpleado.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
-                    
+
                     jcbxEmpresaCliente.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
                     jcbxEmpresaCliente.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
 
@@ -326,8 +325,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         modeloPedido.setValueAt("Enviado", selectedRow, 3);
         objPedido.modificarEstatus("Enviado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue());
     }
-    
-        private void rechazado() {
+
+    private void rechazado() {
         int selectedRow = jtbPedido.getSelectedRow();
         modeloPedido.setValueAt("Rechazado", selectedRow, 3);
         objPedido.modificarEstatus("Rechazado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue());
@@ -335,59 +334,57 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void detalle(int folio) {
         abrirOpcion(jpPrincipal, jpDetallePedido);
-        
+
         //hora
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    System.out.println("fecha actual " + (java.sql.Date.valueOf(dateFormat.format(date)))); //2016/11/16 12:08:43
+        System.out.println("fecha actual " + (java.sql.Date.valueOf(dateFormat.format(date)))); //2016/11/16 12:08:43
 
         try {
             PreparedStatement conectar;
             obj.conectar();
-            conectar = obj.conexion.prepareStatement("Select pedido.folioPedido, fechaPedido, pedido.idCliente, estatus, nombreProducto, " +
-"cantidad, monto, persona.nombre, persona.calleNum, persona.telefono, persona.rfcPersona, persona.apellidos, persona.municipio, persona.estado,"
-                    + " detallepedido.idProducto, cliente.rfcCliente from cliente, pedido, detallepedido, producto, persona where pedido.folioPedido = detallepedido.folioPedido and " +
-"producto.idProducto = detallepedido.idProducto and pedido.idCliente = cliente.idCliente and cliente.rfcCliente = persona.rfcPersona and detallepedido.folioPedido = ?");
+            conectar = obj.conexion.prepareStatement("Select pedido.folioPedido, fechaPedido, pedido.idCliente, estatus, nombreProducto, "
+                    + "cantidad, monto, persona.nombre, persona.calleNum, persona.telefono, persona.rfcPersona, persona.apellidos, persona.municipio, persona.estado,"
+                    + " detallepedido.idProducto, cliente.rfcCliente from cliente, pedido, detallepedido, producto, persona where pedido.folioPedido = detallepedido.folioPedido and "
+                    + "producto.idProducto = detallepedido.idProducto and pedido.idCliente = cliente.idCliente and cliente.rfcCliente = persona.rfcPersona and detallepedido.folioPedido = ?");
             conectar.setInt(1, folio);
-            System.out.println("Folio pedido a buscar: "+folio);
+            System.out.println("Folio pedido a buscar: " + folio);
             //ejecutar sentencia
             ResultSet rs = conectar.executeQuery();
             while (rs.next()) {
-                jtxfolioPedido.setText(String.valueOf(rs.getInt("folioPedido")) );
-                jtxClientePedido.setText(rs.getString("nombre")+rs.getString("apellidos"));
-                jtxDomicilioPedido.setText(rs.getString("calleNum")+" "+rs.getString("municipio")+" "+rs.getString("estado"));
-              jtxTelefonoPedido.setText(rs.getString("telefono"));
-              jtxRfcPedido1.setText(rs.getString("rfcPersona"));
-              jtxProductoPedido1.setText(rs.getString("nombreProducto"));
-              jtxCantidadPedido2.setText(String.valueOf(rs.getInt("cantidad")) );
-              jlbEstatusDetallePedido.setText(rs.getString("estatus"));
-              jtxFechaPedido2.setText(rs.getString("fechaPedido"));
-              jtxMontoPedido3.setText(String.valueOf(rs.getDouble("monto")) );
-              jlbIDProd.setText(String.valueOf(rs.getInt("idProducto")));
+                jtxfolioPedido.setText(String.valueOf(rs.getInt("folioPedido")));
+                jtxClientePedido.setText(rs.getString("nombre") + rs.getString("apellidos"));
+                jtxDomicilioPedido.setText(rs.getString("calleNum") + " " + rs.getString("municipio") + " " + rs.getString("estado"));
+                jtxTelefonoPedido.setText(rs.getString("telefono"));
+                jtxRfcPedido1.setText(rs.getString("rfcPersona"));
+                jtxProductoPedido1.setText(rs.getString("nombreProducto"));
+                jtxCantidadPedido2.setText(String.valueOf(rs.getInt("cantidad")));
+                jlbEstatusDetallePedido.setText(rs.getString("estatus"));
+                jtxFechaPedido2.setText(rs.getString("fechaPedido"));
+                jtxMontoPedido3.setText(String.valueOf(rs.getDouble("monto")));
+                jlbIDProd.setText(String.valueOf(rs.getInt("idProducto")));
 
                 if (!rs.getString("estatus").equals("Competado")) {
                     jbnGenerarVentaDetallePedido.setEnabled(true);
                 }
             }
             int idVentap = objetoVenta.MaximoidOrden();
-             double subtotal = Double.parseDouble(jtxMontoPedido3.getText());
-             double iva = subtotal * 0.16 ;
-            double total = (subtotal + iva) ;
-            double totalaDescontar =0;
-            int iddescuento =0;
-              objetoVenta = new Venta(idVentap, (java.sql.Date.valueOf(dateFormat.format(date))), total, subtotal, iva, totalaDescontar, iddescuento);
-             
-              jtxTotalPedido1.setText(String.valueOf(total));
-              jtxSubtotalPedido1.setText(String.valueOf(subtotal));
-              jtxIvaPedido1.setText(String.valueOf(iva));
-              
-               objDetalleVenta = new DetalleVenta(Integer.parseInt(jlbIDProd.getText()), 
-                       idVentap, Double.parseDouble(jtxCantidadPedido2.getText()), Double.parseDouble(jtxMontoPedido3.getText()));
+            double subtotal = Double.parseDouble(jtxMontoPedido3.getText());
+            double iva = subtotal * 0.16;
+            double total = (subtotal + iva);
+            double totalaDescontar = 0;
+            int iddescuento = 0;
+            objetoVenta = new Venta(idVentap, (java.sql.Date.valueOf(dateFormat.format(date))), total, subtotal, iva, totalaDescontar, iddescuento);
+
+            jtxTotalPedido1.setText(String.valueOf(total));
+            jtxSubtotalPedido1.setText(String.valueOf(subtotal));
+            jtxIvaPedido1.setText(String.valueOf(iva));
+
+            objDetalleVenta = new DetalleVenta(Integer.parseInt(jlbIDProd.getText()),
+                    idVentap, Double.parseDouble(jtxCantidadPedido2.getText()), Double.parseDouble(jtxMontoPedido3.getText()));
 
         } catch (SQLException ex) {
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
 
     }
 
@@ -5255,7 +5252,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objetoVenta.altaVenta();
         System.out.println("Venta generada");
         objDetalleVenta.altaDetalleVenta();
-                System.out.println("Detalle Venta generada");
+        System.out.println("Detalle Venta generada");
     }//GEN-LAST:event_jbnGenerarVentaDetallePedidoActionPerformed
 
     //Metodos para cambiar color en el panel empresa

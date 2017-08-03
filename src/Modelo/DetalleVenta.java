@@ -84,9 +84,6 @@ public class DetalleVenta {
             int resp = conectar.executeUpdate();
 
             // JOptionPane.showMessageDialog(null,  "Operación exitosa");
-
-            JOptionPane.showMessageDialog(null, "Operación exitosa");
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al registrar " + ex);
 

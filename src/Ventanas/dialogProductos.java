@@ -156,6 +156,11 @@ public class dialogProductos extends javax.swing.JDialog {
         jtxNombreProducto.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreProducto.setBorder(null);
+        jtxNombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNombreProductoKeyTyped(evt);
+            }
+        });
 
         jlbNombreProveedor1.setDisplayedMnemonic('b');
         jlbNombreProveedor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -204,6 +209,11 @@ public class dialogProductos extends javax.swing.JDialog {
         jtxStock.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxStock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxStock.setBorder(null);
+        jtxStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxStockKeyTyped(evt);
+            }
+        });
 
         jlbRfcProveedor2.setDisplayedMnemonic('b');
         jlbRfcProveedor2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -226,6 +236,11 @@ public class dialogProductos extends javax.swing.JDialog {
         jtxPrecioCom.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxPrecioCom.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxPrecioCom.setBorder(null);
+        jtxPrecioCom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxPrecioComKeyTyped(evt);
+            }
+        });
 
         jbnExaminar.setText("Examinar");
         jbnExaminar.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +276,11 @@ public class dialogProductos extends javax.swing.JDialog {
         jtcPrecioVent.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtcPrecioVent.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtcPrecioVent.setBorder(null);
+        jtcPrecioVent.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtcPrecioVentKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -457,6 +477,51 @@ public class dialogProductos extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        limpiarCampos();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jtxNombreProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreProductoKeyTyped
+       
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNombreProductoKeyTyped
+
+    private void jtxStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxStockKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxStockKeyTyped
+
+    private void jtxPrecioComKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPrecioComKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxPrecioComKeyTyped
+
+    private void jtcPrecioVentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtcPrecioVentKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtcPrecioVentKeyTyped
 
     /**
      * @param args the command line arguments

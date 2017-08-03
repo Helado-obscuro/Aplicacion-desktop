@@ -252,6 +252,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxNombreProductoKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbNombreProveedor1">
           <Properties>
@@ -349,6 +352,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxStockKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbRfcProveedor2">
           <Properties>
@@ -392,6 +398,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxPrecioComKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbnExaminar">
           <Properties>
@@ -474,6 +483,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtcPrecioVentKeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

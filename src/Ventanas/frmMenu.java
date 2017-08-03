@@ -1366,6 +1366,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNombreCliente.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreCliente.setBorder(null);
+        jtxNombreCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNombreClienteKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 210, 30));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
@@ -1392,6 +1397,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxApellidosClientes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxApellidosClientes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxApellidosClientes.setBorder(null);
+        jtxApellidosClientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxApellidosClientesKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxApellidosClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 210, 30));
 
         jlbTelefonoCliente.setDisplayedMnemonic('b');
@@ -1410,6 +1420,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTelefonoCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxTelefonoCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxTelefonoCliente.setBorder(null);
+        jtxTelefonoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxTelefonoClienteKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 180, 30));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
@@ -1474,6 +1489,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxMunicipioCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxMunicipioCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxMunicipioCliente.setBorder(null);
+        jtxMunicipioCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxMunicipioClienteKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxMunicipioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 190, 30));
 
         jlbCpCliente.setDisplayedMnemonic('b');
@@ -1492,6 +1512,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxCpCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxCpCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxCpCliente.setBorder(null);
+        jtxCpCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxCpClienteKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxCpCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 190, 120, 30));
 
         jlbEstadoCliente.setDisplayedMnemonic('b');
@@ -1510,6 +1535,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxEstadoCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxEstadoCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxEstadoCliente.setBorder(null);
+        jtxEstadoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxEstadoClienteKeyTyped(evt);
+            }
+        });
         jpCliente.add(jtxEstadoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 140, 30));
 
         jlbContrasenaCliente.setDisplayedMnemonic('b');
@@ -1852,6 +1882,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNombreEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreEmpleado.setBorder(null);
+        jtxNombreEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNombreEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxNombreEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 210, 30));
 
         jSeparator18.setForeground(new java.awt.Color(0, 0, 0));
@@ -1880,6 +1915,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxApellidosEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxApellidosEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxApellidosEmpleado.setBorder(null);
+        jtxApellidosEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxApellidosEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxApellidosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 60, 210, 30));
 
         jlbTelefonoEmpleado.setDisplayedMnemonic('b');
@@ -1899,6 +1939,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTelefonoEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxTelefonoEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxTelefonoEmpleado.setBorder(null);
+        jtxTelefonoEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxTelefonoEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxTelefonoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 180, 30));
 
         jSeparator21.setForeground(new java.awt.Color(0, 0, 0));
@@ -1966,6 +2011,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxMunicipioEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxMunicipioEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxMunicipioEmpleado.setBorder(null);
+        jtxMunicipioEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxMunicipioEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxMunicipioEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 190, 30));
 
         jlbCpEmpleado.setDisplayedMnemonic('b');
@@ -1985,6 +2035,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxCpEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxCpEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxCpEmpleado.setBorder(null);
+        jtxCpEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxCpEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxCpEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 300, 120, 30));
 
         jlbEstadoEmpleado.setDisplayedMnemonic('b');
@@ -2004,6 +2059,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxEstadoEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxEstadoEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxEstadoEmpleado.setBorder(null);
+        jtxEstadoEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxEstadoEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxEstadoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 140, 30));
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
@@ -2139,6 +2199,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNssEmpleado.setForeground(new java.awt.Color(102, 102, 102));
         jtxNssEmpleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNssEmpleado.setBorder(null);
+        jtxNssEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNssEmpleadoKeyTyped(evt);
+            }
+        });
         jpEmpleado.add(jtxNssEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 170, 30));
 
         jlbReferenciasEmpleado.setDisplayedMnemonic('b');
@@ -2444,6 +2509,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNombreEmpresa.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreEmpresa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreEmpresa.setBorder(null);
+        jtxNombreEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNombreEmpresaKeyTyped(evt);
+            }
+        });
         jpEmpresa.add(jtxNombreEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 450, 30));
 
         jSeparator35.setForeground(new java.awt.Color(0, 0, 0));
@@ -2472,6 +2542,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTelefonoEmpresa.setForeground(new java.awt.Color(102, 102, 102));
         jtxTelefonoEmpresa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxTelefonoEmpresa.setBorder(null);
+        jtxTelefonoEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxTelefonoEmpresaKeyTyped(evt);
+            }
+        });
         jpEmpresa.add(jtxTelefonoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 240, 30));
 
         jlbTelefonoEmpresa.setDisplayedMnemonic('b');
@@ -2547,6 +2622,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNumEmpleadosEmpresa.setForeground(new java.awt.Color(102, 102, 102));
         jtxNumEmpleadosEmpresa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNumEmpleadosEmpresa.setBorder(null);
+        jtxNumEmpleadosEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNumEmpleadosEmpresaKeyTyped(evt);
+            }
+        });
         jpEmpresa.add(jtxNumEmpleadosEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, 240, 30));
 
         jlbNumEmpleadosEmpresa.setDisplayedMnemonic('b');
@@ -2759,6 +2839,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxNombreProveedor.setForeground(new java.awt.Color(102, 102, 102));
         jtxNombreProveedor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxNombreProveedor.setBorder(null);
+        jtxNombreProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxNombreProveedorKeyTyped(evt);
+            }
+        });
         jpProveedor.add(jtxNombreProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 450, 30));
 
         jSeparator44.setForeground(new java.awt.Color(0, 0, 0));
@@ -2785,6 +2870,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxTelefonoProveedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxTelefonoProveedor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxTelefonoProveedor.setBorder(null);
+        jtxTelefonoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxTelefonoProveedorKeyTyped(evt);
+            }
+        });
         jpProveedor.add(jtxTelefonoProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 240, 30));
 
         jlbTelefonoProveedor.setDisplayedMnemonic('b');
@@ -2885,6 +2975,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxIdProveedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxIdProveedor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxIdProveedor.setBorder(null);
+        jtxIdProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxIdProveedorKeyTyped(evt);
+            }
+        });
         jpProveedor.add(jtxIdProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 20));
 
         jScrollPane7.setBackground(new java.awt.Color(255, 255, 255));
@@ -3337,7 +3432,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbLogoProgramaProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
 
         jLabel7.setText("Arpones");
 
@@ -5023,6 +5118,221 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         System.out.println("Checando empresa...");
         checarempresa();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jtxNombreEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreEmpleadoKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNombreEmpleadoKeyTyped
+
+    private void jtxApellidosEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxApellidosEmpleadoKeyTyped
+                      //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxApellidosEmpleadoKeyTyped
+
+    private void jtxMunicipioEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxMunicipioEmpleadoKeyTyped
+                      //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxMunicipioEmpleadoKeyTyped
+
+    private void jtxEstadoEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxEstadoEmpleadoKeyTyped
+                      //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxEstadoEmpleadoKeyTyped
+
+    private void jtxTelefonoEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxTelefonoEmpleadoKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxTelefonoEmpleadoKeyTyped
+
+    private void jtxNssEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNssEmpleadoKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNssEmpleadoKeyTyped
+
+    private void jtxCpEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxCpEmpleadoKeyTyped
+                //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxCpEmpleadoKeyTyped
+
+    private void jtxIdProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxIdProveedorKeyTyped
+
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxIdProveedorKeyTyped
+
+    private void jtxTelefonoProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxTelefonoProveedorKeyTyped
+
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxTelefonoProveedorKeyTyped
+
+    private void jtxNombreProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreProveedorKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNombreProveedorKeyTyped
+
+    private void jtxNombreClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreClienteKeyTyped
+                     //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNombreClienteKeyTyped
+
+    private void jtxApellidosClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxApellidosClientesKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxApellidosClientesKeyTyped
+
+    private void jtxMunicipioClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxMunicipioClienteKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxMunicipioClienteKeyTyped
+
+    private void jtxEstadoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxEstadoClienteKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxEstadoClienteKeyTyped
+
+    private void jtxTelefonoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxTelefonoClienteKeyTyped
+
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxTelefonoClienteKeyTyped
+
+    private void jtxCpClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxCpClienteKeyTyped
+
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxCpClienteKeyTyped
+
+    private void jtxNombreEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreEmpresaKeyTyped
+              //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+    }//GEN-LAST:event_jtxNombreEmpresaKeyTyped
+
+    private void jtxTelefonoEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxTelefonoEmpresaKeyTyped
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+
+    }//GEN-LAST:event_jtxTelefonoEmpresaKeyTyped
+
+    private void jtxNumEmpleadosEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNumEmpleadosEmpresaKeyTyped
+        //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
+        char letra = evt.getKeyChar();
+
+        //VALIDAR SI ES NUMERO
+        if(!Character.isDigit(letra)){
+            getToolkit().beep();//Emite un sonido de alerta
+            evt.consume(); // evita que el caracter aparezca en la caja  de texto
+        }
+
+    }//GEN-LAST:event_jtxNumEmpleadosEmpresaKeyTyped
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {

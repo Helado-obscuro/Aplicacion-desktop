@@ -5847,7 +5847,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         checarempresa();
     }//GEN-LAST:event_formWindowOpened
 
-<<<<<<< HEAD
+
     private void jtxNombreEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreEmpleadoKeyTyped
               //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
         char letra = evt.getKeyChar();
@@ -6062,7 +6062,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         }
 
     }//GEN-LAST:event_jtxNumEmpleadosEmpresaKeyTyped
-=======
+
 
     private void jtxBuscarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxBuscarComprasActionPerformed
        objCompra.setIdCompra(Integer.parseInt(jtxBuscarCompras.getText()));
@@ -6156,7 +6156,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         System.out.println("Detalle Venta generada");
     }//GEN-LAST:event_jbnGenerarVentaDetallePedidoActionPerformed
 
->>>>>>> dnop
+
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {

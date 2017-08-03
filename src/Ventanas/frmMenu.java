@@ -737,7 +737,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jSeparator47 = new javax.swing.JSeparator();
         jtxEmailProveedor = new javax.swing.JTextField();
         jlbEmailProveedor = new javax.swing.JLabel();
-        jlbLogoEmpresaProveedor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jlbIconoProveedor = new javax.swing.JLabel();
         jlbLogoProgramaProveedor = new javax.swing.JLabel();
@@ -778,7 +777,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnActualizarProducto = new javax.swing.JButton();
         jbnAgregarProveedor1 = new javax.swing.JButton();
         jbnEliminarProducto = new javax.swing.JButton();
-        jlbLogoEmpresaProveedor1 = new javax.swing.JLabel();
         jpContenidoLogoProducto = new javax.swing.JPanel();
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
@@ -3047,10 +3045,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbEmailProveedor.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpProveedor.add(jlbEmailProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 100, 20));
 
-        jlbLogoEmpresaProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProveedor.add(jlbLogoEmpresaProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 250, 230));
-
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3538,10 +3532,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpProducto.add(jpBarraInferiorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
-        jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
-
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3711,7 +3701,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnRegresarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jbnRegresarVenta.setForeground(new java.awt.Color(255, 255, 255));
         jbnRegresarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
-        jbnRegresarVenta.setText("Regresar a menu");
         jbnRegresarVenta.setBorderPainted(false);
         jbnRegresarVenta.setContentAreaFilled(false);
         jbnRegresarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -3728,15 +3717,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpPanelSuperiorVentaLayout.setHorizontalGroup(
             jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jbnRegresarVenta)
+                .addGap(59, 59, 59)
                 .addComponent(jlbBuscarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                    .addComponent(jSeparator50))
-                .addGap(59, 59, 59)
-                .addComponent(jbnRegresarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                    .addComponent(jtxBuscarProductoVenta)
+                    .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                 .addComponent(jbnCarritoVenta)
                 .addGap(150, 150, 150)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3747,15 +3735,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jbnCerrarVenta)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                        .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlbBuscarPedido2)
-                    .addComponent(jbnCarritoVenta)
-                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbnCarritoVenta, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlbBuscarPedido2)
+                                .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -5102,14 +5093,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEmpleadoActionPerformed
         abrirOpcion(jpPrincipal, jpEmpleado);
-        LimpiarTabla(jtbEmpleado, modeloEmpleado);
+        limpiarEmpleado();
         objEmpleado.consultaEmpleado(modeloEmpleado);
+        
 
     }//GEN-LAST:event_jbnEmpleadoActionPerformed
 
     private void jbnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProveedorActionPerformed
         abrirOpcion(jpPrincipal, jpProveedor);
-        LimpiarTabla(jtbProveedor, modeloProveedor);
+        limpiarProveedor();
         objProveedor.consultaProveedor(modeloProveedor);
 
     }//GEN-LAST:event_jbnProveedorActionPerformed
@@ -5133,7 +5125,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClientesActionPerformed
         abrirOpcion(jpPrincipal, jpCliente);
-        LimpiarTabla(jtbCliente, modeloCliente);
+        limpiarCliente();
         objCliente.consultaCliente(modeloCliente);
     }//GEN-LAST:event_jbnClientesActionPerformed
 
@@ -5576,9 +5568,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             jtxRfcProveedor.setText(objProveedor.getRfc());
             //se habilitan los botones en caso de que la consulta sea valida
 
-            if (objEmpleado.getIdEmpleado() >= 1) {
-                jbnEliminarEmpleado.setEnabled(true);
-                jbnActualizarEmpleado.setEnabled(true);
+            if (objProveedor.getIdProveedor()>= 1) {
+                jbnEliminarProveedor.setEnabled(true);
+                jbnActualizarProveedor.setEnabled(true);
             }
         }
 
@@ -5646,7 +5638,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
     private void jtxBuscarProductoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyPressed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyPressed
 
     private void jtxBuscarProductoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyTyped
@@ -5654,11 +5646,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             @Override
             public void keyTyped(final KeyEvent e) {
                 repaint();
-                filtroPedido();
+                filtroProducto();
             }
         });
-        trsfiltro = new TableRowSorter(modeloPedido);
-        jtbPedido.setRowSorter(trsfiltro);
+        trsfiltro = new TableRowSorter(modeloProductoVenta);
+        jtbProductoVenta.setRowSorter(trsfiltro);
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyTyped
 
     private void jcbxClienteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxClienteVentaActionPerformed
@@ -5884,9 +5876,58 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     jtxSubtotalVenta.setText(null);
     jtxBuscarProductoVenta.setText(null);
     jbnCarritoVenta.setText("0");
-    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);
+    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);   
+    }
+    void limpiarCliente(){
+    jtxIdCliente.setText(null);
+    jtxNombreCliente.setText(null);
+    jtxNoComprasCliente.setText(null);
+    jtxApellidosClientes.setText(null);
+    jtxFechaNacimiento.setText(null);
+    jtxTelefonoCliente.setText(null);
+    jtxRfcCliente.setText(null);
+    jtxEmailCliente.setText(null);
+    jtxContrasenaCliente.setText(null);
+    jtxCalleyNumCliente.setText(null);
+    jtxColoniaCliente.setText(null);
+    jtxReferenciaCliente.setText(null);
+    jtxCpCliente.setText(null);
+    jtxMunicipioCliente.setText(null);
+    jtxEstadoCliente.setText(null);
+    jtxBuscarCliente.setText(null);
+    LimpiarTabla(jtbCliente, modeloCliente);   
+    }
+    void limpiarEmpleado(){
+    jtxIdEmpleado.setText(null);
+    jtxNombreEmpleado.setText(null);
+    jtxApellidosEmpleado.setText(null);
+    jtxFechaNacimientoEmpl.setText(null);
+    jtxTelefonoEmpleado.setText(null);
+    jtxRfcEmpleado.setText(null);
+    jtxEmailEmpleado.setText(null);
+    jtxUsuarioEmpleado.setText(null);
+    jtxContrasenaEmpleado.setText(null);
+    jtxCalleyNumEmpleado.setText(null);
+    jtxColoniaEmpleado.setText(null);
+    jtxReferenciasEmpleado.setText(null);
+    jtxCpEmpleado.setText(null);
+    jtxMunicipioEmpleado.setText(null);
+    jtxEstadoEmpleado.setText(null);
+    jtxBuscarEmpleado.setText(null);
+    LimpiarTabla(jtbEmpleado, modeloEmpleado);    
+    }
     
-    
+    void limpiarProveedor(){
+    jtxIdProveedor.setText(null);
+    jtxNombreProveedor.setText(null);
+    jtxDomicilioProveedor.setText(null);
+    jtxTelefonoProveedor.setText(null);
+    jtxEmailProveedor.setText(null);
+    jtxRfcProveedor.setText(null);
+    jtxBuscarProveedor.setText(null);
+    LimpiarTabla(jtbProveedor, modeloProveedor);
+    jbnEliminarProveedor.setEnabled(false);
+    jbnActualizarProveedor.setEnabled(false);
     }
 
     //Metodo para regrsar al menu desde cualquier ventana
@@ -6203,9 +6244,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbLocalidadEmpresa;
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
+<<<<<<< HEAD
+=======
     private javax.swing.JLabel jlbLogoEmpresaCompras;
     private javax.swing.JLabel jlbLogoEmpresaProveedor;
     private javax.swing.JLabel jlbLogoEmpresaProveedor1;
+>>>>>>> dnop
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
     private javax.swing.JLabel jlbLogoPrograma3;

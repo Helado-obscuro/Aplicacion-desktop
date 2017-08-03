@@ -413,14 +413,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void abrirVentana() {
         int selectedRow = jtbProductoVenta.getSelectedRow();
-<<<<<<< HEAD
         objProductoVenta.setIdProducto((int) modeloProductoVenta.getValueAt(selectedRow,0));
         frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto() ,this);
-=======
         objProductoVenta.setIdProducto((int) modeloProductoVenta.getValueAt(selectedRow, 0));
         System.out.println(objProductoVenta.getIdProducto());
-        frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto(), this);
->>>>>>> dnop
+//        frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto(), this);
         agregarPartida.setVisible(true);
     }
     private void editarDetalleVentana() {

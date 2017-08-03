@@ -238,7 +238,7 @@ frmMenu objMenu;
        subtotal=(objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta()))/1.16;
        iva=objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta())-subtotal;
        //Imprimir resultados
-       objMenu.jtxIva.setText(formato.format(iva));
+       objMenu.jtxIvaVenta.setText(formato.format(iva));
        objMenu.jtxSubtotalVenta.setText(formato.format(subtotal));
           this.dispose();
           }

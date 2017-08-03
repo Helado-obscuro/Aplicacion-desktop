@@ -60,7 +60,7 @@ import sun.swing.ImageIconUIResource;
 
 public class frmMenu extends javax.swing.JFrame implements ActionListener {
     //Instancia del jDialog
-
+    java.text.DecimalFormat formato = new java.text.DecimalFormat("#.##");
     //Modelo de las tablas 
     DefaultTableModel modeloEmpleado = new DefaultTableModel();
     DefaultTableModel modeloCliente = new DefaultTableModel();
@@ -441,8 +441,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objDetalleVenta.setIdProducto((int) modeloDetalleVenta.getValueAt(selectedRow,0));
         objDetalleVenta.setIdVenta((int) modeloDetalleVenta.getValueAt(selectedRow,1));
         objDetalleVenta.bajaDetalleVentaProducto();
-            
-        
+        LimpiarTabla(jtbDetalleVenta,modeloDetalleVenta);
+        try {
+            objDetalleVenta.ConsultaVistaDetalle(modeloDetalleVenta, objVenta.MaximoidOrden()-1);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       actualizarDatosVenta();
+       
     }
 
     private void init() {
@@ -801,7 +807,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbSignoTotal = new javax.swing.JLabel();
         jlbTotalVenta1 = new javax.swing.JLabel();
         jlbCambio = new javax.swing.JLabel();
-        jtxIva = new javax.swing.JTextField();
+        jtxIvaVenta = new javax.swing.JTextField();
         jtxSubtotalVenta = new javax.swing.JTextField();
         jlbTotalVenta3 = new javax.swing.JLabel();
         jtxCambio = new javax.swing.JTextField();
@@ -3491,7 +3497,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbLogoProgramaProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), javax.swing.UIManager.getDefaults().getColor("Button.darcula.selection.color1"))); // NOI18N
 
         jLabel7.setText("Arpones");
 
@@ -3674,9 +3680,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                     .addComponent(jSeparator50))
-                .addGap(67, 67, 67)
+                .addGap(59, 59, 59)
                 .addComponent(jbnRegresarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addComponent(jbnCarritoVenta)
                 .addGap(150, 150, 150)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3694,9 +3700,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbBuscarPedido2)
-                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbnCarritoVenta)))
+                    .addComponent(jbnCarritoVenta)
+                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3795,11 +3800,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbCambio.setText("Cambio:");
         jpVenta.add(jlbCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 230, 160, -1));
 
-        jtxIva.setEditable(false);
-        jtxIva.setBackground(new java.awt.Color(204, 204, 204));
-        jtxIva.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
-        jtxIva.setBorder(null);
-        jpVenta.add(jtxIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 390, 120, 40));
+        jtxIvaVenta.setEditable(false);
+        jtxIvaVenta.setBackground(new java.awt.Color(204, 204, 204));
+        jtxIvaVenta.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jtxIvaVenta.setBorder(null);
+        jpVenta.add(jtxIvaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 390, 120, 40));
 
         jtxSubtotalVenta.setEditable(false);
         jtxSubtotalVenta.setBackground(new java.awt.Color(204, 204, 204));
@@ -5207,12 +5212,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jtxPagoPor1ActionPerformed
 
     private void jtxPagoPor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyPressed
-//        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-//            pago=Double.parseDouble(jtxPagoPor1.getText());
-//            cambio=Double.parseDouble(jtxTotalVenta.getText());
-//            cambio=pago-cambio;
-//            jtxCambio.setText(String.valueOf(cambio));
-//        }
+        double pago=0,cambio=0;
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            pago=Double.parseDouble(jtxPagoPor1.getText());
+            cambio=Double.parseDouble(jtxTotalVenta.getText());
+            cambio=pago-cambio;
+            jtxCambio.setText(String.valueOf(cambio));
+        }
     }//GEN-LAST:event_jtxPagoPor1KeyPressed
 
     private void jtxPagoPor1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyTyped
@@ -5238,15 +5244,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private void jbnFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnFinalizarVentaActionPerformed
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         abrirOpcion(jpPrincipal, jpMenu);
-        LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
         objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
         objVenta.setSubtotal(Double.parseDouble(jtxSubtotalVenta.getText()));
         objVenta.setTotal(objDetalleVenta.TotalVenta(objVenta.MaximoidOrden()));
         objVenta.setTotalaDescontar(0);
-        objVenta.setIva(Double.parseDouble(jtxIva.getText()));
+        objVenta.setIva(Double.parseDouble(jtxIvaVenta.getText()));
         objVenta.setIdDescuento(0);
         objVenta.modificarVenta();
+        limpiarVenta();
 
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        objOrdenes.setIdCliente(31);
@@ -5277,8 +5283,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         }
         objVenta.bajaVenta();
         banderitaDetalleVentecita = 0;
-
-        JOptionPane.showMessageDialog(null, "Venta cancelada");
+        limpiarVenta();
     }//GEN-LAST:event_jbnCancelarVentaActionPerformed
 
     private void jbnRegresarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarVentaActionPerformed
@@ -5289,6 +5294,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         }
         objVenta.bajaVenta();
         banderitaDetalleVentecita = 0;
+       limpiarVenta();
     }//GEN-LAST:event_jbnRegresarVentaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -5325,6 +5331,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         panel.setBackground(new Color(51, 153, 255));
 
     }
+    void limpiarVenta(){
+    jtxTotalVenta.setText(null);
+    jtxIvaVenta.setText(null);
+    jtxCambio.setText(null);
+    jtxPagoPor1.setText(null);
+    jtxSubtotalVenta.setText(null);
+    jtxBuscarProductoVenta.setText(null);
+    jbnCarritoVenta.setText("0");
+    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);
+    
+    
+    }
 
     //Metodo para regrsar al menu desde cualquier ventana
     void regresarMenu() {
@@ -5348,6 +5366,17 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         } catch (IOException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    void actualizarDatosVenta(){
+    
+    double subtotal=0, iva=0;
+    jtxTotalVenta.setText(String.valueOf(objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta())));
+    jbnCarritoVenta.setText(String.valueOf(objDetalleVenta.TotalCantidad(objDetalleVenta.getIdVenta())));
+    subtotal=(objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta()))/1.16;
+    iva=objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta())-subtotal;
+       //Imprimir resultados
+       jtxIvaVenta.setText(formato.format(iva));
+       jtxSubtotalVenta.setText(formato.format(subtotal));
     }
 
     //Metodos para limpiar campos y tablas cada vez que entras a una opción
@@ -5760,8 +5789,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField jtxIdCliente;
     private javax.swing.JTextField jtxIdEmpleado;
     private javax.swing.JTextField jtxIdProveedor;
-    public javax.swing.JTextField jtxIva;
     private javax.swing.JTextField jtxIvaPedido1;
+    public javax.swing.JTextField jtxIvaVenta;
     private javax.swing.JTextField jtxLocalidadEmpresa;
     private javax.swing.JTextField jtxMontoPedido3;
     private javax.swing.JTextField jtxMunicipioCliente;

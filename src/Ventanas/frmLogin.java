@@ -24,7 +24,7 @@ public class frmLogin extends javax.swing.JFrame {
  
  
  //Instancia de la clase
- Empleado objEmpleado =new Empleado();
+  Empleado objEmpleado =new Empleado();
   Persona objPersona =new Persona();
   dialogRestaurarContrasena dcontra;
     

@@ -20,11 +20,12 @@ public class frmLogin extends javax.swing.JFrame {
 
  private frmMenu menu;
  private frmSplash splash;
+ public int idCC=0;
  PrintWriter out;
  
  
  //Instancia de la clase
- Empleado objEmpleado =new Empleado();
+  Empleado objEmpleado =new Empleado();
   Persona objPersona =new Persona();
   dialogRestaurarContrasena dcontra;
     
@@ -37,7 +38,7 @@ public class frmLogin extends javax.swing.JFrame {
         initComponents();
            out = new PrintWriter("UserLogged.txt");
            dcontra = new dialogRestaurarContrasena(menu, true);
-
+          
     }
 
  
@@ -253,6 +254,7 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void jbnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAceptarActionPerformed
     validarlog();
+     idCC=objEmpleado.idC;
     }//GEN-LAST:event_jbnAceptarActionPerformed
 
     private void jpsContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsContrasenaActionPerformed
@@ -311,8 +313,8 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jpsContrasenaKeyTyped
 
     private void jbnAceptarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbnAceptarKeyTyped
-               System.out.println("Codigo"+evt.getKeyCode());
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            System.out.println("Codigo"+evt.getKeyCode());
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Toolkit.getDefaultToolkit().beep();
             System.out.println("enter pressed");
             validarlog();

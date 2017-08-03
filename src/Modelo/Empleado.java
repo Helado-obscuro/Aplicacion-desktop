@@ -14,6 +14,7 @@ private int idEmpleado;
 private String usuario;
 private String contrasena;
 private int nss;
+public static int idC=0;
 
 private String id;
 
@@ -110,7 +111,7 @@ public Empleado (){
                 if(resultado.first()){
                 idEmpleado=resultado.getInt("idEmpleado");
                 usuario=resultado.getString("usuario");
-                contrasena=resultado.getString("contraseña");
+                contrasena=resultado.getString("contrasena");
                 nss=resultado.getInt("nss");
                 rfc=resultado.getString("rfcPersona");
                 nombre=resultado.getString("nombre");
@@ -236,7 +237,7 @@ public Empleado (){
  obj.conectar();
  
     try {
-        comando=obj.conexion.prepareCall("Select * from empleado where usuario=?");
+        comando=obj.conexion.prepareCall("Select idEmpleado,usuario,contrasena,rfcEmpleado from empleado where usuario=?");
         comando.setString(1,usuario);
         resultado=comando.executeQuery();
         
@@ -245,6 +246,7 @@ public Empleado (){
              if((getContrasena()).equals(resultado.getString("contrasena"))){
                this.id =  resultado.getString("rfcEmpleado");
                 i=1;
+                idC=Integer.parseInt(resultado.getString("idEmpleado"));
              }else
                  i=2;
             } 

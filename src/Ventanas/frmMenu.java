@@ -16,6 +16,7 @@ import Modelo.Proveedor;
 import Modelo.Pedido;
 import Modelo.Producto;
 import Modelo.Venta;
+import Modelo.Compra;
 import Modelo.DetalleVenta;
 
 import java.awt.event.KeyAdapter;
@@ -28,10 +29,10 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Controlador.productosControlador;
+import Modelo.Conexion;
 
 import java.awt.ComponentOrientation;
 import Modelo.Producto;
-
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -56,7 +61,7 @@ import sun.swing.ImageIconUIResource;
 
 public class frmMenu extends javax.swing.JFrame implements ActionListener {
     //Instancia del jDialog
-
+    java.text.DecimalFormat formato = new java.text.DecimalFormat("#.##");
     //Modelo de las tablas 
     DefaultTableModel modeloEmpleado = new DefaultTableModel();
     DefaultTableModel modeloCliente = new DefaultTableModel();
@@ -64,6 +69,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     DefaultTableModel modeloPedido = new DefaultTableModel();
     DefaultTableModel modeloProductoVenta = new DefaultTableModel();
     DefaultTableModel modeloDetalleVenta = new DefaultTableModel();
+     DefaultComboBoxModel rfcProveedor = new DefaultComboBoxModel();
+   
     //Modelo Combox
     DefaultComboBoxModel comboClienteVenta = new DefaultComboBoxModel();
     //modelo para la fecha 
@@ -72,18 +79,27 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     Empleado objEmpleado = new Empleado();
     Empresa objEmpresa = new Empresa();
     Cliente objCliente = new Cliente();
+    Compra objCompra = new Compra();
     Proveedor objProveedor = new Proveedor();
     Producto objProducto = new Producto();
     Pedido objPedido = new Pedido();
     Producto objProductoVenta = new Producto();
     productosControlador pcontrol = new productosControlador(this);
     Venta objVenta = new Venta();
+
+   
+    Venta objetoVenta = new Venta();
+
     DetalleVenta objDetalleVenta = new DetalleVenta();
+    Conexion obj = new Conexion();
     //Instancia Ventanas
     frmAgregarProducto agregarPartida;
+   
     //Variables del JpopupMenu
     private final JPopupMenu popupMenu;
     private final JPopupMenu popupMenuPoductoVenta;
+    private final JPopupMenu popupMenuDetalleVenta;
+  
     private final JMenuItem menuItemAgregarProductoVenta;
     private final JMenuItem menuItemAdd;
     private final JMenuItem menuItemRemove;
@@ -91,35 +107,40 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private final JMenuItem menuItemTransferido;
     private final JMenuItem menuItemEnviado;
     private final JMenuItem menuItemCompletado;
+    private final JMenuItem menuItemRechazado;
     private final JMenuItem menuItemDesglosarPedido;
-
-    frmLogin inicio;
+    private final JMenuItem menuItemEliminarDetalleVenta;
     
+    
+    frmLogin inicio;
+
     //variables auxiliares 
-    int banderitaDetalleVentecita=0;
+    int banderitaDetalleVentecita = 0;
 
     //Variables para mover la pantaña
     int x = 0, y = 0;
 
 //instancia para el filtro de busqueda 
     private TableRowSorter trsfiltro;
-    
+
     //Leer idEmpresa
-    BufferedReader in ;
+    BufferedReader in;
+
     public frmMenu(frmLogin l) {
 
         inicio = l;
         initComponents();
-           actualizarListaProductos();
-           
-           checarempresa();
- 
+        actualizarListaProductos();
+
+        checarempresa();
 
 //        init();
-
         // constructs the popup menu
         popupMenu = new JPopupMenu();
         popupMenuPoductoVenta = new JPopupMenu();
+        popupMenuDetalleVenta = new JPopupMenu();
+                
+         
         menuItemAgregarProductoVenta = new JMenuItem("Agregar producto");
         menuItemAdd = new JMenuItem("Agrgera nueva fila");
         menuItemRemove = new JMenuItem("Remover la fila actual");
@@ -127,8 +148,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         menuItemRecibido = new JMenuItem("Cambiar estatus a recibido");
         menuItemEnviado = new JMenuItem("Cambiar estatus a enviado");
         menuItemCompletado = new JMenuItem("Cambiar estatus a completado");
+        menuItemRechazado = new JMenuItem("Cambiar estatus a rechazado");
         menuItemDesglosarPedido = new JMenuItem("Detalle de pedido");
-
+        menuItemEliminarDetalleVenta = new JMenuItem("Eliminar detalleVenta");
+        
+            
         menuItemAdd.addActionListener(this);
         menuItemRemove.addActionListener(this);
         menuItemRecibido.addActionListener(this);
@@ -136,24 +160,33 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         menuItemEnviado.addActionListener(this);
         menuItemCompletado.addActionListener(this);
         menuItemDesglosarPedido.addActionListener(this);
+        menuItemRechazado.addActionListener(this);
         menuItemAgregarProductoVenta.addActionListener(this);
-
+       
+        menuItemEliminarDetalleVenta.addActionListener(this);
+        
         popupMenu.add(menuItemAdd);
         popupMenu.add(menuItemRemove);
         popupMenu.add(menuItemTransferido);
         popupMenu.add(menuItemRecibido);
         popupMenu.add(menuItemEnviado);
         popupMenu.add(menuItemCompletado);
+        popupMenu.add(menuItemRechazado);
         popupMenu.add(menuItemDesglosarPedido);
         popupMenuPoductoVenta.add(menuItemAgregarProductoVenta);
-
+        
+        popupMenuDetalleVenta.add(menuItemEliminarDetalleVenta);
+       
         // sets the popup menu for the table
         jtbPedido.setComponentPopupMenu(popupMenu);
         jtbPedido.addMouseListener(new TableMouseListener(jtbPedido));
 
         jtbProductoVenta.setComponentPopupMenu(popupMenuPoductoVenta);
         jtbProductoVenta.addMouseListener(new TableMouseListener(jtbProductoVenta));
-
+        
+        jtbDetalleVenta.setComponentPopupMenu(popupMenuDetalleVenta);
+        jtbDetalleVenta.addMouseListener(new TableMouseListener(jtbDetalleVenta));
+        
     }
 
     public class TableMouseListener extends MouseAdapter {
@@ -190,11 +223,17 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             enviado();
         } else if (menu == menuItemCompletado) {
             completado();
+        } else if (menu == menuItemRechazado) {
+            rechazado();
         } else if (menu == menuItemDesglosarPedido) {
-            detalle();
+            int g = (Integer) jtbPedido.getModel().getValueAt(jtbPedido.getSelectedRow(), 0);
+            detalle(g);
         } else if (menu == menuItemAgregarProductoVenta) {
             abrirVentana();
+        }else if (menu == menuItemEliminarDetalleVenta) {
+            eliminarDetalleVenta();
         }
+        
 
     }
 
@@ -206,8 +245,8 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         int selectedRow = jtbPedido.getSelectedRow();
         modeloPedido.removeRow(selectedRow);
     }
-    
-    public Producto getProducto(){
+
+    public Producto getProducto() {
         return objProducto;
     }
 
@@ -217,7 +256,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             modeloPedido.removeRow(0);
         }
     }
-    
+
     private void checarempresa() {
         try {
             in = new BufferedReader(new FileReader("UserLogged.txt"));
@@ -232,6 +271,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     System.out.println("Empresa 1 en uso, color azul");
                     jPanel11.setBackground(Color.decode("#1672b9"));
                     jpInferior.setBackground(Color.decode("#1672b9"));
+
+                    jcbxEmpresaEmpleado.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
+                    jcbxEmpresaEmpleado.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+
+                    jcbxEmpresaCliente.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
+                    jcbxEmpresaCliente.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
 
                 } else {
                     System.out.println("Empresa 2 en uso, color rojo ");
@@ -263,7 +308,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     jtxBuscarProducto.setBackground(Color.decode("#990000"));
                     jtxBuscarProductoVenta.setBackground(Color.decode("#990000"));
                     jtxBuscarProveedor.setBackground(Color.decode("#990000"));
-                    
+
+                    jcbxEmpresaEmpleado.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+                    jcbxEmpresaEmpleado.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
+
+                    jcbxEmpresaCliente.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+                    jcbxEmpresaCliente.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
 
                 }
             }
@@ -293,7 +343,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private void completado() {
 
         int selectedRow = jtbPedido.getSelectedRow();
-        modeloPedido.setValueAt("completado", selectedRow, 3);
+        modeloPedido.setValueAt("Completado", selectedRow, 3);
         objPedido.modificarEstatus("Completado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue());
     }
 
@@ -303,16 +353,106 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objPedido.modificarEstatus("Enviado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue());
     }
 
-    private void detalle() {
+    private void rechazado() {
+        int selectedRow = jtbPedido.getSelectedRow();
+        modeloPedido.setValueAt("Rechazado", selectedRow, 3);
+        objPedido.modificarEstatus("Rechazado", ((Integer) modeloPedido.getValueAt(selectedRow, 0)).intValue());
+    }
+
+    private void detalle(int folio) {
         abrirOpcion(jpPrincipal, jpDetallePedido);
+
+        //hora
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("fecha actual " + (java.sql.Date.valueOf(dateFormat.format(date)))); //2016/11/16 12:08:43
+
+        try {
+            PreparedStatement conectar;
+            obj.conectar();
+            conectar = obj.conexion.prepareStatement("Select pedido.folioPedido, fechaPedido, pedido.idCliente, estatus, nombreProducto, "
+                    + "cantidad, monto, persona.nombre, persona.calleNum, persona.telefono, persona.rfcPersona, persona.apellidos, persona.municipio, persona.estado,"
+                    + " detallepedido.idProducto, cliente.rfcCliente from cliente, pedido, detallepedido, producto, persona where pedido.folioPedido = detallepedido.folioPedido and "
+                    + "producto.idProducto = detallepedido.idProducto and pedido.idCliente = cliente.idCliente and cliente.rfcCliente = persona.rfcPersona and detallepedido.folioPedido = ?");
+            conectar.setInt(1, folio);
+            System.out.println("Folio pedido a buscar: " + folio);
+            //ejecutar sentencia
+            ResultSet rs = conectar.executeQuery();
+            while (rs.next()) {
+                jtxfolioPedido.setText(String.valueOf(rs.getInt("folioPedido")));
+                jtxClientePedido.setText(rs.getString("nombre") + rs.getString("apellidos"));
+                jtxDomicilioPedido.setText(rs.getString("calleNum") + " " + rs.getString("municipio") + " " + rs.getString("estado"));
+                jtxTelefonoPedido.setText(rs.getString("telefono"));
+                jtxRfcPedido1.setText(rs.getString("rfcPersona"));
+                jtxProductoPedido1.setText(rs.getString("nombreProducto"));
+                jtxCantidadPedido2.setText(String.valueOf(rs.getInt("cantidad")));
+                jlbEstatusDetallePedido.setText(rs.getString("estatus"));
+                jtxFechaPedido2.setText(rs.getString("fechaPedido"));
+                jtxMontoPedido3.setText(String.valueOf(rs.getDouble("monto")));
+                jlbIDProd.setText(String.valueOf(rs.getInt("idProducto")));
+
+                if (!rs.getString("estatus").equals("Competado")) {
+                    jbnGenerarVentaDetallePedido.setEnabled(true);
+                }
+            }
+            int idVentap = objetoVenta.MaximoidOrden();
+            double subtotal = Double.parseDouble(jtxMontoPedido3.getText());
+            double iva = subtotal * 0.16;
+            double total = (subtotal + iva);
+            double totalaDescontar = 0;
+            int iddescuento = 0;
+            objetoVenta = new Venta(idVentap, (java.sql.Date.valueOf(dateFormat.format(date))), total, subtotal, iva, totalaDescontar, iddescuento);
+
+            jtxTotalPedido1.setText(String.valueOf(total));
+            jtxSubtotalPedido1.setText(String.valueOf(subtotal));
+            jtxIvaPedido1.setText(String.valueOf(iva));
+
+            objDetalleVenta = new DetalleVenta(Integer.parseInt(jlbIDProd.getText()),
+                    idVentap, Double.parseDouble(jtxCantidadPedido2.getText()), Double.parseDouble(jtxMontoPedido3.getText()));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     private void abrirVentana() {
         int selectedRow = jtbProductoVenta.getSelectedRow();
         objProductoVenta.setIdProducto((int) modeloProductoVenta.getValueAt(selectedRow,0));
-        System.out.println(objProductoVenta.getIdProducto());
         frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto() ,this);
+        objProductoVenta.setIdProducto((int) modeloProductoVenta.getValueAt(selectedRow, 0));
+        System.out.println(objProductoVenta.getIdProducto());
+//        frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto(), this);
         agregarPartida.setVisible(true);
+    }
+    private void editarDetalleVentana() {
+//        int selectedRow = jtbDetalleVenta.getSelectedRow();
+//        frmEditarDetalle editarDetalleVenta = new frmEditarDetalle(this, false ,this);
+//        
+//        objProducto.setNombreProducto(((String) modeloDetalleVenta.getValueAt(selectedRow,2))); 
+//        objDetalleVenta.setCantidad((double) modeloDetalleVenta.getValueAt(selectedRow,4));
+//        objDetalleVenta.setMonto((double) modeloDetalleVenta.getValueAt(selectedRow,5));
+//        
+//        editarDetalleVenta.jtxCostodDetalle.setText(String.valueOf(objDetalleVenta.getMonto()));
+//        editarDetalleVenta.jtxCantidadDetalle1.setText(String.valueOf(objDetalleVenta.getCantidad()));
+//        editarDetalleVenta.jlbTotalDetalle.setText(String.valueOf(objDetalleVenta.getMonto()));
+//        editarDetalleVenta.jcmProductoDetalle.setSelectedItem(objProducto.getNombreProducto());
+//        editarDetalleVenta.setVisible(true);
+        
+        
+    }
+    public void eliminarDetalleVenta(){
+        int selectedRow = jtbDetalleVenta.getSelectedRow();
+        objDetalleVenta.setIdProducto((int) modeloDetalleVenta.getValueAt(selectedRow,0));
+        objDetalleVenta.setIdVenta((int) modeloDetalleVenta.getValueAt(selectedRow,1));
+        objDetalleVenta.bajaDetalleVentaProducto();
+        LimpiarTabla(jtbDetalleVenta,modeloDetalleVenta);
+        try {
+            objDetalleVenta.ConsultaVistaDetalle(modeloDetalleVenta, objVenta.MaximoidOrden()-1);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       actualizarDatosVenta();
+       
     }
 
     private void init() {
@@ -336,7 +476,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     public JFrame getFrame() {
         return this;
     }
-
 
     public JPanel getPanelPord() {
         return jpListaProd;
@@ -598,7 +737,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jSeparator47 = new javax.swing.JSeparator();
         jtxEmailProveedor = new javax.swing.JTextField();
         jlbEmailProveedor = new javax.swing.JLabel();
-        jlbLogoEmpresaProveedor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jlbIconoProveedor = new javax.swing.JLabel();
         jlbLogoProgramaProveedor = new javax.swing.JLabel();
@@ -639,7 +777,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnActualizarProducto = new javax.swing.JButton();
         jbnAgregarProveedor1 = new javax.swing.JButton();
         jbnEliminarProducto = new javax.swing.JButton();
-        jlbLogoEmpresaProveedor1 = new javax.swing.JLabel();
         jpContenidoLogoProducto = new javax.swing.JPanel();
         jlbIconoProducto = new javax.swing.JLabel();
         jlbLogoProgramaProducto = new javax.swing.JLabel();
@@ -672,7 +809,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbSignoTotal = new javax.swing.JLabel();
         jlbTotalVenta1 = new javax.swing.JLabel();
         jlbCambio = new javax.swing.JLabel();
-        jtxIva = new javax.swing.JTextField();
+        jtxIvaVenta = new javax.swing.JTextField();
         jtxSubtotalVenta = new javax.swing.JTextField();
         jlbTotalVenta3 = new javax.swing.JLabel();
         jtxCambio = new javax.swing.JTextField();
@@ -687,7 +824,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpPanelContenedor = new javax.swing.JPanel();
         jlbBuscarPedido3 = new javax.swing.JLabel();
         jpReportes = new javax.swing.JPanel();
-        jpCompra = new javax.swing.JPanel();
         jPedido1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jpGeneral = new javax.swing.JPanel();
@@ -727,6 +863,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpPanelLogoDetallePedido = new javax.swing.JPanel();
         jlbIconoPedido1 = new javax.swing.JLabel();
         jlbLogoPrograma3 = new javax.swing.JLabel();
+        jbnGenerarVentaDetallePedido = new javax.swing.JButton();
         jlbNombreProveedor1 = new javax.swing.JLabel();
         jSeparator51 = new javax.swing.JSeparator();
         jtxClientePedido = new javax.swing.JTextField();
@@ -741,6 +878,79 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtxfolioPedido = new javax.swing.JTextField();
         jScrollPane12 = new javax.swing.JScrollPane();
         jtbPedido1 = new javax.swing.JTable();
+        jSeparator62 = new javax.swing.JSeparator();
+        jtxRfcPedido1 = new javax.swing.JTextField();
+        jlbTelefonoPedido1 = new javax.swing.JLabel();
+        jSeparator63 = new javax.swing.JSeparator();
+        jtxProductoPedido1 = new javax.swing.JTextField();
+        jlbTelefonoPedido2 = new javax.swing.JLabel();
+        jSeparator64 = new javax.swing.JSeparator();
+        jtxCantidadPedido2 = new javax.swing.JTextField();
+        jlbTelefonoPedido3 = new javax.swing.JLabel();
+        jlbEstatusDetallePedido = new javax.swing.JLabel();
+        jlbTelefonoPedido4 = new javax.swing.JLabel();
+        jtxFechaPedido2 = new javax.swing.JTextField();
+        jSeparator65 = new javax.swing.JSeparator();
+        jtxMontoPedido3 = new javax.swing.JTextField();
+        jlbTelefonoPedido5 = new javax.swing.JLabel();
+        jSeparator66 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jtxIvaPedido1 = new javax.swing.JTextField();
+        jtxTotalPedido1 = new javax.swing.JTextField();
+        jtxSubtotalPedido1 = new javax.swing.JTextField();
+        jlbIDProd = new javax.swing.JLabel();
+        jpCompra = new javax.swing.JPanel();
+        jpBarraSuperiorCompras = new javax.swing.JPanel();
+        jlbTituloCompras = new javax.swing.JLabel();
+        jtxBuscarCompras = new javax.swing.JTextField();
+        jSeparator68 = new javax.swing.JSeparator();
+        jbnCerrarCompras = new javax.swing.JButton();
+        jbnBuscarCompra = new javax.swing.JButton();
+        jbnRegresarCompras = new javax.swing.JButton();
+        jpBarraInferiorCompras = new javax.swing.JPanel();
+        jbnActualizarProducto1 = new javax.swing.JButton();
+        jbnAgregarProveedor2 = new javax.swing.JButton();
+        jlbNombreProveedorCompras = new javax.swing.JLabel();
+        jSeparator69 = new javax.swing.JSeparator();
+        jSeparator70 = new javax.swing.JSeparator();
+        jlbDomicilioProveedorCompras = new javax.swing.JLabel();
+        jlbTelefonoProveedorCompras = new javax.swing.JLabel();
+        jlbEmailProveedorCompras = new javax.swing.JLabel();
+        jScrollPane16 = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
+        jlbLogoEmpresaCompras = new javax.swing.JLabel();
+        jpContenidoLogoCompras = new javax.swing.JPanel();
+        jlbLogoProgramaProducto1 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jlbNombreProveedorCompras2 = new javax.swing.JLabel();
+        jlbDomicilioProveedorCompras2 = new javax.swing.JLabel();
+        jlbTelefonoProveedorCompras2 = new javax.swing.JLabel();
+        jlbEmailProveedorCompras2 = new javax.swing.JLabel();
+        jlbFechaCompra = new javax.swing.JLabel();
+        jSeparator71 = new javax.swing.JSeparator();
+        jlbSubTotalCompra = new javax.swing.JLabel();
+        jlbIvaCompra = new javax.swing.JLabel();
+        jlbTotalCompra = new javax.swing.JLabel();
+        jlbEstatusCompra = new javax.swing.JLabel();
+        jlbIdProductoCompra = new javax.swing.JLabel();
+        jtfIdProductoCompra = new javax.swing.JTextField();
+        jSeparator72 = new javax.swing.JSeparator();
+        jSeparator67 = new javax.swing.JSeparator();
+        jlbNombreProductoCompra = new javax.swing.JLabel();
+        jbtAgreegarPartidaCompra = new javax.swing.JButton();
+        jlbRfcProveedorCompras1 = new javax.swing.JLabel();
+        jcbEstatusCompra = new javax.swing.JComboBox<>();
+        jcbRfcProveedor1 = new javax.swing.JComboBox<>();
+        jcbNombreProductoCompras1 = new javax.swing.JComboBox<>();
+        jlbPrecioUni1 = new javax.swing.JLabel();
+        jlbPrecioUni2 = new javax.swing.JLabel();
+        jbnInicioVenta = new javax.swing.JButton();
+        jtfFecCom = new javax.swing.JTextField();
+        jlbNombreFecha = new javax.swing.JLabel();
+        jtfFechaEntrega = new javax.swing.JTextField();
+        jlbEstatusom = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1101,7 +1311,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpPedido.add(jpBarraSuperiorPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
-        jPMenuPedido.setBackground(new java.awt.Color(153, 153, 153));
+        jPMenuPedido.setBackground(new java.awt.Color(22, 114, 185));
         jPMenuPedido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jlbLogoPrograma2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
@@ -1159,7 +1369,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbEstatusPedido.setDisplayedMnemonic('b');
         jlbEstatusPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jlbEstatusPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbEstatusPedido.setText("Estatus pedido:");
+        jlbEstatusPedido.setText("Filtro estatus:");
         jlbEstatusPedido.setToolTipText("");
         jlbEstatusPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbEstatusPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -2234,6 +2444,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbNombreEmpleado1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpEmpleado.add(jlbNombreEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 130, -1));
 
+        jcbxEmpresaEmpleado.setEditable(true);
         jcbxEmpresaEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jcbxEmpresaEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Redes y Equipos Pesqueros S.A  De C.V", "Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V" }));
         jcbxEmpresaEmpleado.setBorder(null);
@@ -2923,10 +3134,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbEmailProveedor.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpProveedor.add(jlbEmailProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 100, 20));
 
-        jlbLogoEmpresaProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProveedor.add(jlbLogoEmpresaProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 250, 230));
-
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3419,10 +3626,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jpProducto.add(jpBarraInferiorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1200, 60));
 
-        jlbLogoEmpresaProveedor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogoEmpresaProveedor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jpProducto.add(jlbLogoEmpresaProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 80, 60));
-
         jpContenidoLogoProducto.setBackground(new java.awt.Color(204, 204, 204));
 
         jlbIconoProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3592,7 +3795,6 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jbnRegresarVenta.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jbnRegresarVenta.setForeground(new java.awt.Color(255, 255, 255));
         jbnRegresarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
-        jbnRegresarVenta.setText("Regresar a menu");
         jbnRegresarVenta.setBorderPainted(false);
         jbnRegresarVenta.setContentAreaFilled(false);
         jbnRegresarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -3609,15 +3811,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpPanelSuperiorVentaLayout.setHorizontalGroup(
             jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jbnRegresarVenta)
+                .addGap(59, 59, 59)
                 .addComponent(jlbBuscarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                    .addComponent(jSeparator50))
-                .addGap(67, 67, 67)
-                .addComponent(jbnRegresarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                    .addComponent(jtxBuscarProductoVenta)
+                    .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                 .addComponent(jbnCarritoVenta)
                 .addGap(150, 150, 150)
                 .addComponent(jbnCerrarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3628,16 +3829,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jbnCerrarVenta)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPanelSuperiorVentaLayout.createSequentialGroup()
-                        .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlbBuscarPedido2)
-                    .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbnCarritoVenta)))
+                .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jbnRegresarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jSeparator50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbnCarritoVenta, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPanelSuperiorVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlbBuscarPedido2)
+                                .addComponent(jtxBuscarProductoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3736,11 +3939,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbCambio.setText("Cambio:");
         jpVenta.add(jlbCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 230, 160, -1));
 
-        jtxIva.setEditable(false);
-        jtxIva.setBackground(new java.awt.Color(204, 204, 204));
-        jtxIva.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
-        jtxIva.setBorder(null);
-        jpVenta.add(jtxIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 390, 120, 40));
+        jtxIvaVenta.setEditable(false);
+        jtxIvaVenta.setBackground(new java.awt.Color(204, 204, 204));
+        jtxIvaVenta.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        jtxIvaVenta.setBorder(null);
+        jpVenta.add(jtxIvaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 390, 120, 40));
 
         jtxSubtotalVenta.setEditable(false);
         jtxSubtotalVenta.setBackground(new java.awt.Color(204, 204, 204));
@@ -3903,27 +4106,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpReportes.setLayout(jpReportesLayout);
         jpReportesLayout.setHorizontalGroup(
             jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 1260, Short.MAX_VALUE)
         );
         jpReportesLayout.setVerticalGroup(
             jpReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
 
         jpPrincipal.add(jpReportes, "card11");
-
-        javax.swing.GroupLayout jpCompraLayout = new javax.swing.GroupLayout(jpCompra);
-        jpCompra.setLayout(jpCompraLayout);
-        jpCompraLayout.setHorizontalGroup(
-            jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        jpCompraLayout.setVerticalGroup(
-            jpCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
-
-        jpPrincipal.add(jpCompra, "card12");
 
         jPedido1.setBackground(new java.awt.Color(102, 102, 102));
         jPedido1.setDoubleBuffered(false);
@@ -4319,23 +4509,35 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
         jlbLogoPrograma3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
 
+        jbnGenerarVentaDetallePedido.setText("Generar Venta");
+        jbnGenerarVentaDetallePedido.setEnabled(false);
+        jbnGenerarVentaDetallePedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnGenerarVentaDetallePedidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpPanelLogoDetallePedidoLayout = new javax.swing.GroupLayout(jpPanelLogoDetallePedido);
         jpPanelLogoDetallePedido.setLayout(jpPanelLogoDetallePedidoLayout);
         jpPanelLogoDetallePedidoLayout.setHorizontalGroup(
             jpPanelLogoDetallePedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPanelLogoDetallePedidoLayout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jlbIconoPedido1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPanelLogoDetallePedidoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jlbLogoPrograma3))
+            .addGroup(jpPanelLogoDetallePedidoLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(jpPanelLogoDetallePedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlbIconoPedido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbnGenerarVentaDetallePedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpPanelLogoDetallePedidoLayout.setVerticalGroup(
             jpPanelLogoDetallePedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPanelLogoDetallePedidoLayout.createSequentialGroup()
                 .addComponent(jlbLogoPrograma3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbnGenerarVentaDetallePedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(jlbIconoPedido1)
                 .addContainerGap())
         );
@@ -4353,13 +4555,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpDetallePedido.add(jlbNombreProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 120, -1));
 
         jSeparator51.setForeground(new java.awt.Color(0, 0, 0));
-        jpDetallePedido.add(jSeparator51, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 460, 10));
+        jpDetallePedido.add(jSeparator51, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 460, 10));
 
         jtxClientePedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxClientePedido.setForeground(new java.awt.Color(102, 102, 102));
         jtxClientePedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxClientePedido.setBorder(null);
-        jpDetallePedido.add(jtxClientePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 450, 30));
+        jpDetallePedido.add(jtxClientePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 450, 30));
 
         jSeparator52.setForeground(new java.awt.Color(0, 0, 0));
         jpDetallePedido.add(jSeparator52, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, 550, 10));
@@ -4380,7 +4582,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jpDetallePedido.add(jlbDomicilioProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 120, 20));
 
         jSeparator53.setForeground(new java.awt.Color(0, 0, 0));
-        jpDetallePedido.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 260, 10));
+        jpDetallePedido.add(jSeparator53, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 240, 10));
 
         jtxTelefonoPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxTelefonoPedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -4395,7 +4597,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbTelefonoPedido.setToolTipText("");
         jlbTelefonoPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbTelefonoPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpDetallePedido.add(jlbTelefonoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 120, 30));
+        jpDetallePedido.add(jlbTelefonoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 120, 30));
 
         jlbfolioPedido.setDisplayedMnemonic('b');
         jlbfolioPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -4405,15 +4607,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbfolioPedido.setToolTipText("");
         jlbfolioPedido.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlbfolioPedido.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jpDetallePedido.add(jlbfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 140, -1));
+        jpDetallePedido.add(jlbfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 140, -1));
 
         jSeparator60.setForeground(new java.awt.Color(0, 0, 0));
-        jpDetallePedido.add(jSeparator60, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 120, 10));
+        jpDetallePedido.add(jSeparator60, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 120, 10));
 
         jtxfolioPedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jtxfolioPedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtxfolioPedido.setBorder(null);
-        jpDetallePedido.add(jtxfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 20));
+        jpDetallePedido.add(jtxfolioPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 120, 20));
 
         jScrollPane12.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane12.setBorder(null);
@@ -4430,9 +4632,533 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jtbPedido1.setSelectionBackground(new java.awt.Color(22, 114, 185));
         jScrollPane12.setViewportView(jtbPedido1);
 
-        jpDetallePedido.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 860, 220));
+        jpDetallePedido.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 860, 160));
+
+        jSeparator62.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator62, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 260, 240, 10));
+
+        jtxRfcPedido1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxRfcPedido1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxRfcPedido1.setBorder(null);
+        jpDetallePedido.add(jtxRfcPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 230, 240, 30));
+
+        jlbTelefonoPedido1.setDisplayedMnemonic('b');
+        jlbTelefonoPedido1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ID Card_25px_2.png"))); // NOI18N
+        jlbTelefonoPedido1.setText("RFC:");
+        jlbTelefonoPedido1.setToolTipText("");
+        jlbTelefonoPedido1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 120, 30));
+
+        jSeparator63.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator63, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 150, 10));
+
+        jtxProductoPedido1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxProductoPedido1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxProductoPedido1.setBorder(null);
+        jpDetallePedido.add(jtxProductoPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 150, 30));
+
+        jlbTelefonoPedido2.setDisplayedMnemonic('b');
+        jlbTelefonoPedido2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Phone_25px.png"))); // NOI18N
+        jlbTelefonoPedido2.setText("Producto:");
+        jlbTelefonoPedido2.setToolTipText("");
+        jlbTelefonoPedido2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 120, 30));
+
+        jSeparator64.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator64, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 310, 60, 10));
+
+        jtxCantidadPedido2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxCantidadPedido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxCantidadPedido2.setBorder(null);
+        jpDetallePedido.add(jtxCantidadPedido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 280, 60, 30));
+
+        jlbTelefonoPedido3.setDisplayedMnemonic('b');
+        jlbTelefonoPedido3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ID Card_25px_2.png"))); // NOI18N
+        jlbTelefonoPedido3.setText("Cantidad:");
+        jlbTelefonoPedido3.setToolTipText("");
+        jlbTelefonoPedido3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido3, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 280, 120, 30));
+
+        jlbEstatusDetallePedido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jpDetallePedido.add(jlbEstatusDetallePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 80, 80, 40));
+
+        jlbTelefonoPedido4.setDisplayedMnemonic('b');
+        jlbTelefonoPedido4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido4.setText("Fecha pedido:");
+        jlbTelefonoPedido4.setToolTipText("");
+        jlbTelefonoPedido4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 120, 30));
+
+        jtxFechaPedido2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxFechaPedido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxFechaPedido2.setBorder(null);
+        jpDetallePedido.add(jtxFechaPedido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 150, 20));
+
+        jSeparator65.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator65, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 90, 150, 10));
+
+        jtxMontoPedido3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxMontoPedido3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxMontoPedido3.setBorder(null);
+        jpDetallePedido.add(jtxMontoPedido3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 280, 60, 30));
+
+        jlbTelefonoPedido5.setDisplayedMnemonic('b');
+        jlbTelefonoPedido5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlbTelefonoPedido5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoPedido5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ID Card_25px_2.png"))); // NOI18N
+        jlbTelefonoPedido5.setText("Monto:");
+        jlbTelefonoPedido5.setToolTipText("");
+        jlbTelefonoPedido5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoPedido5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpDetallePedido.add(jlbTelefonoPedido5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 280, 120, 30));
+
+        jSeparator66.setForeground(new java.awt.Color(0, 0, 0));
+        jpDetallePedido.add(jSeparator66, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 310, 60, 10));
+
+        jLabel6.setText("Total");
+        jpDetallePedido.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, -1, -1));
+
+        jLabel13.setText("Subtotal");
+        jpDetallePedido.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, -1, -1));
+
+        jLabel14.setText("IVA");
+        jpDetallePedido.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 340, -1, -1));
+        jpDetallePedido.add(jtxIvaPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 330, 60, -1));
+        jpDetallePedido.add(jtxTotalPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, 60, -1));
+        jpDetallePedido.add(jtxSubtotalPedido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 60, -1));
+
+        jlbIDProd.setEnabled(false);
+        jpDetallePedido.add(jlbIDProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 310, -1, -1));
 
         jpPrincipal.add(jpDetallePedido, "card14");
+
+        jpCompra.setBackground(new java.awt.Color(255, 255, 255));
+        jpCompra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpBarraSuperiorCompras.setBackground(new java.awt.Color(22, 114, 185));
+        jpBarraSuperiorCompras.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jlbTituloCompras.setDisplayedMnemonic('b');
+        jlbTituloCompras.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbTituloCompras.setForeground(new java.awt.Color(255, 255, 255));
+        jlbTituloCompras.setText("Gestor de Compras");
+        jlbTituloCompras.setToolTipText("");
+        jlbTituloCompras.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTituloCompras.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jtxBuscarCompras.setBackground(new java.awt.Color(22, 114, 185));
+        jtxBuscarCompras.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jtxBuscarCompras.setForeground(new java.awt.Color(255, 255, 255));
+        jtxBuscarCompras.setBorder(null);
+        jtxBuscarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxBuscarComprasActionPerformed(evt);
+            }
+        });
+
+        jSeparator68.setForeground(new java.awt.Color(255, 255, 255));
+
+        jbnCerrarCompras.setBackground(new java.awt.Color(145, 36, 36));
+        jbnCerrarCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_2.png"))); // NOI18N
+        jbnCerrarCompras.setBorderPainted(false);
+        jbnCerrarCompras.setContentAreaFilled(false);
+        jbnCerrarCompras.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancel_50px_1.png"))); // NOI18N
+        jbnCerrarCompras.setSelected(true);
+        jbnCerrarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnCerrarComprasActionPerformed(evt);
+            }
+        });
+
+        jbnBuscarCompra.setBackground(new java.awt.Color(145, 36, 36));
+        jbnBuscarCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jbnBuscarCompra.setForeground(new java.awt.Color(255, 255, 255));
+        jbnBuscarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Search_48px.png"))); // NOI18N
+        jbnBuscarCompra.setText("Buscar");
+        jbnBuscarCompra.setBorderPainted(false);
+        jbnBuscarCompra.setContentAreaFilled(false);
+        jbnBuscarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnBuscarCompra.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnBuscarCompra.setSelected(true);
+        jbnBuscarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnBuscarCompraActionPerformed(evt);
+            }
+        });
+
+        jbnRegresarCompras.setBackground(new java.awt.Color(145, 36, 36));
+        jbnRegresarCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px.png"))); // NOI18N
+        jbnRegresarCompras.setBorderPainted(false);
+        jbnRegresarCompras.setContentAreaFilled(false);
+        jbnRegresarCompras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnRegresarCompras.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnRegresarCompras.setSelected(true);
+        jbnRegresarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnRegresarComprasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpBarraSuperiorComprasLayout = new javax.swing.GroupLayout(jpBarraSuperiorCompras);
+        jpBarraSuperiorCompras.setLayout(jpBarraSuperiorComprasLayout);
+        jpBarraSuperiorComprasLayout.setHorizontalGroup(
+            jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBarraSuperiorComprasLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jbnRegresarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jlbTituloCompras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addComponent(jbnBuscarCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtxBuscarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator68, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(119, 119, 119)
+                .addComponent(jbnCerrarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpBarraSuperiorComprasLayout.setVerticalGroup(
+            jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraSuperiorComprasLayout.createSequentialGroup()
+                .addComponent(jtxBuscarCompras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator68, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
+            .addGroup(jpBarraSuperiorComprasLayout.createSequentialGroup()
+                .addComponent(jbnCerrarCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jpBarraSuperiorComprasLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbnRegresarCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpBarraSuperiorComprasLayout.createSequentialGroup()
+                        .addGroup(jpBarraSuperiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlbTituloCompras)
+                            .addComponent(jbnBuscarCompra))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jpCompra.add(jpBarraSuperiorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 60));
+
+        jpBarraInferiorCompras.setBackground(new java.awt.Color(22, 114, 185));
+        jpBarraInferiorCompras.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jbnActualizarProducto1.setBackground(new java.awt.Color(145, 36, 36));
+        jbnActualizarProducto1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jbnActualizarProducto1.setForeground(new java.awt.Color(255, 255, 255));
+        jbnActualizarProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sync_48px_1.png"))); // NOI18N
+        jbnActualizarProducto1.setText("Actualizar Compra");
+        jbnActualizarProducto1.setBorderPainted(false);
+        jbnActualizarProducto1.setContentAreaFilled(false);
+        jbnActualizarProducto1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Sync_48px_2.png"))); // NOI18N
+        jbnActualizarProducto1.setSelected(true);
+        jbnActualizarProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnActualizarProducto1ActionPerformed(evt);
+            }
+        });
+
+        jbnAgregarProveedor2.setBackground(new java.awt.Color(145, 36, 36));
+        jbnAgregarProveedor2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jbnAgregarProveedor2.setForeground(new java.awt.Color(255, 255, 255));
+        jbnAgregarProveedor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px.png"))); // NOI18N
+        jbnAgregarProveedor2.setText("Generar compra");
+        jbnAgregarProveedor2.setBorderPainted(false);
+        jbnAgregarProveedor2.setContentAreaFilled(false);
+        jbnAgregarProveedor2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px_1.png"))); // NOI18N
+        jbnAgregarProveedor2.setSelected(true);
+        jbnAgregarProveedor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnAgregarProveedor2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpBarraInferiorComprasLayout = new javax.swing.GroupLayout(jpBarraInferiorCompras);
+        jpBarraInferiorCompras.setLayout(jpBarraInferiorComprasLayout);
+        jpBarraInferiorComprasLayout.setHorizontalGroup(
+            jpBarraInferiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInferiorComprasLayout.createSequentialGroup()
+                .addContainerGap(360, Short.MAX_VALUE)
+                .addComponent(jbnAgregarProveedor2)
+                .addGap(310, 310, 310)
+                .addComponent(jbnActualizarProducto1)
+                .addGap(150, 150, 150))
+        );
+        jpBarraInferiorComprasLayout.setVerticalGroup(
+            jpBarraInferiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInferiorComprasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpBarraInferiorComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbnActualizarProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbnAgregarProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jpCompra.add(jpBarraInferiorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 1260, 60));
+
+        jlbNombreProveedorCompras.setDisplayedMnemonic('b');
+        jlbNombreProveedorCompras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbNombreProveedorCompras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNombreProveedorCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Business Building_25px_5.png"))); // NOI18N
+        jlbNombreProveedorCompras.setText("Nombre:");
+        jlbNombreProveedorCompras.setToolTipText("");
+        jlbNombreProveedorCompras.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbNombreProveedorCompras.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpCompra.add(jlbNombreProveedorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 130, -1));
+
+        jSeparator69.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator69, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 460, 10));
+
+        jSeparator70.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator70, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 550, 10));
+
+        jlbDomicilioProveedorCompras.setDisplayedMnemonic('d');
+        jlbDomicilioProveedorCompras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbDomicilioProveedorCompras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbDomicilioProveedorCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Home_25px_3.png"))); // NOI18N
+        jlbDomicilioProveedorCompras.setText("Domicilio:");
+        jlbDomicilioProveedorCompras.setToolTipText("");
+        jlbDomicilioProveedorCompras.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbDomicilioProveedorCompras.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpCompra.add(jlbDomicilioProveedorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 120, 20));
+
+        jlbTelefonoProveedorCompras.setDisplayedMnemonic('b');
+        jlbTelefonoProveedorCompras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbTelefonoProveedorCompras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTelefonoProveedorCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Phone_25px.png"))); // NOI18N
+        jlbTelefonoProveedorCompras.setText("Telefono:");
+        jlbTelefonoProveedorCompras.setToolTipText("");
+        jlbTelefonoProveedorCompras.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbTelefonoProveedorCompras.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpCompra.add(jlbTelefonoProveedorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 120, 30));
+
+        jlbEmailProveedorCompras.setDisplayedMnemonic('b');
+        jlbEmailProveedorCompras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbEmailProveedorCompras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbEmailProveedorCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Mail_25px.png"))); // NOI18N
+        jlbEmailProveedorCompras.setText("Email:");
+        jlbEmailProveedorCompras.setToolTipText("");
+        jlbEmailProveedorCompras.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbEmailProveedorCompras.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpCompra.add(jlbEmailProveedorCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 100, 20));
+
+        jTable6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Cantidad", "Nombre", "Precio Unitario", "Monto"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane16.setViewportView(jTable6);
+
+        jpCompra.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 920, 160));
+
+        jlbLogoEmpresaCompras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbLogoEmpresaCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
+        jpCompra.add(jlbLogoEmpresaCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 60, 290, 230));
+
+        jpContenidoLogoCompras.setBackground(new java.awt.Color(204, 204, 204));
+
+        jlbLogoProgramaProducto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbLogoProgramaProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SplashLogo.png"))); // NOI18N
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compra_128.png"))); // NOI18N
+        jLabel15.setToolTipText("");
+
+        javax.swing.GroupLayout jpContenidoLogoComprasLayout = new javax.swing.GroupLayout(jpContenidoLogoCompras);
+        jpContenidoLogoCompras.setLayout(jpContenidoLogoComprasLayout);
+        jpContenidoLogoComprasLayout.setHorizontalGroup(
+            jpContenidoLogoComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpContenidoLogoComprasLayout.createSequentialGroup()
+                .addGroup(jpContenidoLogoComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpContenidoLogoComprasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jlbLogoProgramaProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, Short.MAX_VALUE))
+                    .addGroup(jpContenidoLogoComprasLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jpContenidoLogoComprasLayout.setVerticalGroup(
+            jpContenidoLogoComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpContenidoLogoComprasLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(jlbLogoProgramaProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74))
+        );
+
+        jpCompra.add(jpContenidoLogoCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 270, 580));
+
+        jlbNombreProveedorCompras2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbNombreProveedorCompras2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 104, 450, 20));
+
+        jlbDomicilioProveedorCompras2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbDomicilioProveedorCompras2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 134, 460, 30));
+
+        jlbTelefonoProveedorCompras2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbTelefonoProveedorCompras2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 190, 20));
+
+        jlbEmailProveedorCompras2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbEmailProveedorCompras2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 260, 20));
+
+        jlbFechaCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbFechaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Leave_22px_1.png"))); // NOI18N
+        jlbFechaCompra.setText("Fecha:");
+        jpCompra.add(jlbFechaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 90, 40));
+
+        jSeparator71.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator71, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 60, 10));
+
+        jlbSubTotalCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbSubTotalCompra.setText("0");
+        jpCompra.add(jlbSubTotalCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 500, 90, 40));
+
+        jlbIvaCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbIvaCompra.setText("0");
+        jpCompra.add(jlbIvaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 550, 90, 40));
+
+        jlbTotalCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbTotalCompra.setText("0");
+        jpCompra.add(jlbTotalCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 600, 90, 40));
+
+        jlbEstatusCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbEstatusCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
+        jlbEstatusCompra.setText("Estatus:");
+        jpCompra.add(jlbEstatusCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 100, 20));
+
+        jlbIdProductoCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbIdProductoCompra.setText("Insertar ID del producto:");
+        jpCompra.add(jlbIdProductoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 200, 40));
+
+        jtfIdProductoCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jtfIdProductoCompra.setBorder(null);
+        jtfIdProductoCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfIdProductoCompraActionPerformed(evt);
+            }
+        });
+        jpCompra.add(jtfIdProductoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 60, 40));
+
+        jSeparator72.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator72, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 190, 10));
+
+        jSeparator67.setForeground(new java.awt.Color(0, 0, 0));
+        jpCompra.add(jSeparator67, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 260, 10));
+
+        jlbNombreProductoCompra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbNombreProductoCompra.setText("Nombre Producto");
+        jpCompra.add(jlbNombreProductoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 150, 30));
+
+        jbtAgreegarPartidaCompra.setBackground(new java.awt.Color(204, 204, 204));
+        jbtAgreegarPartidaCompra.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jbtAgreegarPartidaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Plus_48px.png"))); // NOI18N
+        jbtAgreegarPartidaCompra.setText("Agregar Partida");
+        jpCompra.add(jbtAgreegarPartidaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 290, 200, 50));
+
+        jlbRfcProveedorCompras1.setDisplayedMnemonic('b');
+        jlbRfcProveedorCompras1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRfcProveedorCompras1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRfcProveedorCompras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ID Card_25px_2.png"))); // NOI18N
+        jlbRfcProveedorCompras1.setText("RFC Proveedor:");
+        jlbRfcProveedorCompras1.setToolTipText("");
+        jlbRfcProveedorCompras1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jlbRfcProveedorCompras1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jpCompra.add(jlbRfcProveedorCompras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 160, -1));
+
+        jcbEstatusCompra.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbEstatusCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enviada", "Surtida", "Cancelada" }));
+        jcbEstatusCompra.setBorder(null);
+        jcbEstatusCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jcbEstatusCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstatusCompraActionPerformed(evt);
+            }
+        });
+        jpCompra.add(jcbEstatusCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 210, 100, 30));
+
+        jcbRfcProveedor1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbRfcProveedor1.setModel(rfcProveedor);
+        jcbRfcProveedor1.setBorder(null);
+        jcbRfcProveedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jcbRfcProveedor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRfcProveedor1ActionPerformed(evt);
+            }
+        });
+        jpCompra.add(jcbRfcProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 430, 30));
+
+        jcbNombreProductoCompras1.setEditable(true);
+        jcbNombreProductoCompras1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbNombreProductoCompras1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jcbNombreProductoCompras1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbNombreProductoCompras1ActionPerformed(evt);
+            }
+        });
+        jpCompra.add(jcbNombreProductoCompras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 260, 260, 30));
+
+        jlbPrecioUni1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbPrecioUni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 294, 140, 30));
+
+        jlbPrecioUni2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbPrecioUni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 290, 140, 30));
+
+        jbnInicioVenta.setBackground(new java.awt.Color(145, 36, 36));
+        jbnInicioVenta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jbnInicioVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Postcard With Barcode_25px_1.png"))); // NOI18N
+        jbnInicioVenta.setText("Iniciar Compra");
+        jbnInicioVenta.setBorderPainted(false);
+        jbnInicioVenta.setContentAreaFilled(false);
+        jbnInicioVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jbnInicioVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Back Arrow_48px_1.png"))); // NOI18N
+        jbnInicioVenta.setSelected(true);
+        jbnInicioVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnInicioVentaActionPerformed(evt);
+            }
+        });
+        jpCompra.add(jbnInicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(299, 250, 200, -1));
+
+        jtfFecCom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jtfFecCom, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 100, 30));
+
+        jlbNombreFecha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbNombreFecha.setText("Fecha de Entrega: ");
+        jpCompra.add(jlbNombreFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 550, -1, -1));
+
+        jtfFechaEntrega.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jtfFechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, 130, 40));
+
+        jlbEstatusom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jpCompra.add(jlbEstatusom, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 140, 30));
+
+        jpPrincipal.add(jpCompra, "card3");
 
         getContentPane().add(jpPrincipal, "card3");
 
@@ -4461,14 +5187,15 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEmpleadoActionPerformed
         abrirOpcion(jpPrincipal, jpEmpleado);
-        LimpiarTabla(jtbEmpleado, modeloEmpleado);
+        limpiarEmpleado();
         objEmpleado.consultaEmpleado(modeloEmpleado);
+        
 
     }//GEN-LAST:event_jbnEmpleadoActionPerformed
 
     private void jbnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnProveedorActionPerformed
         abrirOpcion(jpPrincipal, jpProveedor);
-        LimpiarTabla(jtbProveedor, modeloProveedor);
+        limpiarProveedor();
         objProveedor.consultaProveedor(modeloProveedor);
 
     }//GEN-LAST:event_jbnProveedorActionPerformed
@@ -4479,7 +5206,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
         objProductoVenta.consultaProducto(modeloProductoVenta);
         objCliente.ConsultarNombre(comboClienteVenta);
-        objVenta.setIdVenta(objVenta.MaximoidOrden()+1);
+        objVenta.setIdVenta(objVenta.MaximoidOrden() + 1);
         objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
         objVenta.setSubtotal(0);
         objVenta.setTotal(0);
@@ -4487,18 +5214,18 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         objVenta.setIva(0);
         objVenta.setIdDescuento(0);
         objVenta.altaVenta();
-            
+
     }//GEN-LAST:event_jbnVentaActionPerformed
 
     private void jbnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClientesActionPerformed
         abrirOpcion(jpPrincipal, jpCliente);
-        LimpiarTabla(jtbCliente, modeloCliente);
+        limpiarCliente();
         objCliente.consultaCliente(modeloCliente);
     }//GEN-LAST:event_jbnClientesActionPerformed
 
     private void jbnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCompraActionPerformed
         abrirOpcion(jpPrincipal, jpCompra);
-
+ objProveedor.consultaRfcProveedor(rfcProveedor);
     }//GEN-LAST:event_jbnCompraActionPerformed
 
     private void jbnRerportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRerportesActionPerformed
@@ -4935,9 +5662,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             jtxRfcProveedor.setText(objProveedor.getRfc());
             //se habilitan los botones en caso de que la consulta sea valida
 
-            if (objEmpleado.getIdEmpleado() >= 1) {
-                jbnEliminarEmpleado.setEnabled(true);
-                jbnActualizarEmpleado.setEnabled(true);
+            if (objProveedor.getIdProveedor()>= 1) {
+                jbnEliminarProveedor.setEnabled(true);
+                jbnActualizarProveedor.setEnabled(true);
             }
         }
 
@@ -5005,7 +5732,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jbnRegresarPedido2ActionPerformed
 
     private void jtxBuscarProductoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyPressed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyPressed
 
     private void jtxBuscarProductoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxBuscarProductoVentaKeyTyped
@@ -5013,11 +5740,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             @Override
             public void keyTyped(final KeyEvent e) {
                 repaint();
-                filtroPedido();
+                filtroProducto();
             }
         });
-        trsfiltro = new TableRowSorter(modeloPedido);
-        jtbPedido.setRowSorter(trsfiltro);
+        trsfiltro = new TableRowSorter(modeloProductoVenta);
+        jtbProductoVenta.setRowSorter(trsfiltro);
     }//GEN-LAST:event_jtxBuscarProductoVentaKeyTyped
 
     private void jcbxClienteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxClienteVentaActionPerformed
@@ -5029,12 +5756,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jtxPagoPor1ActionPerformed
 
     private void jtxPagoPor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyPressed
-//        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-//            pago=Double.parseDouble(jtxPagoPor1.getText());
-//            cambio=Double.parseDouble(jtxTotalVenta.getText());
-//            cambio=pago-cambio;
-//            jtxCambio.setText(String.valueOf(cambio));
-//        }
+        double pago=0,cambio=0;
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            pago=Double.parseDouble(jtxPagoPor1.getText());
+            cambio=Double.parseDouble(jtxTotalVenta.getText());
+            cambio=pago-cambio;
+            jtxCambio.setText(String.valueOf(cambio));
+        }
     }//GEN-LAST:event_jtxPagoPor1KeyPressed
 
     private void jtxPagoPor1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxPagoPor1KeyTyped
@@ -5049,9 +5777,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jtxPagoPor1KeyTyped
 
     private void jbnCerrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarVentaActionPerformed
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
-        if(banderitaDetalleVentecita!=0){
-        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
+        if (banderitaDetalleVentecita != 0) {
+            objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
         objVenta.bajaVenta();
         System.exit(0);
@@ -5060,16 +5788,16 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private void jbnFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnFinalizarVentaActionPerformed
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         abrirOpcion(jpPrincipal, jpMenu);
-        LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
         objVenta.setSubtotal(Double.parseDouble(jtxSubtotalVenta.getText()));
         objVenta.setTotal(objDetalleVenta.TotalVenta(objVenta.MaximoidOrden()));
         objVenta.setTotalaDescontar(0);
-        objVenta.setIva(Double.parseDouble(jtxIva.getText()));
+        objVenta.setIva(Double.parseDouble(jtxIvaVenta.getText()));
         objVenta.setIdDescuento(0);
         objVenta.modificarVenta();
-         
+        limpiarVenta();
+
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        objOrdenes.setIdCliente(31);
 //        objOrdenes.setCosto(Double.parseDouble(jtxTotalVenta.getText()));
@@ -5080,11 +5808,11 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 //        objOrdenes.modificarOrden(objOrdenes.MaximoidOrden());
 //        JOptionPane.showMessageDialog(this, "Venta finalizada","",EXIT_ON_CLOSE);
 //        cotadorPizza=0;
-        
+
     }//GEN-LAST:event_jbnFinalizarVentaActionPerformed
 
     private void jbnCerrarSesionVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarSesionVentaActionPerformed
-        
+
     }//GEN-LAST:event_jbnCerrarSesionVentaActionPerformed
 
     private void jbnCarritoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCarritoVentaActionPerformed
@@ -5093,24 +5821,24 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCancelarVentaActionPerformed
         regresarMenu();
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
-        if(banderitaDetalleVentecita!=0){
-        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
+        if (banderitaDetalleVentecita != 0) {
+            objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
         objVenta.bajaVenta();
-        banderitaDetalleVentecita=0;
-        
-     JOptionPane.showMessageDialog(null,"Venta cancelada");
+        banderitaDetalleVentecita = 0;
+        limpiarVenta();
     }//GEN-LAST:event_jbnCancelarVentaActionPerformed
 
     private void jbnRegresarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarVentaActionPerformed
         regresarMenu();
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
-        if(banderitaDetalleVentecita!=0){
-        objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
+        if (banderitaDetalleVentecita != 0) {
+            objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
         objVenta.bajaVenta();
-        banderitaDetalleVentecita=0;
+        banderitaDetalleVentecita = 0;
+       limpiarVenta();
     }//GEN-LAST:event_jbnRegresarVentaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -5119,6 +5847,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         checarempresa();
     }//GEN-LAST:event_formWindowOpened
 
+<<<<<<< HEAD
     private void jtxNombreEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxNombreEmpleadoKeyTyped
               //CONVERTIR LA TECLA PRESIONADA EN TIPO CHAR
         char letra = evt.getKeyChar();
@@ -5333,6 +6062,101 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         }
 
     }//GEN-LAST:event_jtxNumEmpleadosEmpresaKeyTyped
+=======
+
+    private void jtxBuscarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxBuscarComprasActionPerformed
+       objCompra.setIdCompra(Integer.parseInt(jtxBuscarCompras.getText()));
+     objCompra.consultaCompra();
+          objProveedor.setIdProveedor(objCompra.getIdProv());
+        objProveedor.compraProveedor2();
+        
+       
+       
+    }//GEN-LAST:event_jtxBuscarComprasActionPerformed
+
+    private void jbnCerrarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarComprasActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jbnCerrarComprasActionPerformed
+
+    private void jbnBuscarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnBuscarCompraActionPerformed
+       
+       
+      
+        jlbEstatusom.setText(objCompra.getEstatus());
+       jtfFecCom.setText(objCompra.getFechaCompra());
+       jtfFechaEntrega.setText(objCompra.getFechaRecep());
+       jlbNombreProveedorCompras2.setText(objProveedor.getNombre());
+       jlbDomicilioProveedorCompras2.setText(objProveedor.getDomicilio());
+       jlbTelefonoProveedorCompras2.setText(objProveedor.getTelefono());
+       jlbEmailProveedorCompras2.setText(objProveedor.getEmail());
+       jlbEstatusom.setText(objCompra.getEstatus());
+       jtfFecCom.setText(objCompra.getFechaCompra());
+       jtfFechaEntrega.setText(objCompra.getFechaRecep());
+       jlbSubTotalCompra.setText(String.valueOf(objCompra.getSubtotal()));
+       jlbIvaCompra.setText(String.valueOf(objCompra.getIva()));
+       jlbTotalCompra.setText(String.valueOf(objCompra.getTotal()));
+    }//GEN-LAST:event_jbnBuscarCompraActionPerformed
+
+    private void jbnRegresarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarComprasActionPerformed
+        regresarMenu();
+    }//GEN-LAST:event_jbnRegresarComprasActionPerformed
+
+    private void jbnActualizarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnActualizarProducto1ActionPerformed
+      
+        objCompra.setEstatus(String.valueOf(jcbEstatusCompra.getSelectedItem()));
+        objCompra.modificaCompra();
+    }//GEN-LAST:event_jbnActualizarProducto1ActionPerformed
+
+    private void jbnAgregarProveedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAgregarProveedor2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbnAgregarProveedor2ActionPerformed
+
+    private void jtfIdProductoCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdProductoCompraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfIdProductoCompraActionPerformed
+
+    private void jcbEstatusCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstatusCompraActionPerformed
+       jlbEstatusom.setText((String)jcbEstatusCompra.getSelectedItem());
+       
+    }//GEN-LAST:event_jcbEstatusCompraActionPerformed
+
+    private void jcbRfcProveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRfcProveedor1ActionPerformed
+        objProveedor.rfc=(String)jcbRfcProveedor1.getSelectedItem();
+        objProveedor.compraProveedor();
+        jlbNombreProveedorCompras2.setText(objProveedor.getNombre());
+        jlbDomicilioProveedorCompras2.setText(objProveedor.getDomicilio());
+        jlbTelefonoProveedorCompras2.setText(objProveedor.getTelefono());
+        jlbEmailProveedorCompras2.setText(objProveedor.getEmail());
+      
+
+    }//GEN-LAST:event_jcbRfcProveedor1ActionPerformed
+
+    private void jcbNombreProductoCompras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbNombreProductoCompras1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbNombreProductoCompras1ActionPerformed
+
+    private void jbnInicioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnInicioVentaActionPerformed
+     
+        objCompra.setIdCompra(0);
+        objCompra.setFechaCompra(jtfFecCom.getText());
+        objCompra.setTotal(Double.parseDouble(jlbTotalCompra.getText()));
+        objCompra.setSubtotal(Double.parseDouble(jlbSubTotalCompra.getText()));
+        objCompra.setIva(Double.parseDouble(jlbIvaCompra.getText()));
+        objCompra.setFechaRecep(jtfFecCom.getText());
+        objCompra.setEstatus(String.valueOf(jcbEstatusCompra.getSelectedItem()));
+        objCompra.setIdEmpleado(inicio.idCC);
+        objCompra.setIdProv(objProveedor.getIdProveedor());
+        objCompra.altaCompra();
+    }//GEN-LAST:event_jbnInicioVentaActionPerformed
+
+    private void jbnGenerarVentaDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnGenerarVentaDetallePedidoActionPerformed
+        objetoVenta.altaVenta();
+        System.out.println("Venta generada");
+        objDetalleVenta.altaDetalleVenta();
+        System.out.println("Detalle Venta generada");
+    }//GEN-LAST:event_jbnGenerarVentaDetallePedidoActionPerformed
+
+>>>>>>> dnop
 
     //Metodos para cambiar color en el panel empresa
     void setColorEmpresa(JPanel panel, JLabel label) {
@@ -5355,6 +6179,67 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         panel.setBackground(new Color(51, 153, 255));
 
     }
+    void limpiarVenta(){
+    jtxTotalVenta.setText(null);
+    jtxIvaVenta.setText(null);
+    jtxCambio.setText(null);
+    jtxPagoPor1.setText(null);
+    jtxSubtotalVenta.setText(null);
+    jtxBuscarProductoVenta.setText(null);
+    jbnCarritoVenta.setText("0");
+    LimpiarTabla(jtbDetalleVenta, modeloDetalleVenta);   
+    }
+    void limpiarCliente(){
+    jtxIdCliente.setText(null);
+    jtxNombreCliente.setText(null);
+    jtxNoComprasCliente.setText(null);
+    jtxApellidosClientes.setText(null);
+    jtxFechaNacimiento.setText(null);
+    jtxTelefonoCliente.setText(null);
+    jtxRfcCliente.setText(null);
+    jtxEmailCliente.setText(null);
+    jtxContrasenaCliente.setText(null);
+    jtxCalleyNumCliente.setText(null);
+    jtxColoniaCliente.setText(null);
+    jtxReferenciaCliente.setText(null);
+    jtxCpCliente.setText(null);
+    jtxMunicipioCliente.setText(null);
+    jtxEstadoCliente.setText(null);
+    jtxBuscarCliente.setText(null);
+    LimpiarTabla(jtbCliente, modeloCliente);   
+    }
+    void limpiarEmpleado(){
+    jtxIdEmpleado.setText(null);
+    jtxNombreEmpleado.setText(null);
+    jtxApellidosEmpleado.setText(null);
+    jtxFechaNacimientoEmpl.setText(null);
+    jtxTelefonoEmpleado.setText(null);
+    jtxRfcEmpleado.setText(null);
+    jtxEmailEmpleado.setText(null);
+    jtxUsuarioEmpleado.setText(null);
+    jtxContrasenaEmpleado.setText(null);
+    jtxCalleyNumEmpleado.setText(null);
+    jtxColoniaEmpleado.setText(null);
+    jtxReferenciasEmpleado.setText(null);
+    jtxCpEmpleado.setText(null);
+    jtxMunicipioEmpleado.setText(null);
+    jtxEstadoEmpleado.setText(null);
+    jtxBuscarEmpleado.setText(null);
+    LimpiarTabla(jtbEmpleado, modeloEmpleado);    
+    }
+    
+    void limpiarProveedor(){
+    jtxIdProveedor.setText(null);
+    jtxNombreProveedor.setText(null);
+    jtxDomicilioProveedor.setText(null);
+    jtxTelefonoProveedor.setText(null);
+    jtxEmailProveedor.setText(null);
+    jtxRfcProveedor.setText(null);
+    jtxBuscarProveedor.setText(null);
+    LimpiarTabla(jtbProveedor, modeloProveedor);
+    jbnEliminarProveedor.setEnabled(false);
+    jbnActualizarProveedor.setEnabled(false);
+    }
 
     //Metodo para regrsar al menu desde cualquier ventana
     void regresarMenu() {
@@ -5371,13 +6256,24 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         panelito.repaint();
         panelito.revalidate();
     }
-    
-    void actualizarListaProductos(){
-                try {
+
+    void actualizarListaProductos() {
+        try {
             pcontrol.initUI();
         } catch (IOException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    void actualizarDatosVenta(){
+    
+    double subtotal=0, iva=0;
+    jtxTotalVenta.setText(String.valueOf(objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta())));
+    jbnCarritoVenta.setText(String.valueOf(objDetalleVenta.TotalCantidad(objDetalleVenta.getIdVenta())));
+    subtotal=(objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta()))/1.16;
+    iva=objDetalleVenta.TotalVenta(objDetalleVenta.getIdVenta())-subtotal;
+       //Imprimir resultados
+       jtxIvaVenta.setText(formato.format(iva));
+       jtxSubtotalVenta.setText(formato.format(subtotal));
     }
 
     //Metodos para limpiar campos y tablas cada vez que entras a una opción
@@ -5434,10 +6330,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -5455,6 +6355,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -5518,24 +6419,40 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator60;
     private javax.swing.JSeparator jSeparator61;
+    private javax.swing.JSeparator jSeparator62;
+    private javax.swing.JSeparator jSeparator63;
+    private javax.swing.JSeparator jSeparator64;
+    private javax.swing.JSeparator jSeparator65;
+    private javax.swing.JSeparator jSeparator66;
+    private javax.swing.JSeparator jSeparator67;
+    private javax.swing.JSeparator jSeparator68;
+    private javax.swing.JSeparator jSeparator69;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator70;
+    private javax.swing.JSeparator jSeparator71;
+    private javax.swing.JSeparator jSeparator72;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable6;
     private javax.swing.JButton jbnActualizarCliente;
     private javax.swing.JButton jbnActualizarEmpleado;
     private javax.swing.JButton jbnActualizarEmpresa;
     private javax.swing.JButton jbnActualizarProducto;
+    private javax.swing.JButton jbnActualizarProducto1;
     private javax.swing.JButton jbnActualizarProveedor;
     private javax.swing.JButton jbnAgregarCliente;
     private javax.swing.JButton jbnAgregarEmpleado;
     private javax.swing.JButton jbnAgregarEmpresa;
     private javax.swing.JButton jbnAgregarProveedor;
     private javax.swing.JButton jbnAgregarProveedor1;
+    private javax.swing.JButton jbnAgregarProveedor2;
+    private javax.swing.JButton jbnBuscarCompra;
     private javax.swing.JButton jbnCancelarVenta;
     public javax.swing.JButton jbnCarritoVenta;
     private javax.swing.JButton jbnCerrar;
     private javax.swing.JButton jbnCerrar1;
+    private javax.swing.JButton jbnCerrarCompras;
     private javax.swing.JButton jbnCerrarEmpleado;
     private javax.swing.JButton jbnCerrarEmpresa;
     private javax.swing.JButton jbnCerrarOpciones;
@@ -5559,10 +6476,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jbnEmpleado;
     private javax.swing.JButton jbnEmpresas;
     private javax.swing.JButton jbnFinalizarVenta;
+    private javax.swing.JButton jbnGenerarVentaDetallePedido;
+    private javax.swing.JButton jbnInicioVenta;
     private javax.swing.JButton jbnPedidos;
     private javax.swing.JButton jbnProducto;
     private javax.swing.JButton jbnProveedor;
     private javax.swing.JButton jbnRegresarCliente;
+    private javax.swing.JButton jbnRegresarCompras;
     private javax.swing.JButton jbnRegresarEmpleado;
     private javax.swing.JButton jbnRegresarEmpresa;
     private javax.swing.JButton jbnRegresarOpciones;
@@ -5574,6 +6494,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     public javax.swing.JButton jbnRegresarVenta;
     private javax.swing.JButton jbnRerportes;
     private javax.swing.JButton jbnVenta;
+    private javax.swing.JButton jbtAgreegarPartidaCompra;
+    private javax.swing.JComboBox<String> jcbEstatusCompra;
+    private javax.swing.JComboBox<String> jcbNombreProductoCompras1;
+    private javax.swing.JComboBox<String> jcbRfcProveedor1;
     private javax.swing.JComboBox<String> jcbxClienteVenta;
     private javax.swing.JComboBox<String> jcbxEmpresaCliente;
     private javax.swing.JComboBox<String> jcbxEmpresaEmpleado;
@@ -5603,15 +6527,24 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbDomicilioEmpresa;
     private javax.swing.JLabel jlbDomicilioProveedor;
     private javax.swing.JLabel jlbDomicilioProveedor1;
+    private javax.swing.JLabel jlbDomicilioProveedorCompras;
+    private javax.swing.JLabel jlbDomicilioProveedorCompras2;
     private javax.swing.JLabel jlbEmailCliente;
     private javax.swing.JLabel jlbEmailEmpleado;
     private javax.swing.JLabel jlbEmailEmpresa;
     private javax.swing.JLabel jlbEmailProveedor;
+    private javax.swing.JLabel jlbEmailProveedorCompras;
+    private javax.swing.JLabel jlbEmailProveedorCompras2;
     private javax.swing.JLabel jlbEstadoCliente;
     private javax.swing.JLabel jlbEstadoEmpleado;
+    private javax.swing.JLabel jlbEstatusCompra;
+    private javax.swing.JLabel jlbEstatusDetallePedido;
     private javax.swing.JLabel jlbEstatusPedido;
+    private javax.swing.JLabel jlbEstatusom;
+    private javax.swing.JLabel jlbFechaCompra;
     private javax.swing.JLabel jlbFechaNacCliente;
     private javax.swing.JLabel jlbFechaNacEmpleado;
+    private javax.swing.JLabel jlbIDProd;
     private javax.swing.JLabel jlbIconoEmpleado;
     private javax.swing.JLabel jlbIconoEmresa;
     private javax.swing.JLabel jlbIconoOpciones;
@@ -5621,17 +6554,19 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbIconoProveedor;
     private javax.swing.JLabel jlbIdCliente;
     private javax.swing.JLabel jlbIdEmpleado;
+    private javax.swing.JLabel jlbIdProductoCompra;
     private javax.swing.JLabel jlbIdProveedor;
     private javax.swing.JLabel jlbIva;
+    private javax.swing.JLabel jlbIvaCompra;
     private javax.swing.JLabel jlbLocalidadEmpresa;
     private javax.swing.JLabel jlbLogo;
     private javax.swing.JLabel jlbLogoEmpresa;
-    private javax.swing.JLabel jlbLogoEmpresaProveedor;
-    private javax.swing.JLabel jlbLogoEmpresaProveedor1;
+    private javax.swing.JLabel jlbLogoEmpresaCompras;
     private javax.swing.JLabel jlbLogoPrograma1;
     private javax.swing.JLabel jlbLogoPrograma2;
     private javax.swing.JLabel jlbLogoPrograma3;
     private javax.swing.JLabel jlbLogoProgramaProducto;
+    private javax.swing.JLabel jlbLogoProgramaProducto1;
     private javax.swing.JLabel jlbLogoProgramaProveedor;
     private javax.swing.JLabel jlbLogoProgramaProveedor1;
     private javax.swing.JLabel jlbMunicipioCliente;
@@ -5642,8 +6577,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbNombreEmpleado1;
     private javax.swing.JLabel jlbNombreEmpleado2;
     private javax.swing.JLabel jlbNombreEmpresa;
+    private javax.swing.JLabel jlbNombreFecha;
+    private javax.swing.JLabel jlbNombreProductoCompra;
     private javax.swing.JLabel jlbNombreProveedor;
     private javax.swing.JLabel jlbNombreProveedor1;
+    private javax.swing.JLabel jlbNombreProveedorCompras;
+    private javax.swing.JLabel jlbNombreProveedorCompras2;
     private javax.swing.JLabel jlbNssEmpleado;
     private javax.swing.JLabel jlbNumEmpleadosEmpresa;
     private javax.swing.JLabel jlbOpcionNombreRedes;
@@ -5651,19 +6590,31 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbOpcionNombreRedes2;
     private javax.swing.JLabel jlbOpcionNombreTriton;
     private javax.swing.JLabel jlbPago;
+    private javax.swing.JLabel jlbPrecioUni1;
+    private javax.swing.JLabel jlbPrecioUni2;
     private javax.swing.JLabel jlbReferencialiente;
     private javax.swing.JLabel jlbReferenciasEmpleado;
     private javax.swing.JLabel jlbRfcCliente;
     private javax.swing.JLabel jlbRfcEmpleado;
     private javax.swing.JLabel jlbRfcEmpresa;
     private javax.swing.JLabel jlbRfcProveedor;
+    private javax.swing.JLabel jlbRfcProveedorCompras1;
     private javax.swing.JLabel jlbSignoTotal;
+    private javax.swing.JLabel jlbSubTotalCompra;
     private javax.swing.JLabel jlbTelefonoCliente;
     private javax.swing.JLabel jlbTelefonoEmpleado;
     private javax.swing.JLabel jlbTelefonoEmpresa;
     private javax.swing.JLabel jlbTelefonoPedido;
+    private javax.swing.JLabel jlbTelefonoPedido1;
+    private javax.swing.JLabel jlbTelefonoPedido2;
+    private javax.swing.JLabel jlbTelefonoPedido3;
+    private javax.swing.JLabel jlbTelefonoPedido4;
+    private javax.swing.JLabel jlbTelefonoPedido5;
     private javax.swing.JLabel jlbTelefonoProveedor;
+    private javax.swing.JLabel jlbTelefonoProveedorCompras;
+    private javax.swing.JLabel jlbTelefonoProveedorCompras2;
     private javax.swing.JLabel jlbTituloCliente;
+    private javax.swing.JLabel jlbTituloCompras;
     private javax.swing.JLabel jlbTituloEmpleado;
     private javax.swing.JLabel jlbTituloEmpresa;
     private javax.swing.JLabel jlbTituloPedido;
@@ -5672,18 +6623,21 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jlbTituloPedido3;
     private javax.swing.JLabel jlbTituloProducto;
     private javax.swing.JLabel jlbTituloProveedor;
+    private javax.swing.JLabel jlbTotalCompra;
     private javax.swing.JLabel jlbTotalVenta1;
     private javax.swing.JLabel jlbTotalVenta3;
     private javax.swing.JLabel jlbUsuarioEmpleado;
     private javax.swing.JLabel jlbfolioPedido;
     private javax.swing.JPanel jpBarraInferiorCliente;
     private javax.swing.JPanel jpBarraInferiorCliente1;
+    private javax.swing.JPanel jpBarraInferiorCompras;
     private javax.swing.JPanel jpBarraInferiorEmpresa;
     private javax.swing.JPanel jpBarraInferiorPedido;
     private javax.swing.JPanel jpBarraInferiorPedido1;
     private javax.swing.JPanel jpBarraInferiorPedido2;
     private javax.swing.JPanel jpBarraInferiorProducto;
     private javax.swing.JPanel jpBarraSuperiorCliente;
+    private javax.swing.JPanel jpBarraSuperiorCompras;
     private javax.swing.JPanel jpBarraSuperiorEmpleado;
     private javax.swing.JPanel jpBarraSuperiorEmpresa;
     private javax.swing.JPanel jpBarraSuperiorPedido;
@@ -5693,6 +6647,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel jpBarraSuperiorProducto;
     private javax.swing.JPanel jpCliente;
     private javax.swing.JPanel jpCompra;
+    private javax.swing.JPanel jpContenidoLogoCompras;
     public javax.swing.JPanel jpContenidoLogoProducto;
     private javax.swing.JPanel jpDescripcionPedido;
     private javax.swing.JPanel jpDetallePedido;
@@ -5738,9 +6693,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTable jtbProductoVenta;
     private javax.swing.JTable jtbProveedor;
     private javax.swing.JTable jtbTransferido;
+    private javax.swing.JTextField jtfFecCom;
+    private javax.swing.JTextField jtfFechaEntrega;
+    private javax.swing.JTextField jtfIdProductoCompra;
     private javax.swing.JTextField jtxApellidosClientes;
     private javax.swing.JTextField jtxApellidosEmpleado;
     private javax.swing.JTextField jtxBuscarCliente;
+    private javax.swing.JTextField jtxBuscarCompras;
     private javax.swing.JTextField jtxBuscarEmpleado;
     private javax.swing.JTextField jtxBuscarEmpresa;
     private javax.swing.JTextField jtxBuscarPedido;
@@ -5751,6 +6710,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField jtxCalleyNumCliente;
     private javax.swing.JTextField jtxCalleyNumEmpleado;
     private javax.swing.JTextField jtxCambio;
+    private javax.swing.JTextField jtxCantidadPedido2;
     private javax.swing.JTextField jtxClientePedido;
     private javax.swing.JTextField jtxColoniaCliente;
     private javax.swing.JTextField jtxColoniaEmpleado;
@@ -5769,11 +6729,14 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField jtxEstadoEmpleado;
     private javax.swing.JTextField jtxFechaNacimiento;
     private javax.swing.JTextField jtxFechaNacimientoEmpl;
+    private javax.swing.JTextField jtxFechaPedido2;
     private javax.swing.JTextField jtxIdCliente;
     private javax.swing.JTextField jtxIdEmpleado;
     private javax.swing.JTextField jtxIdProveedor;
-    public javax.swing.JTextField jtxIva;
+    private javax.swing.JTextField jtxIvaPedido1;
+    public javax.swing.JTextField jtxIvaVenta;
     private javax.swing.JTextField jtxLocalidadEmpresa;
+    private javax.swing.JTextField jtxMontoPedido3;
     private javax.swing.JTextField jtxMunicipioCliente;
     private javax.swing.JTextField jtxMunicipioEmpleado;
     private javax.swing.JTextField jtxNoComprasCliente;
@@ -5784,19 +6747,23 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField jtxNssEmpleado;
     private javax.swing.JTextField jtxNumEmpleadosEmpresa;
     private javax.swing.JTextField jtxPagoPor1;
+    private javax.swing.JTextField jtxProductoPedido1;
     private javax.swing.JTextField jtxReferenciaCliente;
     private javax.swing.JTextField jtxReferenciasEmpleado;
     private javax.swing.JTextField jtxRfcCliente;
     private javax.swing.JTextField jtxRfcCliente6;
     private javax.swing.JTextField jtxRfcEmpleado;
     private javax.swing.JTextField jtxRfcEmpresa;
+    private javax.swing.JTextField jtxRfcPedido1;
     private javax.swing.JTextField jtxRfcProveedor;
+    private javax.swing.JTextField jtxSubtotalPedido1;
     public javax.swing.JTextField jtxSubtotalVenta;
     private javax.swing.JTextField jtxTelefonoCliente;
     private javax.swing.JTextField jtxTelefonoEmpleado;
     private javax.swing.JTextField jtxTelefonoEmpresa;
     private javax.swing.JTextField jtxTelefonoPedido;
     private javax.swing.JTextField jtxTelefonoProveedor;
+    private javax.swing.JTextField jtxTotalPedido1;
     public javax.swing.JTextField jtxTotalVenta;
     private javax.swing.JTextField jtxUsuarioEmpleado;
     private javax.swing.JTextField jtxfolioPedido;

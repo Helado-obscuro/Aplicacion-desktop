@@ -19,6 +19,21 @@ public class DetalleVenta {
 
     Conexion obj = new Conexion();
 
+<<<<<<< HEAD
+=======
+    
+    public DetalleVenta(int idProducto, int idVenta, double cantidad, double monto) {
+        this.idProducto = idProducto;
+        this.idVenta = idVenta;
+        this.cantidad = cantidad;
+        this.monto = monto;
+    }
+
+    public DetalleVenta() {
+    }
+
+    
+>>>>>>> dnop
     public int getIdProducto() {
         return idProducto;
     }
@@ -50,7 +65,12 @@ public class DetalleVenta {
     public void setMonto(double monto) {
         this.monto = monto;
     }
+<<<<<<< HEAD
 
+=======
+    
+    
+>>>>>>> dnop
     public void altaDetalleVenta() {
         PreparedStatement conectar;
         obj.conectar();
@@ -63,16 +83,27 @@ public class DetalleVenta {
 
             //ejecutar sentencia
             int resp = conectar.executeUpdate();
+<<<<<<< HEAD
             // JOptionPane.showMessageDialog(null,  "Operación exitosa");
+=======
+            JOptionPane.showMessageDialog(null, "Operación exitosa");
+>>>>>>> dnop
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al registrar " + ex);
 
         }
+<<<<<<< HEAD
 
     }
 
     public void bajaDetalleVentaProducto() {
         PreparedStatement comando;
+=======
+ 
+ }
+public void bajaDetalleVentaProducto(){
+PreparedStatement comando;
+>>>>>>> dnop
         obj.conectar();
 
         try {
@@ -127,6 +158,7 @@ public class DetalleVenta {
                 }
                 model.addRow(obj1);
 
+<<<<<<< HEAD
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -161,6 +193,32 @@ public class DetalleVenta {
                 }
                 model.addRow(obj1);
 
+=======
+public void ConsultaDetalle(DefaultTableModel model, int id){
+  Object[] obj1= new Object[4];
+ PreparedStatement comando;
+ ResultSet resultado;
+ obj.conectar();
+  
+ if(contador ==0){
+     model.addColumn("idProducto");
+     model.addColumn("idVenta");
+     model.addColumn("Cantidad");
+     model.addColumn("Monto");
+     contador++;
+     
+     }
+        try {
+            comando = obj.conexion.prepareCall("Select * from detalleVenta where idVenta=?");
+            comando.setInt(1, id);
+            resultado = comando.executeQuery();
+
+            while (resultado.next()) {
+                for (int i = 0; i < 4; i++) {
+                    obj1[i] = resultado.getObject(i + 1);
+                }
+                model.addRow(obj1);
+>>>>>>> dnop
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);

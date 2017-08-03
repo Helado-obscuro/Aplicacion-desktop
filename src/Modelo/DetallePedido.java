@@ -1,7 +1,10 @@
 package Modelo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DetallePedido {
@@ -64,6 +67,51 @@ public class DetallePedido {
           
         }  
     }
+    
+    public void buscarDetallePedido(int folio){
+                try {
+            PreparedStatement conectar;
+            obj.conectar();
+            conectar = obj.conexion.prepareStatement("SELECT * FROM detallepedido WHERE folioPedido = ?");
+            conectar.setInt(1, folio);
+            System.out.println("Folio pedido a buscar: "+folio);
+            //ejecutar sentencia
+            ResultSet rs = conectar.executeQuery();
+            while (rs.next()) {
+                this.folioPedido = rs.getInt("folioPedido");
+                this.idProducto = rs.getInt("idProducto");
+                this.cantidad = rs.getDouble("cantidad");
+                this.monto = rs.getDouble("monto");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public void buscarDetallePedidoFull(int folio){
+                try {
+            PreparedStatement conectar;
+            obj.conectar();
+            conectar = obj.conexion.prepareStatement("Select pedido.folioPedido, fechaPedido,idCliente,estatus, nombreProducto,"
+                    + "cantidad from pedido, detallepedido, producto where pedido.folioPedido = detallepedido.folioPedido"
+                    + " and producto.idProducto = detallepedido.idProducto and detallepedido.folioPedido = ?");
+            conectar.setInt(1, folio);
+            System.out.println("Folio pedido a buscar: "+folio);
+            //ejecutar sentencia
+            ResultSet rs = conectar.executeQuery();
+            while (rs.next()) {
+                this.folioPedido = rs.getInt("folioPedido");
+                this.idProducto = rs.getInt("idProducto");
+                this.cantidad = rs.getDouble("cantidad");
+                this.monto = rs.getDouble("monto");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void bajaDetallePedido(){
     
     

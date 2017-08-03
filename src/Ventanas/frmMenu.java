@@ -81,9 +81,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     DetalleVenta objDetalleVenta = new DetalleVenta();
     //Instancia Ventanas
     frmAgregarProducto agregarPartida;
+   
     //Variables del JpopupMenu
     private final JPopupMenu popupMenu;
     private final JPopupMenu popupMenuPoductoVenta;
+    private final JPopupMenu popupMenuDetalleVenta;
+  
     private final JMenuItem menuItemAgregarProductoVenta;
     private final JMenuItem menuItemAdd;
     private final JMenuItem menuItemRemove;
@@ -92,7 +95,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private final JMenuItem menuItemEnviado;
     private final JMenuItem menuItemCompletado;
     private final JMenuItem menuItemDesglosarPedido;
-
+    private final JMenuItem menuItemEliminarDetalleVenta;
+    
+    
     frmLogin inicio;
     
     //variables auxiliares 
@@ -120,6 +125,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         // constructs the popup menu
         popupMenu = new JPopupMenu();
         popupMenuPoductoVenta = new JPopupMenu();
+        popupMenuDetalleVenta = new JPopupMenu();
+                
+         
         menuItemAgregarProductoVenta = new JMenuItem("Agregar producto");
         menuItemAdd = new JMenuItem("Agrgera nueva fila");
         menuItemRemove = new JMenuItem("Remover la fila actual");
@@ -128,7 +136,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         menuItemEnviado = new JMenuItem("Cambiar estatus a enviado");
         menuItemCompletado = new JMenuItem("Cambiar estatus a completado");
         menuItemDesglosarPedido = new JMenuItem("Detalle de pedido");
-
+        menuItemEliminarDetalleVenta = new JMenuItem("Eliminar detalleVenta");
+        
+            
         menuItemAdd.addActionListener(this);
         menuItemRemove.addActionListener(this);
         menuItemRecibido.addActionListener(this);
@@ -137,7 +147,9 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         menuItemCompletado.addActionListener(this);
         menuItemDesglosarPedido.addActionListener(this);
         menuItemAgregarProductoVenta.addActionListener(this);
-
+       
+        menuItemEliminarDetalleVenta.addActionListener(this);
+        
         popupMenu.add(menuItemAdd);
         popupMenu.add(menuItemRemove);
         popupMenu.add(menuItemTransferido);
@@ -146,14 +158,19 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         popupMenu.add(menuItemCompletado);
         popupMenu.add(menuItemDesglosarPedido);
         popupMenuPoductoVenta.add(menuItemAgregarProductoVenta);
-
+        
+        popupMenuDetalleVenta.add(menuItemEliminarDetalleVenta);
+       
         // sets the popup menu for the table
         jtbPedido.setComponentPopupMenu(popupMenu);
         jtbPedido.addMouseListener(new TableMouseListener(jtbPedido));
 
         jtbProductoVenta.setComponentPopupMenu(popupMenuPoductoVenta);
         jtbProductoVenta.addMouseListener(new TableMouseListener(jtbProductoVenta));
-
+        
+        jtbDetalleVenta.setComponentPopupMenu(popupMenuDetalleVenta);
+        jtbDetalleVenta.addMouseListener(new TableMouseListener(jtbDetalleVenta));
+        
     }
 
     public class TableMouseListener extends MouseAdapter {
@@ -194,7 +211,10 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
             detalle();
         } else if (menu == menuItemAgregarProductoVenta) {
             abrirVentana();
+        }else if (menu == menuItemEliminarDetalleVenta) {
+            eliminarDetalleVenta();
         }
+        
 
     }
 
@@ -310,9 +330,32 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     private void abrirVentana() {
         int selectedRow = jtbProductoVenta.getSelectedRow();
         objProductoVenta.setIdProducto((int) modeloProductoVenta.getValueAt(selectedRow,0));
-        System.out.println(objProductoVenta.getIdProducto());
         frmAgregarProducto agregarPartida = new frmAgregarProducto(this, false, objProductoVenta.getIdProducto() ,this);
         agregarPartida.setVisible(true);
+    }
+    private void editarDetalleVentana() {
+//        int selectedRow = jtbDetalleVenta.getSelectedRow();
+//        frmEditarDetalle editarDetalleVenta = new frmEditarDetalle(this, false ,this);
+//        
+//        objProducto.setNombreProducto(((String) modeloDetalleVenta.getValueAt(selectedRow,2))); 
+//        objDetalleVenta.setCantidad((double) modeloDetalleVenta.getValueAt(selectedRow,4));
+//        objDetalleVenta.setMonto((double) modeloDetalleVenta.getValueAt(selectedRow,5));
+//        
+//        editarDetalleVenta.jtxCostodDetalle.setText(String.valueOf(objDetalleVenta.getMonto()));
+//        editarDetalleVenta.jtxCantidadDetalle1.setText(String.valueOf(objDetalleVenta.getCantidad()));
+//        editarDetalleVenta.jlbTotalDetalle.setText(String.valueOf(objDetalleVenta.getMonto()));
+//        editarDetalleVenta.jcmProductoDetalle.setSelectedItem(objProducto.getNombreProducto());
+//        editarDetalleVenta.setVisible(true);
+        
+        
+    }
+    public void eliminarDetalleVenta(){
+        int selectedRow = jtbDetalleVenta.getSelectedRow();
+        objDetalleVenta.setIdProducto((int) modeloDetalleVenta.getValueAt(selectedRow,0));
+        objDetalleVenta.setIdVenta((int) modeloDetalleVenta.getValueAt(selectedRow,1));
+        objDetalleVenta.bajaDetalleVentaProducto();
+            
+        
     }
 
     private void init() {

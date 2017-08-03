@@ -244,6 +244,13 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     System.out.println("Empresa 1 en uso, color azul");
                     jPanel11.setBackground(Color.decode("#1672b9"));
                     jpInferior.setBackground(Color.decode("#1672b9"));
+                    
+                    jcbxEmpresaEmpleado.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
+                    jcbxEmpresaEmpleado.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+                    
+                    jcbxEmpresaCliente.setSelectedItem("Redes y Equipos Pesqueros S.A  De C.V");
+                    jcbxEmpresaCliente.removeItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+
 
                 } else {
                     System.out.println("Empresa 2 en uso, color rojo ");
@@ -275,6 +282,12 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
                     jtxBuscarProducto.setBackground(Color.decode("#990000"));
                     jtxBuscarProductoVenta.setBackground(Color.decode("#990000"));
                     jtxBuscarProveedor.setBackground(Color.decode("#990000"));
+                    
+                    jcbxEmpresaEmpleado.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+                    jcbxEmpresaEmpleado.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
+                    
+                    jcbxEmpresaCliente.setSelectedItem("Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V");
+                    jcbxEmpresaCliente.removeItem("Redes y Equipos Pesqueros S.A  De C.V");
 
                 }
             }
@@ -2263,6 +2276,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         jlbNombreEmpleado1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jpEmpleado.add(jlbNombreEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 130, -1));
 
+        jcbxEmpresaEmpleado.setEditable(true);
         jcbxEmpresaEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jcbxEmpresaEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Redes y Equipos Pesqueros S.A  De C.V", "Redes y Accesorios Pesqueros Tritón S. de R.L. de C.V" }));
         jcbxEmpresaEmpleado.setBorder(null);

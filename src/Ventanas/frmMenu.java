@@ -5227,7 +5227,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_jtxPagoPor1KeyTyped
 
     private void jbnCerrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCerrarVentaActionPerformed
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         if (banderitaDetalleVentecita != 0) {
             objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
@@ -5239,7 +5239,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         abrirOpcion(jpPrincipal, jpMenu);
         LimpiarTabla(jtbProductoVenta, modeloProductoVenta);
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         objVenta.setFechaVenta(java.sql.Date.valueOf(dateFormat.format(date)));
         objVenta.setSubtotal(Double.parseDouble(jtxSubtotalVenta.getText()));
         objVenta.setTotal(objDetalleVenta.TotalVenta(objVenta.MaximoidOrden()));
@@ -5271,7 +5271,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnCancelarVentaActionPerformed
         regresarMenu();
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         if (banderitaDetalleVentecita != 0) {
             objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }
@@ -5283,7 +5283,7 @@ public class frmMenu extends javax.swing.JFrame implements ActionListener {
 
     private void jbnRegresarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnRegresarVentaActionPerformed
         regresarMenu();
-        objVenta.setIdVenta(objVenta.MaximoidOrden());
+        objVenta.setIdVenta(objVenta.MaximoidOrden()-1);
         if (banderitaDetalleVentecita != 0) {
             objDetalleVenta.bajaDetalleVenta(objVenta.getIdVenta());
         }

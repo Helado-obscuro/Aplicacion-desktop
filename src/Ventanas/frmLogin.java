@@ -20,6 +20,7 @@ public class frmLogin extends javax.swing.JFrame {
 
  private frmMenu menu;
  private frmSplash splash;
+ public int idCC=0;
  PrintWriter out;
  
  
@@ -37,7 +38,7 @@ public class frmLogin extends javax.swing.JFrame {
         initComponents();
            out = new PrintWriter("UserLogged.txt");
            dcontra = new dialogRestaurarContrasena(menu, true);
-
+          
     }
 
  
@@ -253,6 +254,7 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void jbnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAceptarActionPerformed
     validarlog();
+     idCC=objEmpleado.idC;
     }//GEN-LAST:event_jbnAceptarActionPerformed
 
     private void jpsContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsContrasenaActionPerformed

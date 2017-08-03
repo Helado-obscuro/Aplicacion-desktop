@@ -10,16 +10,15 @@ import javax.swing.table.DefaultTableModel;
 
 public class DetalleVenta {
 
-    private int idProducto=0;
-    private int idVenta=0;
-    private double cantidad=0.0;
-    private double monto=0.0;
-    
-    int contador=0;
+    private int idProducto = 0;
+    private int idVenta = 0;
+    private double cantidad = 0.0;
+    private double monto = 0.0;
+
+    int contador = 0;
 
     Conexion obj = new Conexion();
 
-    
     public DetalleVenta(int idProducto, int idVenta, double cantidad, double monto) {
         this.idProducto = idProducto;
         this.idVenta = idVenta;
@@ -30,7 +29,6 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    
     public int getIdProducto() {
         return idProducto;
     }
@@ -62,8 +60,7 @@ public class DetalleVenta {
     public void setMonto(double monto) {
         this.monto = monto;
     }
-    
-    
+
     public void altaDetalleVenta() {
         PreparedStatement conectar;
         obj.conectar();
@@ -81,52 +78,53 @@ public class DetalleVenta {
             JOptionPane.showMessageDialog(null, "Error al registrar " + ex);
 
         }
- 
- }
-public void bajaDetalleVentaProducto(){
-PreparedStatement comando;
+
+    }
+
+    public void bajaDetalleVentaProducto() {
+        PreparedStatement comando;
         obj.conectar();
-            
-        try {    
-            comando=obj.conexion.prepareStatement("Delete from detalleVenta where idProducto=?");
+
+        try {
+            comando = obj.conexion.prepareStatement("Delete from detalleVenta where idProducto=?");
             comando.setInt(1, idProducto);
             int resp = comando.executeUpdate();
             //JOptionPane.showMessageDialog(null, resp+"Se cancela ");    
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar"+ex);
+            JOptionPane.showMessageDialog(null, "No se puede eliminar" + ex);
         }
 
-}
-public void bajaDetalleVenta(int id){
-PreparedStatement comando;
+    }
+
+    public void bajaDetalleVenta(int id) {
+        PreparedStatement comando;
         obj.conectar();
-            
-        try {    
-            comando=obj.conexion.prepareStatement("Delete from detalleVenta where idVenta=?");
+
+        try {
+            comando = obj.conexion.prepareStatement("Delete from detalleVenta where idVenta=?");
             comando.setInt(1, id);
             int resp = comando.executeUpdate();
             //JOptionPane.showMessageDialog(null, resp+"Se cancela ");    
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar"+ex);
+            JOptionPane.showMessageDialog(null, "No se puede eliminar" + ex);
         }
 
+    }
 
-}
+    public void ConsultaDetalle(DefaultTableModel model, int id) {
+        Object[] obj1 = new Object[4];
+        PreparedStatement comando;
+        ResultSet resultado;
+        obj.conectar();
 
-public void ConsultaDetalle(DefaultTableModel model, int id){
-  Object[] obj1= new Object[4];
- PreparedStatement comando;
- ResultSet resultado;
- obj.conectar();
-  
- if(contador ==0){
-     model.addColumn("idProducto");
-     model.addColumn("idVenta");
-     model.addColumn("Cantidad");
-     model.addColumn("Monto");
-     contador++;
-     
-     }
+        if (contador == 0) {
+            model.addColumn("idProducto");
+            model.addColumn("idVenta");
+            model.addColumn("Cantidad");
+            model.addColumn("Monto");
+            contador++;
+
+        }
         try {
             comando = obj.conexion.prepareCall("Select * from detalleVenta where idVenta=?");
             comando.setInt(1, id);
@@ -144,66 +142,65 @@ public void ConsultaDetalle(DefaultTableModel model, int id){
 
     }
 
-public void modificarDetalleVenta(){
+    public void modificarDetalleVenta() {
 
-    PreparedStatement conectar;
-    obj.conectar();
+        PreparedStatement conectar;
+        obj.conectar();
         try {
             conectar = obj.conexion.prepareStatement("UPDATE detalleVenta SET idVenta=?,cantidad=?,monto=? WHERE idProducto=?");
-          
-            
+
             conectar.setInt(1, idVenta);
             conectar.setDouble(2, cantidad);
             conectar.setDouble(3, monto);
             conectar.setInt(4, idProducto);
-            
-             //ejecutar sentencia
+
+            //ejecutar sentencia
             int resp = conectar.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Actualización Exitosa","Venta",JOptionPane.YES_NO_CANCEL_OPTION);
+            JOptionPane.showMessageDialog(null, "Actualización Exitosa", "Venta", JOptionPane.YES_NO_CANCEL_OPTION);
         } catch (SQLException ex) {
-    JOptionPane.showMessageDialog(null, "Error al actualizar datos");
-          
+            JOptionPane.showMessageDialog(null, "Error al actualizar datos");
+
         }
-}
-    public double TotalVenta(int id){
-double canti=0;
-ResultSet resultado;   
-PreparedStatement comando;
-    obj.conectar();
+    }
+
+    public double TotalVenta(int id) {
+        double canti = 0;
+        ResultSet resultado;
+        PreparedStatement comando;
+        obj.conectar();
         try {
             comando = obj.conexion.prepareStatement("select sum(monto) from detalleVenta where idVenta=?");
             comando.setInt(1, id);
-            resultado=comando.executeQuery();
-              if(resultado.first()){
-            canti=resultado.getInt("sum(monto)");
-              }
-           
-        } catch (SQLException ex) {
-    JOptionPane.showMessageDialog(null, "Error al consultar a la base de datos");
+            resultado = comando.executeQuery();
+            if (resultado.first()) {
+                canti = resultado.getInt("sum(monto)");
+            }
 
-}
-  return canti;
-}
-    
-public int TotalCantidad(int id){
-int canti=0;
-ResultSet resultado;   
-PreparedStatement comando;
-    obj.conectar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al consultar a la base de datos");
+
+        }
+        return canti;
+    }
+
+    public int TotalCantidad(int id) {
+        int canti = 0;
+        ResultSet resultado;
+        PreparedStatement comando;
+        obj.conectar();
         try {
             comando = obj.conexion.prepareStatement("select sum(cantidad) from detalleVenta where idVenta=?");
             comando.setInt(1, id);
-            resultado=comando.executeQuery();
-              if(resultado.first()){
-            canti=resultado.getInt("sum(cantidad)");
-              }
-           
+            resultado = comando.executeQuery();
+            if (resultado.first()) {
+                canti = resultado.getInt("sum(cantidad)");
+            }
+
         } catch (SQLException ex) {
-    JOptionPane.showMessageDialog(null, "Error al consultar a la base de datos");
+            JOptionPane.showMessageDialog(null, "Error al consultar a la base de datos");
 
-}
-  return canti;
-}
-
+        }
+        return canti;
+    }
 
 }

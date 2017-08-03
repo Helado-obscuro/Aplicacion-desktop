@@ -15,6 +15,9 @@ import sun.invoke.empty.Empty;
 import Modelo.Producto;
 import Modelo.DetalleVenta;
 import Modelo.Venta;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class frmAgregarProducto extends javax.swing.JDialog {
  //Modelo del combobox
@@ -219,11 +222,15 @@ frmMenu objMenu;
           objDetalle.setIdProducto(this.objProducto.getIdProducto());
           objDetalle.setCantidad(Integer.valueOf(jtxCantidadProducto.getText()));
           objDetalle.setMonto(Double.parseDouble(jlbCostoProducto.getText()));
-          objDetalle.setIdVenta(ObjVenta.MaximoidOrden());
+          objDetalle.setIdVenta(ObjVenta.MaximoidOrden()-1);
           objDetalle.altaDetalleVenta();
           objMenu.banderitaDetalleVentecita=1;
           objMenu.LimpiarTabla(objMenu.jtbDetalleVenta, objMenu.modeloDetalleVenta);
-          objMenu.objDetalleVenta.ConsultaVistaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
+              try {
+                  objMenu.objDetalleVenta.ConsultaVistaDetalle(objMenu.modeloDetalleVenta, objDetalle.getIdVenta());
+              } catch (SQLException ex) {
+                  Logger.getLogger(frmAgregarProducto.class.getName()).log(Level.SEVERE, null, ex);
+              }
           objMenu.jtxTotalVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalVenta(objDetalle.getIdVenta())));
           objMenu.jbnCarritoVenta.setText(String.valueOf(objMenu.objDetalleVenta.TotalCantidad(objDetalle.getIdVenta())));
        

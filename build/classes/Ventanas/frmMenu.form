@@ -4624,19 +4624,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jlbLogoEmpresaProveedor">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/logo.png"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="950" y="60" width="250" height="230"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Container class="javax.swing.JPanel" name="jPanel2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -5544,19 +5531,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="jlbLogoEmpresaProveedor1">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/logo.png"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="1100" y="80" width="80" height="60"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Container class="javax.swing.JPanel" name="jpContenidoLogoProducto">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -5787,17 +5761,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jbnRegresarVenta" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="jlbBuscarPedido2" min="-2" pref="135" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jtxBuscarProductoVenta" pref="247" max="32767" attributes="0"/>
-                              <Component id="jSeparator50" max="32767" attributes="0"/>
+                              <Component id="jtxBuscarProductoVenta" max="32767" attributes="0"/>
+                              <Component id="jSeparator50" min="-2" pref="247" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                          <Component id="jbnRegresarVenta" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="178" max="32767" attributes="0"/>
+                          <EmptySpace pref="336" max="32767" attributes="0"/>
                           <Component id="jbnCarritoVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           <Component id="jbnCerrarVenta" min="-2" pref="59" max="-2" attributes="0"/>
@@ -5811,16 +5784,22 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jbnRegresarVenta" alignment="1" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jtxBuscarProductoVenta" min="-2" pref="36" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSeparator50" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                          <Component id="jSeparator50" min="-2" pref="20" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jbnCarritoVenta" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jlbBuscarPedido2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jtxBuscarProductoVenta" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <Component id="jlbBuscarPedido2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jbnCarritoVenta" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jbnRegresarVenta" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -5933,7 +5912,6 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Iconos/Back Arrow_48px.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Regresar a menu"/>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">

@@ -110,7 +110,7 @@ public Empleado (){
                 if(resultado.first()){
                 idEmpleado=resultado.getInt("idEmpleado");
                 usuario=resultado.getString("usuario");
-                contrasena=resultado.getString("contraseña");
+                contrasena=resultado.getString("contrasena");
                 nss=resultado.getInt("nss");
                 rfc=resultado.getString("rfcPersona");
                 nombre=resultado.getString("nombre");
